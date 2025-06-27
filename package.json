@@ -3,15 +3,16 @@
   "type": "module",
   "version": "1.0.0",
   "scripts": {
-    "dev": "astro dev",
-    "start": "astro dev",
+    "dev": "deno run -A --unstable npm:astro dev",
+    "start": "deno run -A --unstable npm:astro dev",
     "build": "astro build",
-    "preview": "deno run -A ./dist/server/entry.mjs",
+    "preview": "deno run -A --unstable ./dist/server/entry.mjs",
+    "astro": "astro",
     "format": "deno fmt && prettier --write ."
   },
   "dependencies": {
     "@deno/astro-adapter": "^0.1.2",
-    "astro": "^4.9.3"
+    "astro": "^5.10.1"
   },
   "devDependencies": {
     "prettier": "^3.3.1",
