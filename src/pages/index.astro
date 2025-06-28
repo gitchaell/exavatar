@@ -1,143 +1,96 @@
 ---
 import Layout from '../layouts/Layout.astro'
-import Card from '../components/Card.astro'
-// To use Deno KV, swiitch this import to "resources_kv" in the same directory
-import { addResource, listResources, Resource } from '../data/resources'
-
-// Process form submission if required
-if (Astro.request.method === 'POST') {
-	try {
-		const data = await Astro.request.formData()
-		const resource: Resource = {
-			url: data.get('url')?.toString() || '',
-			title: data.get('title')?.toString() || '',
-			summary: data.get('summary')?.toString() || ''
-		}
-		await addResource(resource)
-	} catch (error) {
-		console.error(error)
-	}
-
-	// Redirect to home page to avoid duplicate form submissions
-	return Astro.redirect('/')
-}
-
-// Get a list of resources
-const resources: Resource[] = await listResources()
 ---
-
-<Layout title='Welcome to Deno 🦕'>
-	<main>
-		<h1>Welcome to <span class='text-gradient'>Deno 🦕</span></h1>
-		<div class='news-form'>
-			<p>
-				Welcome to Deno! Add your own links and resources using the form below.
-			</p>
-			<hr />
-			<form method='POST'>
-				<label for='url'>URL</label>
-				<input type='url' name='url' id='url' required />
-				<br />
-
-				<label for='title'>Title</label>
-				<input type='text' name='title' id='title' required />
-				<br />
-
-				<label for='summary'>Summary</label>
-				<input type='text' name='summary' id='summary' required />
-				<br />
-
-				<button type='submit'>Submit</button>
-			</form>
-		</div>
-		<ul role='list' class='link-card-grid'>
-			{
-				resources.map(resource => (
-					<Card
-						href={resource.url}
-						title={resource.title}
-						body={resource.summary}
-					/>
-				))
-			}
-		</ul>
-	</main>
+<Layout title="Exavatar">
+  <main class="p-6 max-w-5xl mx-auto">
+    <h1 class="text-3xl font-bold mb-4">
+      Welcome to <span class="text-gradient">Exavatar</span>
+    </h1>
+    <p class="mb-6">Use the avatar API to generate dynamic images.</p>
+    <div class="flex flex-col md:flex-row gap-6">
+      <div class="flex-1 flex items-center justify-center">
+        <img id="preview" class="border rounded w-64 h-64 object-cover" src="/api/avatar" alt="Preview" />
+      </div>
+      <div class="flex-1 space-y-2">
+        <label class="block">
+          <span class="block text-sm">Set</span>
+          <select id="set" class="w-full border p-1">
+            <option value="animals">animals</option>
+            <option value="any">any</option>
+          </select>
+        </label>
+        <label class="block">
+          <span class="block text-sm">Id</span>
+          <input id="id" type="text" class="w-full border p-1" />
+        </label>
+        <label class="block">
+          <span class="block text-sm">Size</span>
+          <input id="size" type="number" min="1" max="1024" value="256" class="w-full border p-1" />
+        </label>
+        <label class="block">
+          <span class="block text-sm">Format</span>
+          <select id="format" class="w-full border p-1">
+            <option value="png">png</option>
+            <option value="jpeg">jpeg</option>
+            <option value="webp">webp</option>
+            <option value="gif">gif</option>
+          </select>
+        </label>
+        <label class="block">
+          <span class="block text-sm">Text</span>
+          <input id="text" type="text" maxlength="2" class="w-full border p-1" />
+        </label>
+        <label class="block">
+          <span class="block text-sm">Background</span>
+          <input id="bg" type="text" value="#ccc" class="w-full border p-1" />
+        </label>
+        <label class="block">
+          <span class="block text-sm">Foreground</span>
+          <input id="fg" type="text" value="#000" class="w-full border p-1" />
+        </label>
+        <label class="block">
+          <span class="block text-sm">Shape</span>
+          <select id="shape" class="w-full border p-1">
+            <option value="square">square</option>
+            <option value="circle">circle</option>
+            <option value="rounded">rounded</option>
+          </select>
+        </label>
+      </div>
+    </div>
+    <p class="mt-4 break-words"><code id="endpoint" class="text-sm"></code></p>
+  </main>
 </Layout>
+<script>
+  const preview = document.getElementById('preview');
+  const endpointEl = document.getElementById('endpoint');
+  const inputs = Array.from(document.querySelectorAll('input, select'));
 
+  function update() {
+    const params = new URLSearchParams();
+    inputs.forEach((el) => {
+      if (el.id && el.value) params.set(el.id, el.value);
+    });
+    const url = `/api/avatar?${params.toString()}`;
+    preview.src = url;
+    endpointEl.textContent = url;
+  }
+
+  inputs.forEach((el) => el.addEventListener('input', update));
+  update();
+</script>
 <style>
-	main {
-		margin: auto;
-		padding: 1.5rem;
-		max-width: 60ch;
-	}
-	h1 {
-		font-size: 3rem;
-		font-weight: 800;
-		margin: 0;
-	}
-	hr,
-	p {
-		margin: 5px 0;
-	}
-	label {
-		font-size: 0.875rem;
-		font-style: italic;
-	}
-	input {
-		width: 100%;
-		padding: 5px;
-		margin: 0 0 5px 0;
-		display: inline-block;
-		border: 1px solid #ccc;
-		border-radius: 4px;
-		box-sizing: border-box;
-	}
-	button {
-		cursor: pointer;
-		margin: 10px 0 0 0;
-		padding: 10px;
-		font-weight: bold;
-		color: #fff;
-		background-image: var(--accent-gradient);
-		background-size: 400%;
-		background-position: 0%;
-		border: none;
-		border-radius: 4px;
-	}
-	button:hover {
-		background-position: 10%;
-	}
-	.text-gradient {
-		background-image: var(--accent-gradient);
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		background-size: 400%;
-		background-position: 0%;
-	}
-	.news-form {
-		line-height: 1.6;
-		margin: 1rem 0;
-		border: 1px solid rgba(var(--accent), 25%);
-		background-color: white;
-		padding: 1rem;
-		border-radius: 0.4rem;
-	}
-	.news-form code {
-		font-size: 0.875em;
-		font-weight: bold;
-		background: rgba(var(--accent), 12%);
-		color: rgb(var(--accent));
-		border-radius: 4px;
-		padding: 0.3em 0.45em;
-	}
-	.news-form strong {
-		color: rgb(var(--accent));
-	}
-	.link-card-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
-		gap: 1rem;
-		padding: 0;
-		margin: 0;
-	}
+  main {
+    margin: auto;
+    padding: 1.5rem;
+    max-width: 60ch;
+    text-align: center;
+  }
+  .text-gradient {
+    background-image: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 400%;
+    background-position: 0%;
+  }
 </style>

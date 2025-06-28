@@ -48,8 +48,8 @@ instead of Node.js.
 - Build a production-ready SSR site with `npm run build`
 - After building, you can preview your SSR site locally with `npm run preview`
 
-The template project lightly modifies the base Astro project with some basic
-CRUD operations to create additional resource links.
+This project also exposes a dynamic avatar generation service.
+
 
 ## 🔌 Managing dependencies, integrations, and plugins
 
@@ -59,21 +59,6 @@ hosted on npm. Deno's Node/npm compatibility layer should be able to handle this
 just fine. If you run into any compatibility issues,
 [please let us know](https://github.com/denoland/deno/issues).
 
-## 🗝️ Using Deno KV
-
-By default, the template project stores data in memory in a
-[Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map).
-If you'd like to instead use [Deno KV](https://deno.com/kv) to store your data,
-change the `import` statements in these files:
-
-- `src/pages/index.astro`
-- `src/pages/api/resources.json.ts`
-
-to use `resources_kv.ts` instead of `resources.ts`. This will work for everyone
-locally on recent versions of Deno, but will only work on Deno Deploy if you
-have applied for and received access to the beta for KV.
-
-## 🦕 🚀 Running on Deno Deploy
 
 When you're ready to put this application on the Internet, you can run it on
 [Deno Deploy](https://www.deno.com/deploy). You have two options for doing so.
@@ -145,3 +130,41 @@ This template also uses a patched version of Astro's Deno SSR adapter in
 ## 👩‍⚖️ License
 
 MIT
+
+## Avatar Endpoint
+
+A dynamic avatar service is available at `/api/avatar`. It can return the animal images located under `src/assets/animals` or generate simple text-based placeholders.
+
+Example usage:
+
+```
+/api/avatar?set=animals&id=dog&size=128&format=png
+```
+
+When an image with the requested `set` and `id` does not exist, you can provide a `text` parameter to render an avatar with the given background and foreground colors.
+
+```
+/api/avatar?text=JS&bg=%23ff0&fg=%23000&size=256
+```
+
+Before starting the server you can pre-generate avatars for the common sizes
+and formats using Sharp:
+
+```bash
+npm run generate
+```
+
+## Development
+
+Format and lint the code before committing:
+
+```bash
+npm run format
+npm run lint
+```
+
+Run the test suite:
+
+```bash
+npm test
+```
