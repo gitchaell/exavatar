@@ -1,61 +1,141 @@
 {
-  "branches": ["main"],
-  "plugins": [
-    [
-      "@semantic-release/commit-analyzer",
-      {
-        "preset": "conventionalcommits",
-        "releaseRules": [
-          { "type": "feat", "release": "minor" },
-          { "type": "fix", "release": "patch" },
-          { "type": "perf", "release": "patch" },
-          { "type": "revert", "release": "patch" },
-          { "type": "docs", "release": false },
-          { "type": "style", "release": false },
-          { "type": "refactor", "release": "patch" },
-          { "type": "test", "release": false },
-          { "type": "build", "release": false },
-          { "type": "ci", "release": false },
-          { "type": "chore", "release": false },
-          { "scope": "breaking", "release": "major" }
-        ]
-      }
-    ],
-    [
-      "@semantic-release/release-notes-generator",
-      {
-        "preset": "conventionalcommits",
-        "presetConfig": {
-          "types": [
-            { "type": "feat", "section": "✨ Features" },
-            { "type": "fix", "section": "🐛 Bug Fixes" },
-            { "type": "perf", "section": "⚡ Performance Improvements" },
-            { "type": "revert", "section": "⏪ Reverts" },
-            { "type": "docs", "section": "📚 Documentation", "hidden": false },
-            { "type": "style", "section": "💄 Styles", "hidden": true },
-            { "type": "refactor", "section": "♻️ Code Refactoring" },
-            { "type": "test", "section": "✅ Tests", "hidden": true },
-            { "type": "build", "section": "🚀 Build System", "hidden": true },
-            { "type": "ci", "section": "👷 CI", "hidden": true },
-            { "type": "chore", "section": "🔧 Chore", "hidden": true }
-          ]
-        }
-      }
-    ],
-    [
-      "@semantic-release/changelog",
-      {
-        "changelogFile": "CHANGELOG.md",
-        "changelogTitle": "# Changelog\n\nAll notable changes to this project will be documented in this file."
-      }
-    ],
-    [
-      "@semantic-release/git",
-      {
-        "assets": ["CHANGELOG.md", "package.json"],
-        "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
-      }
-    ],
-    "@semantic-release/github"
-  ]
+	"branches": [
+		"main"
+	],
+	"plugins": [
+		[
+			"@semantic-release/commit-analyzer",
+			{
+				"preset": "conventionalcommits",
+				"releaseRules": [
+					{
+						"type": "feat",
+						"release": "minor"
+					},
+					{
+						"type": "fix",
+						"release": "patch"
+					},
+					{
+						"type": "perf",
+						"release": "patch"
+					},
+					{
+						"type": "revert",
+						"release": "patch"
+					},
+					{
+						"type": "docs",
+						"release": false
+					},
+					{
+						"type": "style",
+						"release": false
+					},
+					{
+						"type": "refactor",
+						"release": "patch"
+					},
+					{
+						"type": "test",
+						"release": false
+					},
+					{
+						"type": "build",
+						"release": false
+					},
+					{
+						"type": "ci",
+						"release": false
+					},
+					{
+						"type": "chore",
+						"release": false
+					},
+					{
+						"scope": "breaking",
+						"release": "major"
+					}
+				]
+			}
+		],
+		[
+			"@semantic-release/release-notes-generator",
+			{
+				"preset": "conventionalcommits",
+				"presetConfig": {
+					"types": [
+						{
+							"type": "feat",
+							"section": "✨ Features"
+						},
+						{
+							"type": "fix",
+							"section": "🐛 Bug Fixes"
+						},
+						{
+							"type": "perf",
+							"section": "⚡ Performance Improvements"
+						},
+						{
+							"type": "revert",
+							"section": "⏪ Reverts"
+						},
+						{
+							"type": "docs",
+							"section": "📚 Documentation",
+							"hidden": false
+						},
+						{
+							"type": "style",
+							"section": "💄 Styles",
+							"hidden": true
+						},
+						{
+							"type": "refactor",
+							"section": "♻️ Code Refactoring"
+						},
+						{
+							"type": "test",
+							"section": "✅ Tests",
+							"hidden": true
+						},
+						{
+							"type": "build",
+							"section": "🚀 Build System",
+							"hidden": true
+						},
+						{
+							"type": "ci",
+							"section": "👷 CI",
+							"hidden": true
+						},
+						{
+							"type": "chore",
+							"section": "🔧 Chore",
+							"hidden": true
+						}
+					]
+				}
+			}
+		],
+		[
+			"@semantic-release/changelog",
+			{
+				"changelogFile": "CHANGELOG.md",
+				"changelogTitle": "# Changelog\n\nAll notable changes to this project will be documented in this file."
+			}
+		],
+		[
+			"@semantic-release/git",
+			{
+				"assets": [
+					"CHANGELOG.md",
+					"package.json"
+				],
+				"message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+			}
+		],
+		"@semantic-release/github"
+	]
 }

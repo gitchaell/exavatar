@@ -30,7 +30,9 @@ Basado en los commits:
 
 ### En GitHub Actions
 
-El workflow se ejecuta automáticamente cuando se hace push a `main`:
+El workflow **Release & Deploy** se ejecuta automáticamente cuando se hace push a `main`:
+
+**Job 1: Release**
 
 1. Ejecuta linting y tests
 2. Construye el proyecto
@@ -38,6 +40,11 @@ El workflow se ejecuta automáticamente cuando se hace push a `main`:
 4. Crea tag y release en GitHub
 5. Actualiza CHANGELOG.md
 6. Incrementa versión en package.json
+
+**Job 2: Deploy** (se ejecuta después del release) 7. Clona el repositorio 8. Instala
+dependencias 9. Construye el proyecto 10. Despliega a Deno Deploy
+
+> **Nota**: Para Pull Requests, solo se ejecuta el deploy (sin release)
 
 ### Configuración de GitHub Token
 
