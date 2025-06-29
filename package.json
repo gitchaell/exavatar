@@ -1,51 +1,36 @@
 {
-  "name": "deno-astro-template",
-  "type": "module",
-  "version": "1.0.0",
-  "scripts": {
-    "dev": "deno run -A --unstable npm:astro dev",
-    "start": "deno run -A --unstable npm:astro dev",
-    "build": "astro build",
-    "preview": "deno run -A --unstable ./dist/server/entry.mjs",
-    "astro": "astro",
-    "format": "deno fmt && prettier --write .",
-    "lint": "deno lint",
-    "test": "deno test -A",
-    "prepare": "husky install",
-    "release": "semantic-release",
-    "generate": "deno run -A scripts/generate.ts"
-  },
-  "dependencies": {
-    "@deno/astro-adapter": "^0.1.2",
-    "astro": "^5.10.1",
-    "sharp": "^0.33.0",
-    "color-parse": "^1.4.3",
-    "@astrojs/tailwind": "^3.3.0",
-    "tailwindcss": "^4.0.0"
-  },
-  "devDependencies": {
-    "prettier": "^3.3.1",
-    "prettier-plugin-astro": "^0.14.0",
-    "eslint": "^8.57.0",
-    "@typescript-eslint/parser": "^7.2.0",
-    "@typescript-eslint/eslint-plugin": "^7.2.0",
-    "husky": "^8.0.3",
-    "@commitlint/cli": "^18.4.3",
-    "@commitlint/config-conventional": "^18.4.3",
-    "semantic-release": "^23.0.0"
-  },
-  "prettier": {
-    "tabWidth": 2,
-    "plugins": [
-      "./node_modules/prettier-plugin-astro/dist/index.js"
-    ],
-    "overrides": [
-      {
-        "files": "*.astro",
-        "options": {
-          "parser": "astro"
-        }
-      }
-    ]
-  }
+	"name": "deno-astro-template",
+	"type": "module",
+	"version": "1.0.0",
+	"scripts": {
+		"dev": "deno run -A --unstable npm:astro dev",
+		"start": "deno run -A --unstable npm:astro dev",
+		"build": "astro build",
+		"preview": "deno run -A --unstable ./dist/server/entry.mjs",
+		"astro": "astro",
+		"format": "deno fmt && prettier --write .",
+		"lint": "deno lint",
+		"test": "deno test -A",
+		"prepare": "husky install",
+		"release": "semantic-release",
+		"generate": "deno run -A scripts/generate.ts"
+	},
+	"dependencies": {
+		"@deno/astro-adapter": "^0.1.2",
+		"astro": "^5.10.1",
+		"sharp": "^0.33.0",
+		"color-parse": "^1.4.3",
+		"tailwindcss": "^4.0.4"
+	},
+	"devDependencies": {
+		"prettier": "^3.3.1",
+		"prettier-plugin-astro": "^0.14.0",
+		"eslint": "^8.57.0",
+		"@typescript-eslint/parser": "^7.2.0",
+		"@typescript-eslint/eslint-plugin": "^7.2.0",
+		"husky": "^8.0.3",
+		"@commitlint/cli": "^18.4.3",
+		"@commitlint/config-conventional": "^18.4.3",
+		"semantic-release": "^23.0.0"
+	}
 }
