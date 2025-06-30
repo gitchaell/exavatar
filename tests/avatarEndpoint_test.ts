@@ -8,6 +8,6 @@ async function run() {
 	assertEquals(res.status, 200)
 }
 
-deno.test('avatar endpoint', async () => {
+Deno.test('avatar endpoint', async () => {
 	await run()
 })

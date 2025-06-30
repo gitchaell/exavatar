@@ -1,0 +1,18 @@
+{
+	"tasks": {
+		"dev": "deno run -A --unstable npm:astro dev",
+		"start": "deno run -A --unstable npm:astro dev",
+		"build": "astro build",
+		"preview": "deno run -A --unstable ./dist/server/entry.mjs",
+		"format": "deno fmt && prettier --write .",
+		"lint": "deno lint",
+		"test": "deno test -A --no-check"
+	},
+	"compilerOptions": {
+		"lib": ["dom", "dom.iterable", "esnext", "deno.ns"]
+	},
+	"nodeModulesDir": "auto",
+	"imports": {
+		"color-parse": "./node_modules/color-parse/index.js"
+	}
+}
