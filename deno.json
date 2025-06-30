@@ -1,15 +1,22 @@
 {
 	"tasks": {
-		"dev": "deno run -A --unstable npm:astro dev",
-		"start": "deno run -A --unstable npm:astro dev",
-		"build": "astro build",
+		"dev": "npm run dev",
+		"start": "npm run dev",
+		"build": "npm run build",
 		"preview": "deno run -A --unstable ./dist/server/entry.mjs",
-		"format": "deno fmt && prettier --write .",
+		"format": "deno fmt",
+		"format:prettier": "deno run -A npm:prettier --write .",
+		"format:all": "deno task format && deno task format:prettier",
 		"lint": "deno lint",
-		"test": "deno test -A --no-check"
+		"lint:eslint": "deno run -A npm:eslint src/",
+		"test": "deno test -A --no-check",
+		"generate": "deno run -A scripts/generate.ts",
+		"release:dry": "npm run release:dry",
+		"release": "npm run release"
 	},
 	"compilerOptions": {
-		"lib": ["dom", "dom.iterable", "esnext", "deno.ns"]
+		"lib": ["dom", "dom.iterable", "esnext", "deno.ns"],
+		"types": ["./src/types/color-parse.d.ts"]
 	},
 	"nodeModulesDir": "auto",
 	"imports": {

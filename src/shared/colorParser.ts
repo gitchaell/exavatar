@@ -5,7 +5,7 @@ export function parseColor(input: string): string {
 
 	// Use color-parse to validate the color
 	const result = parse(input)
-	if (!result || result.space === undefined) {
+	if (!result || !result.space) {
 		throw new Error('Invalid color')
 	}
 

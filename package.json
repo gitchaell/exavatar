@@ -1,20 +1,14 @@
 {
-	"name": "deno-astro-template",
+	"name": "exavatar",
 	"type": "module",
 	"version": "1.0.0",
+	"description": "Dynamic avatar generation API built with Deno and Astro",
 	"scripts": {
 		"dev": "deno run -A --unstable npm:astro dev",
-		"start": "deno run -A --unstable npm:astro dev",
 		"build": "astro build",
-		"preview": "deno run -A --unstable ./dist/server/entry.mjs",
-		"astro": "astro",
-		"format": "deno fmt && prettier --write .",
-		"lint": "deno lint",
-		"test": "deno test -A",
 		"prepare": "husky install",
 		"release": "semantic-release",
-		"release:dry": "semantic-release --dry-run --config .releaserc.local.json",
-		"generate": "deno run -A scripts/generate.ts"
+		"release:dry": "semantic-release --dry-run --config .releaserc.local.json"
 	},
 	"dependencies": {
 		"@deno/astro-adapter": "^0.1.2",
