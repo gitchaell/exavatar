@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.3](https://github.com/gitchaell/exavatar/compare/v1.0.2...v1.0.3) (2025-07-07)
+
+### ♻️ Code Refactoring
+
+- reorganize HTTP request files into separate dev and prod environments
+  ([136dc4a](https://github.com/gitchaell/exavatar/commit/136dc4acee5d507351cd366ec15bdc376c608bab))
+
 ## [1.0.2](https://github.com/gitchaell/exavatar/compare/v1.0.1...v1.0.2) (2025-07-07)
 
 ### 🐛 Bug Fixes
