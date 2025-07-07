@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.1](https://github.com/gitchaell/exavatar/compare/v1.1.0...v1.1.1) (2025-07-07)
+
+### 🐛 Bug Fixes
+
+- correct deployment path and simplify Deno Deploy workflow steps
+  ([c5ef9eb](https://github.com/gitchaell/exavatar/commit/c5ef9eb30e0cca6d674991d10c7b25298c688196))
+
 ## [1.1.0](https://github.com/gitchaell/exavatar/compare/v1.0.3...v1.1.0) (2025-07-07)
 
 ### ✨ Features
