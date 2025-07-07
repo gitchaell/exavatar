@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.1](https://github.com/gitchaell/exavatar/compare/v1.2.0...v1.2.1) (2025-07-07)
+
+### ♻️ Code Refactoring
+
+- remove unused options and replace static HTML with Astro page
+  ([6f9bd07](https://github.com/gitchaell/exavatar/commit/6f9bd0773085bd8822f95921d8f11db7a7c10602))
+
 ## [1.2.0](https://github.com/gitchaell/exavatar/compare/v1.1.1...v1.2.0) (2025-07-07)
 
 ### ✨ Features
