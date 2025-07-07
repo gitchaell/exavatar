@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.1](https://github.com/gitchaell/exavatar/compare/v1.0.0...v1.0.1) (2025-07-07)
+
+### 🐛 Bug Fixes
+
+- change filename to fileurl
+  ([6bf32cf](https://github.com/gitchaell/exavatar/commit/6bf32cf8490925e980e646c425f041b7ebee15b5))
+
 ## 1.0.0 (2025-07-07)
 
 ### ✨ Features
