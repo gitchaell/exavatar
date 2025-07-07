@@ -14,7 +14,8 @@
 		"generate": "deno run -A scripts/generate.ts",
 		"prepare": "husky install",
 		"release": "semantic-release",
-		"release:dry": "semantic-release --dry-run --config .releaserc.local.json"
+		"release:dry": "semantic-release --dry-run --config .releaserc.local.json",
+		"deploy": "cd dist && deployctl deploy --project=exavatar --entrypoint=./server/entry.mjs"
 	},
 	"dependencies": {
 		"@deno/astro-adapter": "^0.1.2",

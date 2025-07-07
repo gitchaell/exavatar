@@ -9,12 +9,19 @@
 		"test": "npm run test",
 		"generate": "npm run generate",
 		"release:dry": "npm run release:dry",
-		"release": "npm run release"
+		"release": "npm run release",
+		"deploy": "npm run deploy"
 	},
 	"compilerOptions": {
 		"lib": ["dom", "dom.iterable", "esnext", "deno.ns"]
 	},
 	"test": {
 		"include": ["tests/*.spec.ts"]
+	},
+	"deploy": {
+		"project": "e59d7b6e-e980-4810-b075-d1d20a2b4199",
+		"exclude": ["**/node_modules"],
+		"include": [],
+		"entrypoint": "dist/server/entry.mjs"
 	}
 }
