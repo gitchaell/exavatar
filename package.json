@@ -5,7 +5,7 @@
 	"description": "Dynamic avatar generation API built with Deno and Astro",
 	"scripts": {
 		"dev": "deno run --env-file -A npm:astro dev",
-		"start": "deno run --env-file -A npm:astro dev",
+		"start": "deno run --env-file=.env.prod -A npm:astro dev",
 		"build": "deno run -A npm:astro build",
 		"preview": "deno run -A --unstable ./dist/server/entry.mjs",
 		"format": "deno run -A npm:prettier --write .",

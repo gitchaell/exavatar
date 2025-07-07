@@ -1,7 +1,7 @@
 {
 	"tasks": {
 		"dev": "npm run dev",
-		"start": "npm run dev",
+		"start": "npm run start",
 		"build": "npm run build",
 		"preview": "npm run preview",
 		"format": "npm run format",

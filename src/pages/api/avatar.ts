@@ -14,7 +14,7 @@ export const GET: APIRoute = async ({ request }) => {
 			headers: {
 				'Content-Type': `image/${type}`,
 				'Cache-Control':
-					Deno.env.get('PRODUCTION') === 'true' ? 'public, max-age=86400' : 'no-cache',
+					Deno.env.get('ENV') === 'production' ? 'public, max-age=86400' : 'no-cache',
 			},
 		})
 	} catch (error) {
