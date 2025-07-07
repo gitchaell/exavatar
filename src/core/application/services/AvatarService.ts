@@ -7,18 +7,15 @@ export class AvatarService {
 		const avatar = new Avatar(params)
 
 		try {
-			if (avatar.text.value.length > 0) {
-				avatar.fileblob = SvgAvatarBuilder.build(avatar)
-			} else {
-				avatar.fileblob = await Deno.readFile(avatar.filepath)
-			}
+			avatar.fileblob =
+				avatar.onlyText() ? SvgAvatarBuilder.build(avatar) : await Deno.readFile(avatar.filepath)
 		} catch {
 			throw new AvatarNotFoundError()
 		}
 
 		return {
 			data: avatar.fileblob,
-			type: avatar.text.value.length > 0 ? 'svg' : avatar.format.value,
+			type: avatar.onlyText() ? 'svg' : avatar.format.value,
 		}
 	}
 }

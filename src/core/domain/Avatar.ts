@@ -37,4 +37,8 @@ export class Avatar {
 		this.filename = `${this.id.value}.${this.format.value}`
 		this.filepath = `public/assets/${this.set.value}/${this.size.value}/${this.filename}`
 	}
+
+	onlyText(): boolean {
+		return this.text.value.length > 0
+	}
 }
