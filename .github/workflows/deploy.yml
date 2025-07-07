@@ -77,12 +77,9 @@ jobs:
           name: dist
           path: dist
 
-      - name: Prepare
-        run: cd dist
-
-      - name: Upload to Deno Deploy
+      - name: Deploy to Deno
         uses: denoland/deployctl@v1
         with:
           project: 'exavatar'
           entrypoint: 'server/entry.mjs'
-          root: '.'
+          root: 'dist'
