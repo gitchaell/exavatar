@@ -25,3 +25,15 @@ export const GET: APIRoute = async ({ request }) => {
 		return new Response('Server Error', { status: 500 })
 	}
 }
+
+export const POST: APIRoute = () => {
+	return new Response('Method Not Allowed', { status: 405 })
+}
+
+export const PUT: APIRoute = () => {
+	return new Response('Method Not Allowed', { status: 405 })
+}
+
+export const DELETE: APIRoute = () => {
+	return new Response('Method Not Allowed', { status: 405 })
+}

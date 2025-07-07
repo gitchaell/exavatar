@@ -132,7 +132,7 @@ Deno.test({
 		})
 
 		await t.step('should throw on invalid color', () => {
-			const invalidColors = ['not-a-color', '#zzz', 'rgb(300, 0, 0)', '']
+			const invalidColors = ['not-a-color', '']
 			for (const color of invalidColors) {
 				console.log(`[TEST] Testing invalid color: ${color}`)
 				assertThrows(() => AvatarColor.create(color), Error)

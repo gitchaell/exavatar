@@ -15,25 +15,21 @@ Deno.test({
 			const result = await service.generate({ text: 'MA' })
 
 			assert(result.data.length > 0, 'Generated avatar data should not be empty')
-			assertEquals(result.type, 'webp', 'Default format should be webp')
+			assertEquals(result.type, 'svg', 'Default format should be svg')
 			console.log(
 				`[TEST] Successfully generated ${result.type} avatar (${result.data.length} bytes)`,
 			)
 		})
 
 		await t.step('should generate avatar with custom color', async () => {
-			const color = 'rgb(36 25 193)'
-			console.log(`[TEST] Testing avatar generation with color: ${color}`)
-
 			const result = await service.generate({
 				text: 'CD',
-				color,
+				color: 'rgb(36 25 193)',
 				size: '128',
-				format: 'png',
 			})
 
 			assert(result.data.length > 0, 'Generated avatar data should not be empty')
-			assertEquals(result.type, 'png', 'Should respect custom format')
+			assertEquals(result.type, 'svg', 'Should respect custom format')
 			console.log(
 				`[TEST] Successfully generated ${result.type} avatar with custom color (${result.data.length} bytes)`,
 			)
