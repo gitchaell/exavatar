@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.0](https://github.com/gitchaell/exavatar/compare/v1.1.1...v1.2.0) (2025-07-07)
+
+### ✨ Features
+
+- configure avatar file URL based on NODE_ENV environment variable
+  ([46d951f](https://github.com/gitchaell/exavatar/commit/46d951fd6bbfa1e520331468574baa86df87bf4c))
+
+### ♻️ Code Refactoring
+
+- update default avatar text and HTTP request parameters
+  ([ed74fbd](https://github.com/gitchaell/exavatar/commit/ed74fbd109cc8568d369e018999a363b70448bf4))
+
 ## [1.1.1](https://github.com/gitchaell/exavatar/compare/v1.1.0...v1.1.1) (2025-07-07)
 
 ### 🐛 Bug Fixes
