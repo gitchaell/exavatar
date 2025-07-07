@@ -1,4 +1,4 @@
-import { Avatar } from '@/domain/Avatar.ts'
+import { Avatar } from '../domain/Avatar.ts'
 import { ColorParser } from './ColorParser.ts'
 
 export class SvgAvatarBuilder {

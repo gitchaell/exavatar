@@ -3,11 +3,11 @@
 		"dev": "npm run dev",
 		"start": "npm run dev",
 		"build": "npm run build",
-		"preview": "deno run -A --unstable ./dist/server/entry.mjs",
-		"format": "deno run -A npm:prettier --write .",
-		"lint": "deno run -A npm:eslint src/",
-		"test": "deno test -A --no-check",
-		"generate": "deno run -A scripts/generate.ts",
+		"preview": "npm run preview",
+		"format": "npm run format",
+		"lint": "npm run lint",
+		"test": "npm run test",
+		"generate": "npm run generate",
 		"release:dry": "npm run release:dry",
 		"release": "npm run release"
 	},
@@ -16,15 +16,5 @@
 	},
 	"test": {
 		"include": ["tests/*.spec.ts"]
-	},
-	"nodeModulesDir": "auto",
-	"imports": {
-		"@/": "./src/",
-		"@/api/": "./src/api/",
-		"@/application/": "./src/application/",
-		"@/domain/": "./src/domain/",
-		"@/infrastructure/": "./src/infrastructure/",
-		"@/shared/": "./src/shared/",
-		"@/tests/": "./tests/"
 	}
 }

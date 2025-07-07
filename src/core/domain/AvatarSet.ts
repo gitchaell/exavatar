@@ -1,4 +1,4 @@
-import { ExavatarError } from '@/shared/ExavatarError.ts'
+import { ExavatarError } from '../shared/ExavatarError.ts'
 
 type Set = 'animals'
 

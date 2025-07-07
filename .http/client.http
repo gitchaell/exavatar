@@ -1,0 +1,9 @@
+GET http://localhost:4321/api/avatar
+
+###
+
+GET http://localhost:4321/api/avatar?set=animals&id=cat&size=256&format=webp
+
+###
+
+GET http://localhost:4321/api/avatar?color=%23000000&text=MM

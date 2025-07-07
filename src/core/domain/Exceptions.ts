@@ -1,4 +1,4 @@
-import { ExavatarError } from '@/shared/ExavatarError.ts'
+import { ExavatarError } from '../shared/ExavatarError.ts'
 
 export class AvatarNotFoundError extends ExavatarError {
 	constructor() {

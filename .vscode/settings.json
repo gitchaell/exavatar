@@ -8,5 +8,8 @@
   },
   "[astro]": {
     "editor.defaultFormatter": "astro-build.astro-vscode"
+  },
+  "[svg]": {
+    "editor.defaultFormatter": "jock.svg"
   }
 }

@@ -1,7 +1,7 @@
-import { AvatarService } from '@/application/services/AvatarService.ts'
 import { assert } from 'https://deno.land/std@0.224.0/assert/assert.ts'
 import { assertRejects } from 'https://deno.land/std@0.224.0/assert/assert_rejects.ts'
 import { assertEquals } from 'https://deno.land/std@0.224.0/assert/assert_equals.ts'
+import { AvatarService } from '../src/core/application/services/AvatarService.ts'
 
 const service = new AvatarService()
 

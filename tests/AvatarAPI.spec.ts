@@ -1,5 +1,5 @@
-import { get } from '@/api/avatar.ts'
 import { assertEquals } from 'https://deno.land/std@0.224.0/assert/assert_equals.ts'
+import { get } from '../src/pages/api/avatar.ts'
 
 type HandlerParams = Parameters<typeof get>[0]
 
@@ -14,7 +14,7 @@ Deno.test({
 	fn: async (t) => {
 		await t.step('should respond with 200 for valid text parameter', async () => {
 			console.log('[TEST] Testing valid text parameter')
-			const request = createTestRequest('http://localhost/api/avatar?text=AB')
+			const request = createTestRequest('http://localhost:4321/api/avatar?text=AB')
 			const response = await get({ request } as HandlerParams)
 
 			assertEquals(response.status, 200, 'Should return status 200')
@@ -35,7 +35,7 @@ Deno.test({
 
 			for (const { params, expectedType } of testCases) {
 				console.log(`[TEST] Testing with params: ${params}`)
-				const request = createTestRequest(`http://localhost/api/avatar?${params}`)
+				const request = createTestRequest(`http://localhost:4321/api/avatar?${params}`)
 				const response = await get({ request } as HandlerParams)
 
 				assertEquals(response.status, 200, 'Should return status 200')
@@ -52,12 +52,12 @@ Deno.test({
 			console.log('[TEST] Testing error handling')
 
 			// Test missing text parameter
-			let request = createTestRequest('http://localhost/api/avatar')
+			let request = createTestRequest('http://localhost:4321/api/avatar')
 			let response = await get({ request } as HandlerParams)
 			assertEquals(response.status, 400, 'Should return 400 for missing text')
 
 			// Test invalid size
-			request = createTestRequest('http://localhost/api/avatar?text=A&size=9999')
+			request = createTestRequest('http://localhost:4321/api/avatar?text=A&size=9999')
 			response = await get({ request } as HandlerParams)
 			assertEquals(response.status, 400, 'Should return 400 for invalid size')
 
@@ -69,7 +69,7 @@ Deno.test({
 
 			for (const method of methods) {
 				console.log(`[TEST] Testing HTTP ${method} method`)
-				const request = createTestRequest('http://localhost/api/avatar?text=TEST', method)
+				const request = createTestRequest('http://localhost:4321/api/avatar?text=TEST', method)
 				const response = await get({ request } as HandlerParams)
 
 				if (method === 'GET') {

@@ -1,9 +1,9 @@
-import { ExavatarError } from '@/shared/ExavatarError.ts'
+import { ExavatarError } from '../shared/ExavatarError.ts'
 
 const MIN_TEXT_LENGTH = 1
 const MAX_TEXT_LENGTH = 2
 
-const defaultText: string = ''
+const defaultText: string = '00'
 
 export class AvatarText {
 	private constructor(public readonly value: string) {}

@@ -1,4 +1,4 @@
-import { ExavatarError } from '@/shared/ExavatarError.ts'
+import { ExavatarError } from '../shared/ExavatarError.ts'
 
 type AnimalIds =
 	| 'ant'
@@ -27,7 +27,7 @@ type AnimalIds =
 	| 'koala'
 	| 'ladybug'
 	| 'lion'
-	| 'mammonth'
+	| 'mammoth'
 	| 'mouse'
 	| 'octopus'
 	| 'owl'
@@ -74,7 +74,7 @@ const animalIds = [
 	'koala',
 	'ladybug',
 	'lion',
-	'mammonth',
+	'mammoth',
 	'mouse',
 	'octopus',
 	'owl',
@@ -99,7 +99,7 @@ type Id = AnimalIds
 
 const ids = [...animalIds]
 
-const defaultId: Id = 'lion'
+const defaultId: Id = ids[Math.floor(Math.random() * ids.length)] as Id
 
 export class AvatarId {
 	private constructor(public readonly value: Id) {}

@@ -1,10 +1,10 @@
-import { ExavatarError } from '@/shared/ExavatarError.ts'
+import { ExavatarError } from '../shared/ExavatarError.ts'
 
 type Size = 16 | 32 | 64 | 128 | 256 | 512 | 1024
 
 const sizes = [16, 32, 64, 128, 256, 512, 1024]
 
-const defaultSize: Size = 16
+const defaultSize: Size = sizes[Math.floor(Math.random() * sizes.length)] as Size
 
 export class AvatarSize {
 	private constructor(public readonly value: Size) {}

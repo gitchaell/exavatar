@@ -5,7 +5,7 @@
 deno task format
 
 # Lint code
-# deno task lint
+deno task lint
 
 # Add formatted files to git
 git add .

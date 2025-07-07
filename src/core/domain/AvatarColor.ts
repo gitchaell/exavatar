@@ -1,5 +1,5 @@
 import { ColorParser } from '../shared/ColorParser.ts'
-import { ExavatarError } from '@/shared/ExavatarError.ts'
+import { ExavatarError } from '../shared/ExavatarError.ts'
 
 const defaultColor: string = '#00EEDB'
 

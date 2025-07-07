@@ -35,6 +35,6 @@ export class Avatar {
 		this.text = AvatarText.create(props.text)
 
 		this.filename = `${this.id.value}.${this.format.value}`
-		this.filepath = `./public/assets/${this.set.value}/${this.filename}`
+		this.filepath = `public/assets/${this.set.value}/${this.size.value}/${this.filename}`
 	}
 }
