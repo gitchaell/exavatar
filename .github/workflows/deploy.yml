@@ -43,6 +43,11 @@ jobs:
       - name: Test
         run: deno task test
 
+      - name: Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: deno task release
+
       - name: Build
         run: deno task build
 
@@ -51,11 +56,6 @@ jobs:
         with:
           name: dist
           path: dist
-
-      - name: Release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: deno task release
 
   deploy:
     name: Deploy to Deno Deploy

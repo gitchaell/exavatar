@@ -11,11 +11,12 @@ export const GET: APIRoute = async ({ request }) => {
 		const params = Object.fromEntries(url.searchParams)
 		const { data, type } = await service.generate(params)
 
+		const isProduction = process.env.NODE_ENV === 'production'
+
 		return new Response(data, {
 			headers: {
 				'Content-Type': `image/${type}`,
-				'Cache-Control':
-					process.env.NODE_ENV === 'production' ? 'public, max-age=86400' : 'no-cache',
+				'Cache-Control': isProduction ? 'public, max-age=86400' : 'no-cache',
 			},
 		})
 	} catch (error) {
