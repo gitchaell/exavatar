@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.3.0](https://github.com/gitchaell/exavatar/compare/v1.2.2...v1.3.0) (2025-07-07)
+
+### ✨ Features
+
+- improve error logging and update default form values for avatar creation
+  ([0cb4fdb](https://github.com/gitchaell/exavatar/commit/0cb4fdbee69676ea235f33186f89037b4e44cf7d))
+
 ## [1.2.2](https://github.com/gitchaell/exavatar/compare/v1.2.1...v1.2.2) (2025-07-07)
 
 ### ♻️ Code Refactoring
