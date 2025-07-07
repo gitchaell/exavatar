@@ -1,1 +1,2 @@
-GET https://exavatar.deno.dev/api/avatar
+GET https://exavatar.deno.dev/api/avatar?set=animals&id=frog
+
