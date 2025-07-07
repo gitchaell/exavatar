@@ -4,22 +4,27 @@
 		"start": "npm run dev",
 		"build": "npm run build",
 		"preview": "deno run -A --unstable ./dist/server/entry.mjs",
-		"format": "deno fmt",
-		"format:prettier": "deno run -A npm:prettier --write .",
-		"format:all": "deno task format && deno task format:prettier",
-		"lint": "deno lint",
-		"lint:eslint": "deno run -A npm:eslint src/",
+		"format": "deno run -A npm:prettier --write .",
+		"lint": "deno run -A npm:eslint src/",
 		"test": "deno test -A --no-check",
 		"generate": "deno run -A scripts/generate.ts",
 		"release:dry": "npm run release:dry",
 		"release": "npm run release"
 	},
 	"compilerOptions": {
-		"lib": ["dom", "dom.iterable", "esnext", "deno.ns"],
-		"types": ["./src/types/color-parse.d.ts"]
+		"lib": ["dom", "dom.iterable", "esnext", "deno.ns"]
+	},
+	"test": {
+		"include": ["tests/*.spec.ts"]
 	},
 	"nodeModulesDir": "auto",
 	"imports": {
-		"color-parse": "./node_modules/color-parse/index.js"
+		"@/": "./src/",
+		"@/api/": "./src/api/",
+		"@/application/": "./src/application/",
+		"@/domain/": "./src/domain/",
+		"@/infrastructure/": "./src/infrastructure/",
+		"@/shared/": "./src/shared/",
+		"@/tests/": "./tests/"
 	}
 }

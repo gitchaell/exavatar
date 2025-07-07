@@ -1,96 +1,150 @@
 ---
 import Layout from '../layouts/Layout.astro'
 ---
-<Layout title="Exavatar">
-  <main class="p-6 max-w-5xl mx-auto">
-    <h1 class="text-3xl font-bold mb-4">
-      Welcome to <span class="text-gradient">Exavatar</span>
-    </h1>
-    <p class="mb-6">Use the avatar API to generate dynamic images.</p>
-    <div class="flex flex-col md:flex-row gap-6">
-      <div class="flex-1 flex items-center justify-center">
-        <img id="preview" class="border rounded w-64 h-64 object-cover" src="/api/avatar" alt="Preview" />
-      </div>
-      <div class="flex-1 space-y-2">
-        <label class="block">
-          <span class="block text-sm">Set</span>
-          <select id="set" class="w-full border p-1">
-            <option value="animals">animals</option>
-            <option value="any">any</option>
-          </select>
-        </label>
-        <label class="block">
-          <span class="block text-sm">Id</span>
-          <input id="id" type="text" class="w-full border p-1" />
-        </label>
-        <label class="block">
-          <span class="block text-sm">Size</span>
-          <input id="size" type="number" min="1" max="1024" value="256" class="w-full border p-1" />
-        </label>
-        <label class="block">
-          <span class="block text-sm">Format</span>
-          <select id="format" class="w-full border p-1">
-            <option value="png">png</option>
-            <option value="jpeg">jpeg</option>
-            <option value="webp">webp</option>
-            <option value="gif">gif</option>
-          </select>
-        </label>
-        <label class="block">
-          <span class="block text-sm">Text</span>
-          <input id="text" type="text" maxlength="2" class="w-full border p-1" />
-        </label>
-        <label class="block">
-          <span class="block text-sm">Background</span>
-          <input id="bg" type="text" value="#ccc" class="w-full border p-1" />
-        </label>
-        <label class="block">
-          <span class="block text-sm">Foreground</span>
-          <input id="fg" type="text" value="#000" class="w-full border p-1" />
-        </label>
-        <label class="block">
-          <span class="block text-sm">Shape</span>
-          <select id="shape" class="w-full border p-1">
-            <option value="square">square</option>
-            <option value="circle">circle</option>
-            <option value="rounded">rounded</option>
-          </select>
-        </label>
-      </div>
-    </div>
-    <p class="mt-4 break-words"><code id="endpoint" class="text-sm"></code></p>
-  </main>
+
+<Layout title='Exavatar'>
+	<main class='p-6 max-w-5xl mx-auto'>
+		<h1 class='text-3xl font-bold mb-4'>
+			Welcome to <span class='text-gradient'>Exavatar</span>
+		</h1>
+
+		<p class='mb-6'>Use the avatar API to generate dynamic images.</p>
+
+		<div class='flex flex-col md:flex-row gap-6'>
+			<div class='flex-1 flex items-center justify-center'>
+				<img
+					id='preview'
+					class='border rounded w-64 h-64 object-cover'
+					src='/api/avatar'
+					alt='Preview'
+				/>
+			</div>
+
+			<div class='flex-1 space-y-2'>
+				<label class='block'>
+					<span class='block text-sm'>Set</span>
+					<select
+						id='set'
+						class='w-full border p-1'>
+						<option value='animals'>animals</option>
+						<option value='any'>any</option>
+					</select>
+				</label>
+
+				<label class='block'>
+					<span class='block text-sm'>Id</span>
+					<input
+						id='id'
+						type='text'
+						class='w-full border p-1'
+					/>
+				</label>
+
+				<label class='block'>
+					<span class='block text-sm'>Size</span>
+					<input
+						id='size'
+						type='number'
+						min='1'
+						max='1024'
+						value='256'
+						class='w-full border p-1'
+					/>
+				</label>
+
+				<label class='block'>
+					<span class='block text-sm'>Format</span>
+					<select
+						id='format'
+						class='w-full border p-1'>
+						<option value='png'>png</option>
+						<option value='jpeg'>jpeg</option>
+						<option value='webp'>webp</option>
+						<option value='gif'>gif</option>
+					</select>
+				</label>
+
+				<label class='block'>
+					<span class='block text-sm'>Text</span>
+					<input
+						id='text'
+						type='text'
+						maxlength='2'
+						class='w-full border p-1'
+					/>
+				</label>
+
+				<label class='block'>
+					<span class='block text-sm'>Color</span>
+					<input
+						id='color'
+						type='text'
+						value='#ccc'
+						class='w-full border p-1'
+					/>
+				</label>
+
+				<label class='block'>
+					<span class='block text-sm'>Shape</span>
+					<select
+						id='shape'
+						class='w-full border p-1'>
+						<option value='square'>square</option>
+						<option value='circle'>circle</option>
+						<option value='rounded'>rounded</option>
+					</select>
+				</label>
+			</div>
+		</div>
+
+		<p class='mt-4 break-words'>
+			<code
+				id='endpoint'
+				class='text-sm'
+			></code>
+		</p>
+	</main>
 </Layout>
+
 <script>
-  const preview = document.getElementById('preview');
-  const endpointEl = document.getElementById('endpoint');
-  const inputs = Array.from(document.querySelectorAll('input, select'));
+	const preview = document.getElementById('preview') as HTMLImageElement
+	const endpoint = document.getElementById('endpoint') as HTMLElement
+	const inputs = Array.from(
+		document.querySelectorAll<HTMLInputElement | HTMLSelectElement>('input, select'),
+	)
 
-  function update() {
-    const params = new URLSearchParams();
-    inputs.forEach((el) => {
-      if (el.id && el.value) params.set(el.id, el.value);
-    });
-    const url = `/api/avatar?${params.toString()}`;
-    preview.src = url;
-    endpointEl.textContent = url;
-  }
+	function update() {
+		const params = new URLSearchParams()
 
-  inputs.forEach((el) => el.addEventListener('input', update));
-  update();
+		inputs.forEach((input) => {
+			if (input.id && input.value) {
+				params.set(input.id, input.value)
+			}
+		})
+
+		const url = `/api/avatar?${params.toString()}`
+
+		preview.src = url
+		endpoint.textContent = url
+	}
+
+	inputs.forEach((input) => input.addEventListener('input', update))
+
+	update()
 </script>
+
 <style>
-  main {
-    margin: auto;
-    padding: 1.5rem;
-    max-width: 60ch;
-    text-align: center;
-  }
-  .text-gradient {
-    background-image: var(--accent-gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-size: 400%;
-    background-position: 0%;
-  }
+	main {
+		margin: auto;
+		padding: 1.5rem;
+		max-width: 60ch;
+		text-align: center;
+	}
+	.text-gradient {
+		background-image: var(--accent-gradient);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-size: 400%;
+		background-position: 0%;
+	}
 </style>
