@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.2](https://github.com/gitchaell/exavatar/compare/v1.2.1...v1.2.2) (2025-07-07)
+
+### ♻️ Code Refactoring
+
+- move avatar file loading logic from Avatar to AvatarService
+  ([511c23f](https://github.com/gitchaell/exavatar/commit/511c23fda6f6fd3e517b3cc06494f6a9d89daf74))
+
 ## [1.2.1](https://github.com/gitchaell/exavatar/compare/v1.2.0...v1.2.1) (2025-07-07)
 
 ### ♻️ Code Refactoring
