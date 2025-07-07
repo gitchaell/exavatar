@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.3.3](https://github.com/gitchaell/exavatar/compare/v1.3.2...v1.3.3) (2025-07-07)
+
+### ♻️ Code Refactoring
+
+- simplify environment configuration and base URL handling for avatar service
+  ([49ae4b4](https://github.com/gitchaell/exavatar/commit/49ae4b405d92c00363dfc30ccdbcbe70aa3a3a48))
+
 ## [1.3.2](https://github.com/gitchaell/exavatar/compare/v1.3.1...v1.3.2) (2025-07-07)
 
 ### 🐛 Bug Fixes
