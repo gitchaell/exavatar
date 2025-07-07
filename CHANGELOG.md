@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.3.1](https://github.com/gitchaell/exavatar/compare/v1.3.0...v1.3.1) (2025-07-07)
+
+### ♻️ Code Refactoring
+
+- replace process.env with Deno.env and add env file support
+  ([ac97158](https://github.com/gitchaell/exavatar/commit/ac97158c5a49f20f3dd19322e9d04a933f4fa63e))
+
 ## [1.3.0](https://github.com/gitchaell/exavatar/compare/v1.2.2...v1.3.0) (2025-07-07)
 
 ### ✨ Features
