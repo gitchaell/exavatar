@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.0](https://github.com/gitchaell/exavatar/compare/v1.0.3...v1.1.0) (2025-07-07)
+
+### ✨ Features
+
+- create landing page with basic info and API link
+  ([afdb40a](https://github.com/gitchaell/exavatar/commit/afdb40a2f98a1325870775bc73b93c5bc66b044e))
+
 ## [1.0.3](https://github.com/gitchaell/exavatar/compare/v1.0.2...v1.0.3) (2025-07-07)
 
 ### ♻️ Code Refactoring
