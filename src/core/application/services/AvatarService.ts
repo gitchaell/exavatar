@@ -8,7 +8,7 @@ export class AvatarService {
 
 		try {
 			avatar.fileblob =
-				avatar.onlyText() ? SvgAvatarBuilder.build(avatar) : await Deno.readFile(avatar.filepath)
+				avatar.onlyText() ? SvgAvatarBuilder.build(avatar) : await Deno.readFile(avatar.fileurl)
 		} catch {
 			throw new AvatarNotFoundError()
 		}

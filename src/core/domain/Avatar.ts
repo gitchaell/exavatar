@@ -22,7 +22,7 @@ export class Avatar {
 	readonly color: AvatarColor
 	readonly text: AvatarText
 
-	readonly filepath: string
+	readonly fileurl: string
 	readonly filename: string
 	fileblob?: Uint8Array
 
@@ -35,7 +35,7 @@ export class Avatar {
 		this.text = AvatarText.create(props.text)
 
 		this.filename = `${this.id.value}.${this.format.value}`
-		this.filepath = `public/assets/${this.set.value}/${this.size.value}/${this.filename}`
+		this.fileurl = `https://gitchaell.github.io/exavatar/avatars/${this.set.value}/${this.size.value}/${this.filename}`
 	}
 
 	onlyText(): boolean {
