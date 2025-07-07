@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.3.2](https://github.com/gitchaell/exavatar/compare/v1.3.1...v1.3.2) (2025-07-07)
+
+### 🐛 Bug Fixes
+
+- use external URL for avatar fetching in production environment
+  ([8ed980a](https://github.com/gitchaell/exavatar/commit/8ed980af3aae913224682a66a2aae3a3bf0e7c33))
+
 ## [1.3.1](https://github.com/gitchaell/exavatar/compare/v1.3.0...v1.3.1) (2025-07-07)
 
 ### ♻️ Code Refactoring
