@@ -1,3 +1,4 @@
+import process from 'node:process'
 import { AvatarSize } from './AvatarSize.ts'
 import { AvatarFormat } from './AvatarFormat.ts'
 import { AvatarColor } from './AvatarColor.ts'
@@ -35,8 +36,10 @@ export class Avatar {
 		this.text = AvatarText.create(props.text)
 
 		this.filename = `${this.id.value}.${this.format.value}`
-		// this.fileurl = `https://gitchaell.github.io/exavatar/avatars/${this.set.value}/${this.size.value}/${this.filename}`
-		this.fileurl = `https://raw.githubusercontent.com/gitchaell/exavatar/refs/heads/main/avatars/${this.set.value}/${this.size.value}/${this.filename}`
+		this.fileurl =
+			process.env.NODE_ENV === 'production' ?
+				`https://raw.githubusercontent.com/gitchaell/exavatar/refs/heads/main/avatars/${this.set.value}/${this.size.value}/${this.filename}`
+			:	`avatars/${this.set.value}/${this.size.value}/${this.filename}`
 	}
 
 	onlyText(): boolean {
