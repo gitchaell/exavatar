@@ -21,21 +21,13 @@ export class AvatarService {
 	}
 
 	private async getFileBlob(filepath: string): Promise<Uint8Array> {
-		console.log(
-			'EXTERNAL_BASE_URL',
-			Deno.env.get('EXTERNAL_BASE_URL'),
-			'INTERNAL_BASE_URL',
-			Deno.env.get('INTERNAL_BASE_URL'),
-			'PRODUCTION',
-			Deno.env.get('PRODUCTION'),
-		)
 		const isProduction = Deno.env.get('PRODUCTION') === 'true'
 
 		if (!isProduction) {
 			return Deno.readFile(Deno.env.get('INTERNAL_BASE_URL') + filepath)
 		}
 
-		const res = await fetch(Deno.env.get('INTERNAL_BASE_URL') + filepath)
+		const res = await fetch(Deno.env.get('EXTERNAL_BASE_URL') + filepath)
 
 		if (!res.ok) throw new Error(`Failed to fetch avatar from ${filepath}: ${res.status}`)
 
