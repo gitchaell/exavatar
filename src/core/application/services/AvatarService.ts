@@ -10,7 +10,8 @@ export class AvatarService {
 		try {
 			avatar.fileblob =
 				avatar.onlyText() ? SvgAvatarBuilder.build(avatar) : await this.getFileBlob(avatar.filepath)
-		} catch {
+		} catch (error) {
+			console.error(error)
 			throw new AvatarNotFoundError()
 		}
 
