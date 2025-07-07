@@ -4,15 +4,20 @@
 	"version": "1.0.0",
 	"description": "Dynamic avatar generation API built with Deno and Astro",
 	"scripts": {
-		"dev": "deno run -A npm:astro dev",
-		"build": "deno run -A npm:astro build",
-		"prepare": "husky install",
+               "dev": "deno run -A npm:astro dev",
+               "build": "deno run -A npm:astro build",
+               "preview": "deno run -A --unstable ./dist/server/entry.mjs",
+               "format": "deno run -A npm:prettier --write .",
+               "lint": "deno run -A npm:eslint src/",
+               "test": "deno test -A --no-check",
+               "generate": "deno run -A scripts/generate.ts",
+               "prepare": "husky install",
 		"release": "semantic-release",
 		"release:dry": "semantic-release --dry-run --config .releaserc.local.json"
 	},
 	"dependencies": {
 		"@deno/astro-adapter": "^0.1.2",
-		"astro": "^5.10.1",
+               "astro": "^4.9.3",
 		"sharp": "^0.33.0",
 		"tailwindcss": "^4.0.4"
 	},
