@@ -10,80 +10,54 @@ import Layout from '../layouts/Layout.astro'
 
 		<p class='mb-6'>Use the avatar API to generate dynamic images.</p>
 
-		<div class='flex flex-col md:flex-row gap-6'>
-			<div class='flex-1 flex items-center justify-center'>
-				<img
-					id='preview'
-					class='border rounded w-64 h-64 object-cover'
-					src='/api/avatar'
-					alt='Preview'
-				/>
-			</div>
+                <div class='flex flex-col md:flex-row gap-6'>
+                        <div class='flex-1 flex items-center justify-center'>
+                                <img
+                                        id='preview'
+                                        class='border rounded w-64 h-64 object-cover'
+                                        src='/api/avatar'
+                                        alt='Preview'
+                                />
+                        </div>
 
-			<div class='flex-1 space-y-2'>
-				<label class='block'>
-					<span class='block text-sm'>Set</span>
-					<select
-						id='set'
-						class='w-full border p-1'>
-						<option value='animals'>animals</option>
-					</select>
-				</label>
+                        <div class='flex-1 form space-y-2'>
+                                <label class='label'>
+                                        <span>Set</span>
+                                        <select id='set' class='select'>
+                                                <option value='animals'>animals</option>
+                                        </select>
+                                </label>
 
-				<label class='block'>
-					<span class='block text-sm'>Id</span>
-					<input
-						id='id'
-						type='text'
-						class='w-full border p-1'
-						value='frog'
-					/>
-				</label>
+                                <label class='label'>
+                                        <span>Id</span>
+                                        <input id='id' type='text' class='input' value='frog' />
+                                </label>
 
-				<label class='block'>
-					<span class='block text-sm'>Size</span>
-					<input
-						id='size'
-						type='number'
-						min='1'
-						max='1024'
-						value='256'
-						class='w-full border p-1'
-					/>
-				</label>
+                                <label class='label'>
+                                        <span>Size</span>
+                                        <input id='size' type='number' min='1' max='1024' value='256' class='input' />
+                                </label>
 
-				<label class='block'>
-					<span class='block text-sm'>Format</span>
-					<select
-						id='format'
-						class='w-full border p-1'>
-						<option value='png'>png</option>
-						<option value='jpeg'>jpeg</option>
-						<option value='webp'>webp</option>
-					</select>
-				</label>
+                                <label class='label'>
+                                        <span>Format</span>
+                                        <select id='format' class='select'>
+                                                <option value='png'>png</option>
+                                                <option value='jpeg'>jpeg</option>
+                                                <option value='webp'>webp</option>
+                                        </select>
+                                </label>
 
-				<label class='block'>
-					<span class='block text-sm'>Text</span>
-					<input
-						id='text'
-						type='text'
-						maxlength='2'
-						class='w-full border p-1'
-					/>
-				</label>
+                                <label class='label'>
+                                        <span>Text</span>
+                                        <input id='text' type='text' maxlength='2' class='input' />
+                                </label>
 
-				<label class='block'>
-					<span class='block text-sm'>Color</span>
-					<input
-						id='color'
-						type='color'
-						value='#000000'
-						class='w-full border p-1'
-					/>
-				</label>
-			</div>
-		</div>
+                                <label class='label'>
+                                        <span>Color</span>
+                                        <input id='color' type='color' value='#000000' class='input' />
+                                </label>
+                        </div>
+                </div>
 
 		<p class='mt-4 break-words'>
 			<code
