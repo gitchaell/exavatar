@@ -1,7 +1,6 @@
 import { AvatarProps, Avatar } from '../../domain/Avatar.ts'
 import { AvatarNotFoundError } from '../../domain/Exceptions.ts'
 import { SvgAvatarBuilder } from '../../shared/SvgAvatarBuilder.ts'
-import process from 'node:process'
 
 export class AvatarService {
 	async generate(params: AvatarProps): Promise<{ data: Uint8Array; type: string }> {
@@ -22,17 +21,26 @@ export class AvatarService {
 	}
 
 	private async getFileBlob(filepath: string): Promise<Uint8Array> {
-		const isProduction = process.env.NODE_ENV === 'production'
+		console.log(
+			'EXTERNAL_BASE_URL',
+			Deno.env.get('EXTERNAL_BASE_URL'),
+			'INTERNAL_BASE_URL',
+			Deno.env.get('INTERNAL_BASE_URL'),
+			'PRODUCTION',
+			Deno.env.get('PRODUCTION'),
+		)
+		const isProduction = Deno.env.get('PRODUCTION') === 'true'
 
 		if (!isProduction) {
-			return Deno.readFile('avatars/' + filepath)
+			return Deno.readFile(Deno.env.get('INTERNAL_BASE_URL') + filepath)
 		}
 
-		const res = await fetch(
-			'https://raw.githubusercontent.com/gitchaell/exavatar/refs/heads/main/avatars/' + filepath,
-		)
+		const res = await fetch(Deno.env.get('INTERNAL_BASE_URL') + filepath)
+
 		if (!res.ok) throw new Error(`Failed to fetch avatar from ${filepath}: ${res.status}`)
+
 		const buffer = new Uint8Array(await res.arrayBuffer())
+
 		return buffer
 	}
 }
