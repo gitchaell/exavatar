@@ -6382,6 +6382,7 @@
         "npm:@typescript-eslint/eslint-plugin@^7.2.0",
         "npm:@typescript-eslint/parser@^7.2.0",
         "npm:astro@^4.9.3",
+        "npm:basecoat-css@~0.2.8",
         "npm:eslint-plugin-prettier@^5.5.1",
         "npm:eslint@^8.57.0",
         "npm:husky@^8.0.3",

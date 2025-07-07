@@ -6,9 +6,4 @@ export default defineConfig({
 	output: 'server',
 	adapter: deno(),
 	integrations: [],
-	vite: {
-		css: {
-			transformer: 'postcss',
-		},
-	},
 })
