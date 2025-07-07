@@ -91,6 +91,9 @@ jobs:
           name: dist
           path: dist
 
+      - name: Verify built files
+        run: ls -R dist
+
       - name: Upload to Deno Deploy
         uses: denoland/deployctl@v1
         with:
