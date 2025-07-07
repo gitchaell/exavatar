@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.2](https://github.com/gitchaell/exavatar/compare/v1.0.1...v1.0.2) (2025-07-07)
+
+### 🐛 Bug Fixes
+
+- update avatar URL to use raw GitHub content and simplify deploy workflow
+  ([e94c6af](https://github.com/gitchaell/exavatar/commit/e94c6af6f739647c2606db98a22e7dbc975679fc))
+
 ## [1.0.1](https://github.com/gitchaell/exavatar/compare/v1.0.0...v1.0.1) (2025-07-07)
 
 ### 🐛 Bug Fixes
