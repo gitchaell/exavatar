@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.3.4](https://github.com/gitchaell/exavatar/compare/v1.3.3...v1.3.4) (2025-07-08)
+
+### ♻️ Code Refactoring
+
+- rename AvatarSizeType to AvatarSize for better clarity
+  ([d3dc435](https://github.com/gitchaell/exavatar/commit/d3dc43570920b0d6bd793e8e98dd01a08c1227ed))
+- reorganize avatar domain with new builders and environment config
+  ([4422567](https://github.com/gitchaell/exavatar/commit/44225679285d5b41ad2d7e346f5d3c14caafe06a))
+
 ## [1.3.3](https://github.com/gitchaell/exavatar/compare/v1.3.2...v1.3.3) (2025-07-07)
 
 ### ♻️ Code Refactoring
