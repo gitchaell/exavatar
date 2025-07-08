@@ -3,7 +3,7 @@ import { assertThrows } from 'https://deno.land/std@0.224.0/assert/assert_throws
 import { Avatar } from '../src/core/domain/Avatar.ts'
 import { AvatarColor } from '../src/core/domain/AvatarColor.ts'
 import { AvatarFormat } from '../src/core/domain/AvatarFormat.ts'
-import { AvatarSizeType } from '../src/core/domain/AvatarSize.ts'
+import { AvatarSize } from '../src/core/domain/AvatarSize.ts'
 
 Deno.test({
 	name: 'Avatar',
