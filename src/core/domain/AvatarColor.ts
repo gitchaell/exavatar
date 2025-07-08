@@ -1,14 +1,14 @@
 import { ColorParser } from '../shared/ColorParser.ts'
 import { ExavatarError } from '../shared/ExavatarError.ts'
 
-const defaultColor: string = '#00EEDB'
+export const defaultAvatarColor: string = '#000'
 
 export class AvatarColor {
 	private constructor(public readonly value: string) {}
 
 	static create(input: unknown): AvatarColor {
 		if (input === null || input === undefined) {
-			return new AvatarColor(defaultColor)
+			return new AvatarColor(defaultAvatarColor)
 		}
 
 		if (typeof input !== 'string') {

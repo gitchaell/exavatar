@@ -1,112 +1,219 @@
 ---
+import { Code } from 'astro:components'
 import Layout from '../layouts/Layout.astro'
+import { avatarSets, getDefaultAvatarSet } from '../core/domain/AvatarSet'
+import { avatarIds, getDefaultAvatarId } from '../core/domain/AvatarId'
+import { avatarSizes } from '../core/domain/AvatarSize'
+import { avatarFormats, defaultAvatarFormat } from '../core/domain/AvatarFormat'
+import { defaultAvatarText } from '../core/domain/AvatarText'
+import { defaultAvatarColor } from '../core/domain/AvatarColor'
+import { transformers } from './UrlHighlighter'
+
+const defaultParams = {
+	set: getDefaultAvatarSet().toString(),
+	id: getDefaultAvatarId().toString(),
+	size: '256', // getDefaultAvatarSize().toString(),
+	format: defaultAvatarFormat.toString(),
+	text: defaultAvatarText.toString(),
+	color: defaultAvatarColor.toString(),
+}
+
+const params = new URLSearchParams(defaultParams)
+
+const path = `/api/avatar?${params.toString()}`
+const code = `https://exavatar.deno.dev${path}`
 ---
 
 <Layout title='Exavatar'>
 	<main class='p-6 max-w-5xl mx-auto'>
 		<h1 class='text-3xl font-bold mb-4'>
-			Welcome to <span class='text-gradient'>Exavatar</span>
+			Welcome to <strong>Exavatar</strong>
 		</h1>
 
 		<p class='mb-6'>Use the avatar API to generate dynamic images.</p>
 
-                <div class='flex flex-col md:flex-row gap-6'>
-                        <div class='flex-1 flex items-center justify-center'>
-                                <img
-                                        id='preview'
-                                        class='border rounded w-64 h-64 object-cover'
-                                        src='/api/avatar'
-                                        alt='Preview'
-                                />
-                        </div>
+		<div class='flex flex-col md:flex-row gap-6'>
+			<div class='flex-1 flex items-center justify-center'>
+				<img
+					id='preview'
+					class='border rounded w-64 h-64 object-cover'
+					src={path}
+					alt='Preview'
+				/>
+			</div>
 
-                        <div class='flex-1 form space-y-2'>
-                                <label class='label'>
-                                        <span>Set</span>
-                                        <select id='set' class='select'>
-                                                <option value='animals'>animals</option>
-                                        </select>
-                                </label>
+			<div class='flex-1 form space-y-2'>
+				<label class='label'>
+					<span class='min-w-[100px]'>Avatar.Set</span>
 
-                                <label class='label'>
-                                        <span>Id</span>
-                                        <input id='id' type='text' class='input' value='frog' />
-                                </label>
+					<select
+						id='avatar-set'
+						class='select w-full'
+						data-param='set'>
+						<option value=''></option>
+						{
+							avatarSets.map((set) => (
+								<option
+									value={set}
+									selected={defaultParams.set === set}>
+									{set}
+								</option>
+							))
+						}
+					</select>
+				</label>
 
-                                <label class='label'>
-                                        <span>Size</span>
-                                        <input id='size' type='number' min='1' max='1024' value='256' class='input' />
-                                </label>
+				<label class='label'>
+					<span class='min-w-[100px]'>Avatar.Id</span>
 
-                                <label class='label'>
-                                        <span>Format</span>
-                                        <select id='format' class='select'>
-                                                <option value='png'>png</option>
-                                                <option value='jpeg'>jpeg</option>
-                                                <option value='webp'>webp</option>
-                                        </select>
-                                </label>
+					<select
+						id='avatar-id'
+						class='select w-full'
+						data-param='id'>
+						<option value=''></option>
+						{
+							avatarIds.map((id) => (
+								<option
+									value={id}
+									selected={defaultParams.id === id}>
+									{id}
+								</option>
+							))
+						}
+					</select>
+				</label>
 
-                                <label class='label'>
-                                        <span>Text</span>
-                                        <input id='text' type='text' maxlength='2' class='input' />
-                                </label>
+				<label class='label'>
+					<span class='min-w-[100px]'>Avatar.Size</span>
 
-                                <label class='label'>
-                                        <span>Color</span>
-                                        <input id='color' type='color' value='#000000' class='input' />
-                                </label>
-                        </div>
-                </div>
+					<select
+						id='avatar-size'
+						class='select w-full'
+						data-param='size'>
+						<option value=''></option>
+						{
+							avatarSizes.map((size) => (
+								<option
+									value={size}
+									selected={+defaultParams.size === +size}>
+									{size}
+								</option>
+							))
+						}
+					</select>
+				</label>
+
+				<label class='label'>
+					<span class='min-w-[100px]'>Avatar.Format</span>
+
+					<select
+						id='avatar-format'
+						class='select w-full'
+						data-param='format'>
+						<option value=''></option>
+						{
+							avatarFormats.map((format) => (
+								<option
+									value={format}
+									selected={defaultParams.format === format}>
+									{format}
+								</option>
+							))
+						}
+					</select>
+				</label>
+
+				<label class='label'>
+					<span class='min-w-[100px]'>Avatar.Text</span>
+
+					<input
+						id='avatar-text'
+						type='text'
+						maxlength='2'
+						class='input w-full'
+						data-param='text'
+						value={defaultParams.text}
+					/>
+				</label>
+
+				<label class='label'>
+					<span class='min-w-[100px]'>Avatar.Color</span>
+
+					<input
+						id='avatar-color'
+						type='color'
+						class='input w-full'
+						data-param='color'
+						value={defaultParams.color}
+					/>
+				</label>
+			</div>
+		</div>
 
 		<p class='mt-4 break-words'>
-			<code
-				id='endpoint'
+			<Code
 				class='text-sm'
-			></code>
+				code={code}
+				theme='dark-plus'
+				wrap
+				transformers={transformers}
+			/>
 		</p>
 	</main>
 </Layout>
 
-<script>
-	const preview = document.getElementById('preview') as HTMLImageElement
-	const endpoint = document.getElementById('endpoint') as HTMLElement
-	const inputs = Array.from(
-		document.querySelectorAll<HTMLInputElement | HTMLSelectElement>('input, select'),
-	)
-
-	function update() {
-		const params = new URLSearchParams()
-
-		inputs.forEach((input) => {
-			if (input.id && input.value) {
-				params.set(input.id, input.value)
-			}
-		})
-
-		const url = `/api/avatar?${params.toString()}`
-
-		preview.src = url
-		endpoint.textContent = url
+<style is:global>
+	.url-protocol {
+		color: #38bdf8;
 	}
-
-	inputs.forEach((input) => input.addEventListener('input', update))
-
-	update()
-</script>
-
-<style>
-	main {
-		margin: auto;
-		padding: 1.5rem;
-		max-width: 60ch;
-		text-align: center;
+	.url-domain {
+		color: #22c55e;
 	}
-	.text-gradient {
-		background-image: var(--accent-gradient);
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		background-size: 400%;
-		background-position: 0%;
+	.url-path {
+		color: #facc15;
+	}
+	.url-query {
+		color: #a855f7;
+	}
+	.url-param-key {
+		color: #f97316;
+	}
+	.url-param-value {
+		color: #ec4899;
 	}
 </style>
+
+<script is:inline>
+	document.addEventListener('DOMContentLoaded', () => {
+		const preview = document.getElementById('preview')
+		const codeElement = document.querySelector('code')
+		const inputs = document.querySelectorAll('[data-param]')
+
+		function update() {
+			const params = new URLSearchParams()
+
+			inputs.forEach((input) => {
+				const param = input.getAttribute('data-param')
+				if (input.value) {
+					params.set(param, input.value)
+				}
+			})
+
+			const path = `/api/avatar?${params.toString()}`
+
+			preview.src = path
+
+			// const code = `https://exavatar.deno.dev${path}`
+
+			// if (codeElement) {
+			// 	codeElement.textContent = code
+			// }
+		}
+
+		inputs.forEach((input) => {
+			input.addEventListener('input', update)
+		})
+
+		update()
+	})
+</script>

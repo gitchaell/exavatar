@@ -1,33 +1,36 @@
 import { ExavatarError } from '../shared/ExavatarError.ts'
 
-type Set = 'animals'
+export type AvatarSetType = 'animals'
 
-const sets = ['animals']
+export const avatarSets: AvatarSetType[] = ['animals']
 
-const defaultSet: Set = 'animals'
+export const getDefaultAvatarSet = (): AvatarSetType =>
+	avatarSets[Math.floor(Math.random() * avatarSets.length)]
 
 export class AvatarSet {
-	private constructor(public readonly value: Set) {}
+	private constructor(public readonly value: AvatarSetType) {}
 
 	static create(input: unknown): AvatarSet {
 		if (input === null || input === undefined) {
-			return new AvatarSet(defaultSet)
+			return new AvatarSet(getDefaultAvatarSet())
 		}
 
 		if (typeof input !== 'string') {
 			throw new AvatarSetNotValidError(input)
 		}
 
-		if (!sets.includes(input)) {
+		if (!avatarSets.includes(input as AvatarSetType)) {
 			throw new AvatarSetNotValidError(input)
 		}
 
-		return new AvatarSet(input as Set)
+		return new AvatarSet(input as AvatarSetType)
 	}
 }
 
 export class AvatarSetNotValidError extends ExavatarError {
 	constructor(set: unknown) {
-		super(`Avatar.set <<${set}>> is not valid. Expected a valid set like: ${sets.join(', ')}.`)
+		super(
+			`Avatar.set <<${set}>> is not valid. Expected a valid set like: ${avatarSets.join(', ')}.`,
+		)
 	}
 }

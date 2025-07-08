@@ -1,6 +1,7 @@
 import { ExavatarError } from '../shared/ExavatarError.ts'
+import { AvatarSetType } from './AvatarSet.ts'
 
-type AnimalIds =
+export type AvatarAnimalIdTypes =
 	| 'ant'
 	| 'bear'
 	| 'bee'
@@ -47,82 +48,85 @@ type AnimalIds =
 	| 'whale'
 	| 'zebra'
 
-const animalIds = [
-	'ant',
-	'bear',
-	'bee',
-	'bull',
-	'camel',
-	'cat',
-	'chameleon',
-	'crab',
-	'crocodile',
-	'dinosaur',
-	'dog',
-	'dolphin',
-	'duck',
-	'eagle',
-	'elephant',
-	'flamingo',
-	'fox',
-	'frog',
-	'goat',
-	'gorilla',
-	'hedgehog',
-	'horse',
-	'kangaroo',
-	'koala',
-	'ladybug',
-	'lion',
-	'mammoth',
-	'mouse',
-	'octopus',
-	'owl',
-	'panda',
-	'parrot',
-	'penguin',
-	'pig',
-	'pufferfish',
-	'rabbit',
-	'raccoon',
-	'rooster',
-	'shark',
-	'slothbear',
-	'snake',
-	'tiger',
-	'turtle',
-	'whale',
-	'zebra',
-]
+export type AvatarIdType = AvatarAnimalIdTypes
 
-type Id = AnimalIds
+export const avatarIdsMap: Record<AvatarSetType, AvatarIdType[]> = {
+	animals: [
+		'ant',
+		'bear',
+		'bee',
+		'bull',
+		'camel',
+		'cat',
+		'chameleon',
+		'crab',
+		'crocodile',
+		'dinosaur',
+		'dog',
+		'dolphin',
+		'duck',
+		'eagle',
+		'elephant',
+		'flamingo',
+		'fox',
+		'frog',
+		'goat',
+		'gorilla',
+		'hedgehog',
+		'horse',
+		'kangaroo',
+		'koala',
+		'ladybug',
+		'lion',
+		'mammoth',
+		'mouse',
+		'octopus',
+		'owl',
+		'panda',
+		'parrot',
+		'penguin',
+		'pig',
+		'pufferfish',
+		'rabbit',
+		'raccoon',
+		'rooster',
+		'shark',
+		'slothbear',
+		'snake',
+		'tiger',
+		'turtle',
+		'whale',
+		'zebra',
+	],
+}
 
-const ids = [...animalIds]
+export const avatarIds: AvatarIdType[] = [...Object.entries(avatarIdsMap).flatMap(([, ids]) => ids)]
 
-const defaultId: Id = ids[Math.floor(Math.random() * ids.length)] as Id
+export const getDefaultAvatarId = (): AvatarIdType =>
+	avatarIds[Math.floor(Math.random() * avatarIds.length)]
 
 export class AvatarId {
-	private constructor(public readonly value: Id) {}
+	private constructor(public readonly value: AvatarIdType) {}
 
 	static create(input: unknown): AvatarId {
 		if (input === null || input === undefined) {
-			return new AvatarId(defaultId)
+			return new AvatarId(getDefaultAvatarId())
 		}
 
 		if (typeof input !== 'string') {
 			throw new AvatarIdNotValidError(input)
 		}
 
-		if (!animalIds.includes(input)) {
+		if (!avatarIds.includes(input as AvatarIdType)) {
 			throw new AvatarIdNotValidError(input)
 		}
 
-		return new AvatarId(input as Id)
+		return new AvatarId(input as AvatarIdType)
 	}
 }
 
 export class AvatarIdNotValidError extends ExavatarError {
 	constructor(id: unknown) {
-		super(`Avatar.id <<${id}>> is not valid. Expected a valid id like: ${ids.join(', ')}.`)
+		super(`Avatar.id <<${id}>> is not valid. Expected a valid id like: ${avatarIds.join(', ')}.`)
 	}
 }

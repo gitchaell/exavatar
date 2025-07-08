@@ -1,17 +1,18 @@
 import { ExavatarError } from '../shared/ExavatarError.ts'
 
-type Size = 16 | 32 | 64 | 128 | 256 | 512 | 1024
+export type AvatarSizeType = 16 | 32 | 64 | 128 | 256 | 512 | 1024
 
-const sizes = [16, 32, 64, 128, 256, 512, 1024]
+export const avatarSizes: AvatarSizeType[] = [16, 32, 64, 128, 256, 512, 1024]
 
-const defaultSize: Size = sizes[Math.floor(Math.random() * sizes.length)] as Size
+export const getDefaultAvatarSize = (): AvatarSizeType =>
+	avatarSizes[Math.floor(Math.random() * avatarSizes.length)]
 
 export class AvatarSize {
-	private constructor(public readonly value: Size) {}
+	private constructor(public readonly value: AvatarSizeType) {}
 
 	static create(input: unknown): AvatarSize {
 		if (input === null || input === undefined) {
-			return new AvatarSize(defaultSize)
+			return new AvatarSize(getDefaultAvatarSize())
 		}
 
 		if (typeof input !== 'string') {
@@ -20,16 +21,18 @@ export class AvatarSize {
 
 		const size = Number(input)
 
-		if (!sizes.includes(size)) {
+		if (!avatarSizes.includes(size as AvatarSizeType)) {
 			throw new AvatarSizeNotValidError(input)
 		}
 
-		return new AvatarSize(size as Size)
+		return new AvatarSize(size as AvatarSizeType)
 	}
 }
 
 export class AvatarSizeNotValidError extends ExavatarError {
 	constructor(size: unknown) {
-		super(`Avatar.size <<${size}>> is not valid. Expected a valid size like: ${sizes.join(', ')}`)
+		super(
+			`Avatar.size <<${size}>> is not valid. Expected a valid size like: ${avatarSizes.join(', ')}`,
+		)
 	}
 }

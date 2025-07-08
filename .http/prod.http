@@ -1,2 +1,2 @@
-GET https://exavatar.deno.dev/api/avatar?set=animals&id=lion
+GET https://exavatar.deno.dev/api/avatar?set=animals&id=dinosaur&size=256
 

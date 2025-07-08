@@ -3,14 +3,14 @@ import { ExavatarError } from '../shared/ExavatarError.ts'
 const MIN_TEXT_LENGTH = 1
 const MAX_TEXT_LENGTH = 2
 
-const defaultText: string = ''
+export const defaultAvatarText: string = ''
 
 export class AvatarText {
 	private constructor(public readonly value: string) {}
 
 	static create(input: unknown): AvatarText {
 		if (input === null || input === undefined) {
-			return new AvatarText(defaultText)
+			return new AvatarText(defaultAvatarText)
 		}
 
 		if (typeof input !== 'string') {

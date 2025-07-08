@@ -1,7 +1,7 @@
-import { Avatar } from '../domain/Avatar.ts'
-import { ColorParser } from './ColorParser.ts'
+import { Avatar } from './Avatar.ts'
+import { ColorParser } from '../shared/ColorParser.ts'
 
-export class SvgAvatarBuilder {
+export class AvatarSvgBuilder {
 	private static readonly DEFAULT_TEXT_COLOR = '#FFFFFF'
 	private static readonly DEFAULT_BACKGROUND_COLOR = '#000000'
 	private static readonly DEFAULT_FONT_WEIGHT = 'bold'

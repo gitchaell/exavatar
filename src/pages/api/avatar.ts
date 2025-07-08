@@ -1,6 +1,7 @@
 import { APIRoute } from 'astro'
 import { AvatarService } from '../../core/application/services/AvatarService.ts'
 import { ExavatarError } from '../../core/shared/ExavatarError.ts'
+import { environment } from '../../core/shared/Environment.ts'
 
 export const GET: APIRoute = async ({ request }) => {
 	const url = new URL(request.url)
@@ -13,8 +14,7 @@ export const GET: APIRoute = async ({ request }) => {
 		return new Response(data, {
 			headers: {
 				'Content-Type': `image/${type}`,
-				'Cache-Control':
-					Deno.env.get('ENV') === 'production' ? 'public, max-age=86400' : 'no-cache',
+				'Cache-Control': environment === 'production' ? 'public, max-age=86400' : 'no-cache',
 			},
 		})
 	} catch (error) {
