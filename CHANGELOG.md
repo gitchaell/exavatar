@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.4.0](https://github.com/gitchaell/exavatar/compare/v1.3.4...v1.4.0) (2025-07-09)
+
+### ✨ Features
+
+- custom code component for URL highlighting
+  ([2a7d7e1](https://github.com/gitchaell/exavatar/commit/2a7d7e1113b40a8feb2247f51ac30c600d64aa12))
+
 ## [1.3.4](https://github.com/gitchaell/exavatar/compare/v1.3.3...v1.3.4) (2025-07-08)
 
 ### ♻️ Code Refactoring
