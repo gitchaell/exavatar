@@ -1,5 +1,5 @@
 ---
-import { Code } from 'astro:components'
+import Code from '../components/Code.astro'
 import Layout from '../layouts/Layout.astro'
 import { avatarSets, getDefaultAvatarSet } from '../core/domain/AvatarSet'
 import { avatarIds, getDefaultAvatarId } from '../core/domain/AvatarId'
@@ -7,7 +7,6 @@ import { avatarSizes } from '../core/domain/AvatarSize'
 import { avatarFormats, defaultAvatarFormat } from '../core/domain/AvatarFormat'
 import { defaultAvatarText } from '../core/domain/AvatarText'
 import { defaultAvatarColor } from '../core/domain/AvatarColor'
-import { transformers } from './UrlHighlighter'
 
 const defaultParams = {
 	set: getDefaultAvatarSet().toString(),
@@ -154,10 +153,8 @@ const code = `https://exavatar.deno.dev${path}`
 			<Code
 				class='text-sm'
 				code={code}
-				theme='dark-plus'
-				wrap
-				transformers={transformers}
-			/>
+                               wrap
+                       />
 		</p>
 	</main>
 </Layout>

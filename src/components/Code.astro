@@ -1,0 +1,16 @@
+---
+import type { HTMLAttributes } from 'astro'
+import { highlightUrl } from './UrlSyntaxHighlighter'
+
+interface Props extends HTMLAttributes<'code'> {
+  code: string
+  wrap?: boolean
+}
+
+const { code, wrap = false, class: className, ...rest } = Astro.props as Props
+const classes = [className, wrap ? 'whitespace-pre-wrap break-words' : '']
+  .filter(Boolean)
+  .join(' ')
+const html = highlightUrl(code)
+---
+<code {...rest} class={classes} set:html={html} />
