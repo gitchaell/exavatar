@@ -7,7 +7,7 @@ export class AvatarColor {
 	private constructor(public readonly value: string) {}
 
 	static create(input: unknown): AvatarColor {
-		if (input === null || input === undefined) {
+		if (input === null || input === undefined || input === '') {
 			return new AvatarColor(defaultAvatarColor)
 		}
 

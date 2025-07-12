@@ -18,6 +18,7 @@ export const GET: APIRoute = async ({ request }) => {
 			},
 		})
 	} catch (error) {
+		console.error(error)
 		if (error instanceof ExavatarError) {
 			return new Response(error.message, { status: 400 })
 		}

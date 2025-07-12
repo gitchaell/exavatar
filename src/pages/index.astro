@@ -8,18 +8,29 @@ import { avatarFormats, defaultAvatarFormat } from '../core/domain/AvatarFormat'
 import { defaultAvatarText } from '../core/domain/AvatarText'
 import { defaultAvatarColor } from '../core/domain/AvatarColor'
 
-const defaultParams = {
-	set: getDefaultAvatarSet().toString(),
-	id: getDefaultAvatarId().toString(),
-	size: '256', // getDefaultAvatarSize().toString(),
-	format: defaultAvatarFormat.toString(),
-	text: defaultAvatarText.toString(),
-	color: defaultAvatarColor.toString(),
-}
+const searchParams = Astro.url.searchParams
+const hasSearchParams = searchParams.size > 0
 
-const params = new URLSearchParams(defaultParams)
+const params =
+	hasSearchParams ?
+		{
+			set: searchParams.get('set') || '',
+			id: searchParams.get('id') || '',
+			size: searchParams.get('size') || '',
+			format: searchParams.get('format') || '',
+			text: searchParams.get('text') || '',
+			color: searchParams.get('color') || '',
+		}
+	:	{
+			set: getDefaultAvatarSet().toString(),
+			id: getDefaultAvatarId().toString(),
+			size: '256',
+			format: defaultAvatarFormat.toString(),
+			text: defaultAvatarText.toString(),
+			color: defaultAvatarColor.toString(),
+		}
 
-const path = `/api/avatar?${params.toString()}`
+const path = `/api/avatar?${new URLSearchParams(params).toString()}`
 const code = `https://exavatar.deno.dev${path}`
 ---
 
@@ -31,7 +42,10 @@ const code = `https://exavatar.deno.dev${path}`
 
 		<p class='mb-6'>Use the avatar API to generate dynamic images.</p>
 
-		<div class='flex flex-col md:flex-row gap-6'>
+		<form
+			method='GET'
+			action=''
+			class='flex flex-col md:flex-row gap-6'>
 			<div class='flex-1 flex items-center justify-center'>
 				<img
 					id='preview'
@@ -46,15 +60,16 @@ const code = `https://exavatar.deno.dev${path}`
 					<span class='min-w-[100px]'>Avatar.Set</span>
 
 					<select
+						name='set'
 						id='avatar-set'
 						class='select w-full'
-						data-param='set'>
+						onchange='this.form.submit()'>
 						<option value=''></option>
 						{
 							avatarSets.map((set) => (
 								<option
 									value={set}
-									selected={defaultParams.set === set}>
+									selected={params.set === set}>
 									{set}
 								</option>
 							))
@@ -66,15 +81,16 @@ const code = `https://exavatar.deno.dev${path}`
 					<span class='min-w-[100px]'>Avatar.Id</span>
 
 					<select
+						name='id'
 						id='avatar-id'
 						class='select w-full'
-						data-param='id'>
+						onchange='this.form.submit()'>
 						<option value=''></option>
 						{
 							avatarIds.map((id) => (
 								<option
 									value={id}
-									selected={defaultParams.id === id}>
+									selected={params.id === id}>
 									{id}
 								</option>
 							))
@@ -86,15 +102,16 @@ const code = `https://exavatar.deno.dev${path}`
 					<span class='min-w-[100px]'>Avatar.Size</span>
 
 					<select
+						name='size'
 						id='avatar-size'
 						class='select w-full'
-						data-param='size'>
+						onchange='this.form.submit()'>
 						<option value=''></option>
 						{
 							avatarSizes.map((size) => (
 								<option
 									value={size}
-									selected={+defaultParams.size === +size}>
+									selected={+params.size === +size}>
 									{size}
 								</option>
 							))
@@ -106,15 +123,16 @@ const code = `https://exavatar.deno.dev${path}`
 					<span class='min-w-[100px]'>Avatar.Format</span>
 
 					<select
+						name='format'
 						id='avatar-format'
 						class='select w-full'
-						data-param='format'>
+						onchange='this.form.submit()'>
 						<option value=''></option>
 						{
 							avatarFormats.map((format) => (
 								<option
 									value={format}
-									selected={defaultParams.format === format}>
+									selected={params.format === format}>
 									{format}
 								</option>
 							))
@@ -126,12 +144,13 @@ const code = `https://exavatar.deno.dev${path}`
 					<span class='min-w-[100px]'>Avatar.Text</span>
 
 					<input
+						name='text'
 						id='avatar-text'
 						type='text'
 						maxlength='2'
 						class='input w-full'
-						data-param='text'
-						value={defaultParams.text}
+						value={params.text}
+						onchange='this.form.submit()'
 					/>
 				</label>
 
@@ -139,78 +158,73 @@ const code = `https://exavatar.deno.dev${path}`
 					<span class='min-w-[100px]'>Avatar.Color</span>
 
 					<input
+						name='color'
 						id='avatar-color'
 						type='color'
 						class='input w-full'
-						data-param='color'
-						value={defaultParams.color}
+						value={params.color}
+						onchange='this.form.submit()'
 					/>
 				</label>
+
+				<div class='flex gap-2 pt-2'>
+					<button
+						type='button'
+						class='btn btn-secondary flex-1'
+						onclick='
+							document.querySelectorAll("input, select").forEach(el => {
+								if (el.type === "radio" || el.type === "checkbox") {
+									el.checked = false;
+								} else {
+									el.value = "";
+								}
+							});
+							this.form.submit();
+						'>
+						Reset
+					</button>
+
+					<button
+						type='button'
+						class='btn btn-primary flex-1'
+						onclick='window.location.replace("/")'>
+						<svg
+							xmlns='http://www.w3.org/2000/svg'
+							width='24'
+							height='24'
+							viewBox='0 0 24 24'
+							fill='none'
+							stroke='currentColor'
+							stroke-width='2'
+							stroke-linecap='round'
+							stroke-linejoin='round'
+							class='icon icon-tabler icons-tabler-outline icon-tabler-dice-2'
+							><path
+								stroke='none'
+								d='M0 0h24v24H0z'
+								fill='none'
+							></path><path
+								d='M3 3m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z'
+							></path><circle
+								cx='9.5'
+								cy='9.5'
+								r='.5'
+								fill='currentColor'
+							></circle><circle
+								cx='14.5'
+								cy='14.5'
+								r='.5'
+								fill='currentColor'
+							></circle></svg
+						>
+						Random
+					</button>
+				</div>
 			</div>
-		</div>
+		</form>
 
 		<p class='mt-4 break-words'>
-			<Code
-				class='text-sm'
-				code={code}
-                               wrap
-                       />
+			<Code code={code} />
 		</p>
 	</main>
 </Layout>
-
-<style is:global>
-	.url-protocol {
-		color: #38bdf8;
-	}
-	.url-domain {
-		color: #22c55e;
-	}
-	.url-path {
-		color: #facc15;
-	}
-	.url-query {
-		color: #a855f7;
-	}
-	.url-param-key {
-		color: #f97316;
-	}
-	.url-param-value {
-		color: #ec4899;
-	}
-</style>
-
-<script is:inline>
-	document.addEventListener('DOMContentLoaded', () => {
-		const preview = document.getElementById('preview')
-		const codeElement = document.querySelector('code')
-		const inputs = document.querySelectorAll('[data-param]')
-
-		function update() {
-			const params = new URLSearchParams()
-
-			inputs.forEach((input) => {
-				const param = input.getAttribute('data-param')
-				if (input.value) {
-					params.set(param, input.value)
-				}
-			})
-
-			const path = `/api/avatar?${params.toString()}`
-
-			preview.src = path
-
-			// const code = `https://exavatar.deno.dev${path}`
-
-			// if (codeElement) {
-			// 	codeElement.textContent = code
-			// }
-		}
-
-		inputs.forEach((input) => {
-			input.addEventListener('input', update)
-		})
-
-		update()
-	})
-</script>

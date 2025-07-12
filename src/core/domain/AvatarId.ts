@@ -109,7 +109,7 @@ export class AvatarId {
 	private constructor(public readonly value: AvatarIdType) {}
 
 	static create(input: unknown): AvatarId {
-		if (input === null || input === undefined) {
+		if (input === null || input === undefined || input === '') {
 			return new AvatarId(getDefaultAvatarId())
 		}
 

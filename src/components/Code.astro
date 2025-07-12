@@ -1,16 +1,18 @@
 ---
-import type { HTMLAttributes } from 'astro'
-import { highlightUrl } from './UrlSyntaxHighlighter'
+import { HTMLAttributes } from 'astro/types'
+import { UrlSyntaxHighlighter } from './UrlSyntaxHighlighter'
 
 interface Props extends HTMLAttributes<'code'> {
-  code: string
-  wrap?: boolean
+	code: string
 }
 
-const { code, wrap = false, class: className, ...rest } = Astro.props as Props
-const classes = [className, wrap ? 'whitespace-pre-wrap break-words' : '']
-  .filter(Boolean)
-  .join(' ')
-const html = highlightUrl(code)
+const { code, ...rest } = Astro.props as Props
+
+const html = UrlSyntaxHighlighter.process(code)
 ---
-<code {...rest} class={classes} set:html={html} />
+
+<code
+	{...rest}
+	class='block text-md font-bold bg-slate-800 rounded-sm p-2'
+	set:html={html}
+/>

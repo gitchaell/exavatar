@@ -1,41 +1,104 @@
-export interface UrlToken {
+type UrlTokenType =
+	| 'protocol'
+	| 'hostname'
+	| 'port'
+	| 'pathname'
+	| 'search-key'
+	| 'search-operator'
+	| 'search-value'
+	| 'hash'
+	| 'href'
+
+class UrlToken {
 	content: string
-	className: string
-}
+	type: UrlTokenType
 
-function escapeHtml(str: string): string {
-	return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-}
+	constructor(content: string, type: UrlTokenType) {
+		this.type = type
+		this.content = content.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+	}
 
-export function tokenizeUrl(url: string): UrlToken[] {
-	try {
-		const p = new URL(url)
-		const tokens: UrlToken[] = []
-		tokens.push({ content: p.protocol + '//', className: 'url-protocol' })
-		tokens.push({ content: p.hostname, className: 'url-domain' })
-		if (p.pathname) {
-			tokens.push({ content: p.pathname, className: 'url-path' })
+	get color() {
+		switch (this.type) {
+			case 'protocol':
+				return '#38bdf8'
+			case 'hostname':
+				return '#22c55e'
+			case 'port':
+				return '#a855f7'
+			case 'pathname':
+				return '#facc15'
+			case 'search-key':
+				return '#f97316'
+			case 'search-operator':
+				return '#a855f7'
+			case 'search-value':
+				return '#ec4899'
+			case 'hash':
+				return '#2E5DE7'
+			default:
+				return '#9999A2'
 		}
-		if ([...p.searchParams].length > 0) {
-			tokens.push({ content: '?', className: 'url-query' })
-			for (const [key, value] of p.searchParams.entries()) {
-				tokens.push({ content: key, className: 'url-param-key' })
-				tokens.push({ content: '=', className: 'url-query' })
-				tokens.push({ content: value, className: 'url-param-value' })
-			}
-		}
-		return tokens
-	} catch {
-		return [{ content: url, className: '' }]
+	}
+
+	get html() {
+		return `<span class="${this.type}" style="color: ${this.color}">${this.content}</span>`
 	}
 }
 
-export function highlightUrl(url: string): string {
-	return tokenizeUrl(url)
-		.map((t) =>
-			t.className ?
-				`<span class="${t.className}">${escapeHtml(t.content)}</span>`
-			:	escapeHtml(t.content),
-		)
-		.join('')
+export class UrlSyntaxHighlighter {
+	static process(code: string): string {
+		return this.tokenize(code)
+			.map((token) => token.html)
+			.join('')
+	}
+
+	static tokenize(url: string): UrlToken[] {
+		try {
+			const parts = new URL(url)
+
+			const tokens: UrlToken[] = []
+
+			tokens.push(new UrlToken(parts.protocol + '//', 'protocol'))
+			tokens.push(new UrlToken(parts.hostname, 'hostname'))
+
+			if (parts.port) {
+				tokens.push(new UrlToken(parts.port, 'port'))
+			}
+
+			if (parts.pathname) {
+				tokens.push(new UrlToken(parts.pathname, 'pathname'))
+			}
+
+			if ([...parts.searchParams].length > 0) {
+				tokens.push(new UrlToken('?', 'search-operator'))
+
+				const entries = [...parts.searchParams.entries()]
+
+				for (let index = 0; index < entries.length; index++) {
+					const [key, value] = entries[index]
+
+					if (value === null || value === undefined || value === '') {
+						continue
+					}
+
+					tokens.push(new UrlToken(key, 'search-key'))
+					tokens.push(new UrlToken('=', 'search-operator'))
+					tokens.push(new UrlToken(value, 'search-value'))
+
+					if (index < entries.length - 1) {
+						tokens.push(new UrlToken('&', 'search-operator'))
+					}
+				}
+			}
+
+			if (parts.hash) {
+				tokens.push(new UrlToken(parts.hash, 'hash'))
+			}
+
+			return tokens
+		} catch {
+			return [new UrlToken(url, 'href')]
+		}
+	}
 }

@@ -11,7 +11,7 @@ export class AvatarSet {
 	private constructor(public readonly value: AvatarSetType) {}
 
 	static create(input: unknown): AvatarSet {
-		if (input === null || input === undefined) {
+		if (input === null || input === undefined || input === '') {
 			return new AvatarSet(getDefaultAvatarSet())
 		}
 

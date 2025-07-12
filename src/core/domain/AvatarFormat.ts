@@ -10,7 +10,7 @@ export class AvatarFormat {
 	private constructor(public readonly value: AvatarFormatType) {}
 
 	static create(input: unknown): AvatarFormat {
-		if (input === null || input === undefined) {
+		if (input === null || input === undefined || input === '') {
 			return new AvatarFormat(defaultAvatarFormat)
 		}
 

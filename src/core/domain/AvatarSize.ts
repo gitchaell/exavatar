@@ -11,7 +11,7 @@ export class AvatarSize {
 	private constructor(public readonly value: AvatarSizeType) {}
 
 	static create(input: unknown): AvatarSize {
-		if (input === null || input === undefined) {
+		if (input === null || input === undefined || input === '') {
 			return new AvatarSize(getDefaultAvatarSize())
 		}
 
