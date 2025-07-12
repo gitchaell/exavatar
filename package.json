@@ -23,8 +23,8 @@
 		"@tailwindcss/vite": "^4.1.11",
 		"astro": "^4.9.3",
 		"basecoat-css": "^0.2.8",
-		"tailwindcss": "^4.1.11",
-		"sharp": "^0.33.0"
+		"sharp": "^0.33.0",
+		"tailwindcss": "^4.1.11"
 	},
 	"devDependencies": {
 		"@commitlint/cli": "^18.4.3",
