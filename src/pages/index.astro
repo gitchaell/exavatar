@@ -1,12 +1,12 @@
 ---
-import Code from '../components/Code.astro'
-import Layout from '../layouts/Layout.astro'
 import { avatarSets, getDefaultAvatarSet } from '../core/domain/AvatarSet'
 import { avatarIds, getDefaultAvatarId } from '../core/domain/AvatarId'
 import { avatarSizes } from '../core/domain/AvatarSize'
 import { avatarFormats, defaultAvatarFormat } from '../core/domain/AvatarFormat'
 import { defaultAvatarText } from '../core/domain/AvatarText'
 import { defaultAvatarColor } from '../core/domain/AvatarColor'
+import Code from '../components/Code.astro'
+import Layout from '../layouts/Layout.astro'
 import Icon from '../components/Icon.astro'
 
 const searchParams = Astro.url.searchParams
@@ -35,35 +35,40 @@ const path = `/api/avatar?${new URLSearchParams(params).toString()}`
 const code = `https://exavatar.deno.dev${path}`
 ---
 
-<Layout title='Exavatar'>
-	<main class='p-6 max-w-5xl mx-auto'>
-		<h1 class='text-3xl font-bold mb-4'>
-			Welcome to <strong>Exavatar</strong>
-		</h1>
+<Layout>
+	<header
+		class='grid-box grid grid-flow-row auto-rows-min col-span-full row-start-3 place-content-center px-4 h-24 md:row-start-2'>
+		<h2 class='text-3xl content-end text-center font-semibold'>Playground</h2>
+		<p class='text-md content-center text-center text-pretty'>
+			Use the avatar API to generate dynamic images.
+		</p>
+	</header>
 
-		<p class='mb-6'>Use the avatar API to generate dynamic images.</p>
+	<main
+		class='grid-box grid grid-cols-12 grid-flow-row auto-rows-[48px] col-span-full row-start-5 row-span-20 md:row-start-4 pb-32'>
+		<section class='relative grid-box col-start-4 col-span-6 row-start-2 row-span-5'>
+			<span class='badge-secondary absolute z-20 top-2 right-2'>{params.size}x{params.size}</span>
+
+			<img
+				id='preview'
+				class='block mx-auto p-1 h-full absolute z-10 inset-0 aspect-square object-cover'
+				src={path}
+				alt={'Preview:' + params.set + ':' + params.id}
+			/>
+		</section>
 
 		<form
 			method='GET'
 			action=''
-			class='flex flex-col md:flex-row gap-6'>
-			<div class='flex-1 flex items-center justify-center'>
-				<img
-					id='preview'
-					class='border rounded w-64 h-64 object-cover'
-					src={path}
-					alt='Preview'
-				/>
-			</div>
-
-			<div class='flex-1 form space-y-2'>
-				<label class='label'>
-					<span class='min-w-[100px]'>Avatar.Set</span>
+			class='grid-box grid grid-cols-12 grid-flow-row auto-rows-[48px] col-span-full row-start-8 row-span-10'>
+			<div class='grid items-center col-start-2 row-start-2 col-span-10 px-2'>
+				<label class='label grid grid-cols-10'>
+					<span class='col-span-3'><span class='font-light'>Avatar.</span>Set</span>
 
 					<select
 						name='set'
 						id='avatar-set'
-						class='select w-full'
+						class='select w-full col-span-7'
 						onchange='this.form.submit()'>
 						<option value=''></option>
 						{
@@ -77,14 +82,16 @@ const code = `https://exavatar.deno.dev${path}`
 						}
 					</select>
 				</label>
+			</div>
 
-				<label class='label'>
-					<span class='min-w-[100px]'>Avatar.Id</span>
+			<div class='grid items-center col-start-2 row-start-3 col-span-10 px-2'>
+				<label class='label grid grid-cols-10'>
+					<span class='col-span-3'><span class='font-light'>Avatar.</span>Id</span>
 
 					<select
 						name='id'
 						id='avatar-id'
-						class='select w-full'
+						class='select w-full col-span-7'
 						onchange='this.form.submit()'>
 						<option value=''></option>
 						{
@@ -98,14 +105,16 @@ const code = `https://exavatar.deno.dev${path}`
 						}
 					</select>
 				</label>
+			</div>
 
-				<label class='label'>
-					<span class='min-w-[100px]'>Avatar.Size</span>
+			<div class='grid items-center col-start-2 row-start-4 col-span-10 px-2'>
+				<label class='label grid grid-cols-10'>
+					<span class='col-span-3'><span class='font-light'>Avatar.</span>Size</span>
 
 					<select
 						name='size'
 						id='avatar-size'
-						class='select w-full'
+						class='select w-full col-span-7'
 						onchange='this.form.submit()'>
 						<option value=''></option>
 						{
@@ -119,14 +128,16 @@ const code = `https://exavatar.deno.dev${path}`
 						}
 					</select>
 				</label>
+			</div>
 
-				<label class='label'>
-					<span class='min-w-[100px]'>Avatar.Format</span>
+			<div class='grid items-center col-start-2 row-start-5 col-span-10 px-2'>
+				<label class='label grid grid-cols-10'>
+					<span class='col-span-3'><span class='font-light'>Avatar.</span>Format</span>
 
 					<select
 						name='format'
 						id='avatar-format'
-						class='select w-full'
+						class='select w-full col-span-7'
 						onchange='this.form.submit()'>
 						<option value=''></option>
 						{
@@ -140,65 +151,70 @@ const code = `https://exavatar.deno.dev${path}`
 						}
 					</select>
 				</label>
+			</div>
 
-				<label class='label'>
-					<span class='min-w-[100px]'>Avatar.Text</span>
+			<div class='grid items-center col-start-2 row-start-6 col-span-10 px-2'>
+				<label class='label grid grid-cols-10'>
+					<span class='col-span-3'><span class='font-light'>Avatar.</span>Text</span>
 
 					<input
 						name='text'
 						id='avatar-text'
 						type='text'
 						maxlength='2'
-						class='input w-full'
+						class='input w-full col-span-7'
 						placeholder='AB'
 						value={params.text}
 						onchange='this.form.submit()'
 					/>
 				</label>
+			</div>
 
-				<label class='label'>
-					<span class='min-w-[100px]'>Avatar.Color</span>
+			<div class='grid items-center col-start-2 row-start-7 col-span-10 px-2'>
+				<label class='label grid grid-cols-10'>
+					<span class='col-span-3'><span class='font-light'>Avatar.</span>Color</span>
 
 					<input
 						name='color'
 						id='avatar-color'
 						type='color'
-						class='input w-full'
+						class='input w-full col-span-7'
 						value={params.color}
 						onchange='this.form.submit()'
 					/>
 				</label>
+			</div>
 
-				<div class='flex gap-2 pt-2'>
-					<button
-						type='button'
-						class='btn btn-secondary flex-1'
-						onclick='
-							document.querySelectorAll("input, select").forEach(el => {
-								if (el.type === "radio" || el.type === "checkbox") {
-									el.checked = false;
-								} else {
-									el.value = "";
-								}
-							});
-							this.form.submit();
-						'>
-						Reset
-					</button>
+			<div class='grid grid-cols-2 items-center col-start-2 row-start-9 col-span-10 gap-2 px-2'>
+				<button
+					type='button'
+					class='btn btn-secondary'
+					onclick='
+						document.querySelectorAll("input, select").forEach(el => {
+							if (el.type === "radio" || el.type === "checkbox") {
+								el.checked = false;
+							} else {
+								el.value = "";
+							}
+						});
+						this.form.submit();
+					'>
+					Reset
+				</button>
 
-					<button
-						type='button'
-						class='btn btn-primary flex-1'
-						onclick='window.location.replace("/")'>
-						<Icon name='dice' />
-						Random
-					</button>
-				</div>
+				<button
+					type='button'
+					class='btn btn-primary'
+					onclick='window.location.replace("/")'>
+					<Icon name='dice' />
+					Random
+				</button>
 			</div>
 		</form>
 
-		<p class='mt-4 break-words'>
-			<Code code={code} />
-		</p>
+		<Code
+			class='grid-box p-3 col-start-1 col-span-12 wrap-anywhere row-start-18 row-span-2'
+			code={code}
+		/>
 	</main>
 </Layout>

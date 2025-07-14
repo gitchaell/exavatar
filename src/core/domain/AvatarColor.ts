@@ -1,7 +1,7 @@
 import { ColorParser } from '../shared/ColorParser.ts'
 import { ExavatarError } from '../shared/ExavatarError.ts'
 
-export const defaultAvatarColor: string = '#000'
+export const defaultAvatarColor: string = '#000000'
 
 export class AvatarColor {
 	private constructor(public readonly value: string) {}

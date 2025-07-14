@@ -1,0 +1,136 @@
+<script is:inline>
+	class GridBackgroundManager {
+		constructor() {
+			this.config = {
+				cols: 12,
+				cellHeight: 48,
+				rows: Math.ceil(window.innerHeight / 48),
+				thick: 1,
+				dash: 4,
+				gap: 4,
+				color: {
+					light: encodeURIComponent('#e7e7e7'),
+					dark: encodeURIComponent('#323232'),
+				},
+			}
+
+			this.currentBreakpoint = null
+			this.resizeObserver = null
+			this.isInitialized = false
+
+			this.init()
+		}
+
+		init() {
+			if (this.isInitialized) return
+
+			this.currentBreakpoint = this.getCurrentBreakpoint()
+			this.setupResizeObserver()
+			this.attachEventListeners()
+			this.updateBackground()
+
+			this.isInitialized = true
+		}
+
+		setupResizeObserver() {
+			if (!window.ResizeObserver) return
+
+			this.resizeObserver = new ResizeObserver(() => {
+				this.updateBackground()
+			})
+		}
+
+		attachEventListeners() {
+			window.addEventListener('resize', () => this.handleBreakpointChange())
+			document.addEventListener('basecoat:theme', () => this.updateBackground())
+			window.addEventListener('beforeunload', () => this.cleanup())
+		}
+
+		getCurrentBreakpoint() {
+			const width = window.innerWidth
+			if (width >= 1024) return 'xl'
+			if (width >= 768) return 'lg'
+			if (width >= 640) return 'md'
+			if (width >= 425) return 'sm'
+			return 'base'
+		}
+
+		handleBreakpointChange() {
+			const newBreakpoint = this.getCurrentBreakpoint()
+
+			if (newBreakpoint !== this.currentBreakpoint) {
+				this.currentBreakpoint = newBreakpoint
+				this.updateBackground()
+			}
+		}
+
+		generateSVG() {
+			const { innerWidth: width } = window
+
+			if (width === 0) return null
+
+			const cellWidth = width / this.config.cols
+			const cellHeight = this.config.cellHeight
+			const strokeWidth = this.config.thick
+			const dashArray = `${this.config.dash},${this.config.gap}`
+
+			const svgHeight = cellHeight
+			const pathData = this.generatePathData(width, svgHeight, cellWidth, cellHeight)
+			const color = this.getThemeColor()
+
+			return `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 ${width} ${svgHeight}'%3E%3Cpath d='${pathData}' fill='none' stroke='${color}' stroke-width='${strokeWidth}' stroke-dasharray='${dashArray}'/%3E%3C/svg%3E`
+		}
+
+		generatePathData(width, height, cellWidth, cellHeight) {
+			let pathData = ''
+
+			for (let i = 1; i < this.config.cols; i++) {
+				const x = i * cellWidth
+				pathData += `M ${x} 0 L ${x} ${height} `
+			}
+
+			pathData += `M 0 ${height} L ${width} ${height} `
+
+			return pathData
+		}
+
+		getThemeColor() {
+			const isDark = document.documentElement.classList.contains('dark')
+			return isDark ? this.config.color.dark : this.config.color.light
+		}
+
+		updateBackground() {
+			requestAnimationFrame(() => {
+				const svg = this.generateSVG()
+
+				if (svg) {
+					document.body.style.backgroundImage = `url("${svg}")`
+					document.body.style.backgroundRepeat = 'repeat'
+					document.body.style.backgroundSize = `${window.innerWidth}px ${this.config.cellHeight}px`
+					document.body.style.backgroundColor = `transparent`
+
+					document.body.style.display = 'grid'
+					document.body.style.gridTemplateColumns = `repeat(${this.config.cols}, 1fr)`
+					document.body.style.gridTemplateRows = `repeat(${this.config.rows}, ${this.config.cellHeight}px)`
+				}
+			})
+		}
+
+		cleanup() {
+			if (this.resizeObserver) {
+				this.resizeObserver.disconnect()
+				this.resizeObserver = null
+			}
+		}
+	}
+
+	function initializeGridBackground() {
+		new GridBackgroundManager()
+	}
+
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', initializeGridBackground)
+	} else {
+		initializeGridBackground()
+	}
+</script>

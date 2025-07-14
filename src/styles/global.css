@@ -40,3 +40,13 @@
 	--font-sans: 'Geist', 'sans-serif';
 	--font-mono: 'GeistMono', 'monospace';
 }
+
+.grid-box {
+	--border-color: #e7e7e7;
+	width: 100%;
+	box-shadow: 0 0 0 1px var(--border-color);
+}
+
+html.dark .grid-box {
+	--border-color: #323232;
+}

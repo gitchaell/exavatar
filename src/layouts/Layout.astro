@@ -1,15 +1,18 @@
 ---
 import '../styles/global.css'
 import Icon from '../components/Icon.astro'
+import GridPattern from '../components/GridPattern.astro'
 ---
 
 <!doctype html>
-<html lang='en'>
+<html
+	lang='en'
+	class='h-full'>
 	<head>
 		<meta charset='UTF-8' />
 		<meta
 			name='description'
-			content='Astro description'
+			content='Dynamic avatar generation API built with Deno and Astro'
 		/>
 		<meta
 			name='viewport'
@@ -56,24 +59,68 @@ import Icon from '../components/Icon.astro'
 		</script>
 	</head>
 
-	<body>
-		<button
-			type='button'
-			aria-label='Toggle dark mode'
-			data-tooltip='Toggle dark mode'
-			data-side='bottom'
-			onclick="document.dispatchEvent(new CustomEvent('basecoat:theme'))"
-			class='btn-icon-outline size-8'>
-			<span class='hidden dark:block'><Icon name='sun' /></span>
-			<span class='block dark:hidden'><Icon name='moon' /></span>
-		</button>
+	<body class='h-full min-h-full overflow-x-hidden overflow-y-auto'>
+		<nav class='grid grid-cols-12 grid-rows-2 col-span-full md:grid-rows-1 h-24 md:h-12'>
+			<h1
+				class='grid-box col-span-7 md:col-span-3 text-2xl font-bold italic place-content-center text-center'>
+				Exavatar
+			</h1>
+
+			<div
+				class='grid-box grid grid-flow-col auto-cols-max col-span-full row-start-2 md:col-span-6 md:row-start-1 md:col-start-4 items-center gap-2 px-1 overflow-x-auto overflow-y-hidden'>
+				<a
+					href='/'
+					class='btn-ghost'
+					aria-current='page'>
+					Playground
+				</a>
+
+				<a
+					href='/gallery'
+					class='btn-ghost'
+					aria-current='page'>
+					Gallery
+				</a>
+			</div>
+
+			<div
+				class='grid-box grid grid-flow-col auto-cols-max col-span-5 md:col-span-3 items-center gap-2 px-2 justify-end'>
+				<button
+					type='button'
+					aria-label='Toggle dark mode'
+					data-tooltip='Toggle dark mode'
+					data-side='left'
+					onclick="document.dispatchEvent(new CustomEvent('basecoat:theme'))"
+					class='btn-icon-outline size-8'>
+					<span class='hidden dark:block'><Icon name='sun' /></span>
+					<span class='block dark:hidden'><Icon name='moon' /></span>
+				</button>
+
+				<a
+					href='https://github.com/gitchaell/exavatar'
+					target='_blank'
+					aria-label='GitHub Respository'
+					data-tooltip='GitHub Repository'
+					data-side='left'
+					class='btn-icon-outline size-8'>
+					<Icon name='github' />
+				</a>
+			</div>
+		</nav>
 
 		<slot />
 
-		<script
-			is:inline
-			src='/js/basecoat/tabs.min.js'
-			defer
-		></script>
+		<div
+			id='toaster'
+			class='toaster'>
+		</div>
+
+		<GridPattern />
 	</body>
 </html>
+
+<script
+	is:inline
+	src='/js/basecoat/all.min.js'
+	defer
+></script>

@@ -1,18 +1,41 @@
 ---
 import { HTMLAttributes } from 'astro/types'
 import { UrlSyntaxHighlighter } from './UrlSyntaxHighlighter'
+import Icon from './Icon.astro'
 
 interface Props extends HTMLAttributes<'code'> {
 	code: string
 }
 
-const { code, ...rest } = Astro.props as Props
+const { code, class: otherClasses, ...rest } = Astro.props as Props
 
 const html = UrlSyntaxHighlighter.process(code)
 ---
 
-<code
-	{...rest}
-	class='block text-md font-medium bg-slate-800 rounded-sm p-2'
-	set:html={html}
-/>
+<section
+	class={'relative group/code ' + otherClasses}
+	{...rest}>
+	<code
+		class='block w-full h-full'
+		set:html={html}
+	/>
+
+	<button
+		type='button'
+		class='btn-outline absolute top-2 right-2 transition-all duration-200 opacity-0 group-hover/code:opacity-100'
+		onclick={`navigator.clipboard.writeText("${code}"); document.dispatchEvent(new CustomEvent('basecoat:toast', {
+    detail: {
+      config: {
+        category: 'success',
+        title: 'Success',
+        description: 'Copied to clipboard',
+        cancel: {
+          label: 'Dismiss'
+        }
+      }
+    }
+  }))`}>
+		<Icon name='copy' />
+		Copy
+	</button>
+</section>
