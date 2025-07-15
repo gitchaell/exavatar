@@ -283,7 +283,6 @@
 
 	observer.observe(document.body, { childList: true, subtree: true })
 })()
-
 ;(() => {
 	const initSelect = (selectComponent) => {
 		const trigger = selectComponent.querySelector(':scope > button')

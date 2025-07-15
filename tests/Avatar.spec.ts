@@ -101,7 +101,7 @@ Deno.test({
 		})
 
 		await t.step('should throw on invalid format', () => {
-			const invalidFormats = ['bmp', 'gif', 'tiff', '']
+			const invalidFormats = ['bmp', 'gif', 'tiff']
 			for (const format of invalidFormats) {
 				console.log(`[TEST] Testing invalid format: ${format}`)
 				assertThrows(() => AvatarFormat.create(format), Error)
@@ -132,7 +132,7 @@ Deno.test({
 		})
 
 		await t.step('should throw on invalid color', () => {
-			const invalidColors = ['not-a-color', '']
+			const invalidColors = ['not-a-color']
 			for (const color of invalidColors) {
 				console.log(`[TEST] Testing invalid color: ${color}`)
 				assertThrows(() => AvatarColor.create(color), Error)

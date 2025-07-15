@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css'
+import { ViewTransitions } from 'astro:transitions'
 import Icon from '../components/Icon.astro'
 import GridPattern from '../components/GridPattern.astro'
 ---
@@ -57,6 +58,8 @@ import GridPattern from '../components/GridPattern.astro'
 				})
 			})()
 		</script>
+
+		<ViewTransitions />
 	</head>
 
 	<body class='h-full min-h-full overflow-x-hidden overflow-y-auto'>
