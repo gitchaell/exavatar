@@ -30,48 +30,19 @@ import GridPattern from '../components/GridPattern.astro'
 		/>
 		<title>Exavatar</title>
 
-		<script is:inline>
-			;(() => {
-				try {
-					const stored = localStorage.getItem('exavatar.themeMode')
-
-					if (stored ? stored === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches) {
-						document.documentElement.classList.add('dark')
-					}
-				} catch (_) {}
-
-				const apply = (dark) => {
-					document.documentElement.classList.toggle('dark', dark)
-
-					try {
-						localStorage.setItem('exavatar.themeMode', dark ? 'dark' : 'light')
-					} catch (_) {}
-				}
-
-				document.addEventListener('basecoat:theme', (event) => {
-					const mode = event.detail?.mode
-					apply(
-						mode === 'dark' ? true
-						: mode === 'light' ? false
-						: !document.documentElement.classList.contains('dark'),
-					)
-				})
-			})()
-		</script>
-
 		<ViewTransitions />
 	</head>
 
 	<body
-		class='grid grid-cols-12 bg-transparent bg-repeat h-[200dvh] min-h-screen overflow-x-hidden overflow-y-auto'>
+		class='grid h-[200dvh] min-h-screen grid-cols-12 overflow-x-hidden overflow-y-auto bg-transparent bg-repeat'>
 		<nav class='contents'>
 			<h1
-				class='grid-box text-2xl font-bold italic place-content-center text-center col-[1/5] row-[1/2] md:col-[3/5] md:row-[1/2]'>
+				class='grid-box col-[1/5] row-[1/2] place-content-center text-center text-2xl font-bold italic md:col-[3/5] md:row-[1/2]'>
 				Exavatar
 			</h1>
 
 			<div
-				class='grid-box grid grid-flow-col auto-cols-max justify-center items-center gap-2 px-1 overflow-x-auto overflow-y-hidden col-[1/13] row-[2/3] md:col-[5/9] md:row-[1/2]'>
+				class='grid-box col-[1/13] row-[2/3] grid auto-cols-max grid-flow-col items-center justify-center gap-2 overflow-x-auto overflow-y-hidden px-1 md:col-[5/9] md:row-[1/2]'>
 				<a
 					href='/'
 					class='btn-ghost'
@@ -88,7 +59,7 @@ import GridPattern from '../components/GridPattern.astro'
 			</div>
 
 			<div
-				class='grid-box grid grid-flow-col auto-cols-max justify-end items-center gap-2 px-2 col-[5/13] row-[1/2] md:col-[9/11] md:row-[1/2]'>
+				class='grid-box col-[5/13] row-[1/2] grid auto-cols-max grid-flow-col items-center justify-end gap-2 px-2 md:col-[9/11] md:row-[1/2]'>
 				<button
 					type='button'
 					aria-label='Toggle dark mode'
@@ -120,11 +91,44 @@ import GridPattern from '../components/GridPattern.astro'
 		</div>
 
 		<GridPattern />
+
+		<script is:inline>
+			;(() => {
+				try {
+					const stored = localStorage.getItem('exavatar.themeMode')
+
+					if (stored ? stored === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches) {
+						document.documentElement.classList.add('dark')
+					}
+				} catch (_) {
+					// Ignorar errores de localStorage
+				}
+
+				const apply = (dark) => {
+					document.documentElement.classList.toggle('dark', dark)
+
+					try {
+						localStorage.setItem('exavatar.themeMode', dark ? 'dark' : 'light')
+					} catch (_) {
+						// Ignorar errores de localStorage
+					}
+				}
+
+				document.addEventListener('basecoat:theme', (event) => {
+					const mode = event.detail?.mode
+					apply(
+						mode === 'dark' ? true
+						: mode === 'light' ? false
+						: !document.documentElement.classList.contains('dark'),
+					)
+				})
+			})()
+		</script>
+
+		<script
+			is:inline
+			src='/js/basecoat/all.min.js'
+			defer
+		></script>
 	</body>
 </html>
-
-<script
-	is:inline
-	src='/js/basecoat/all.min.js'
-	defer
-></script>

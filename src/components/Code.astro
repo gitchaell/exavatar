@@ -126,7 +126,7 @@ const html = UrlSyntaxHighlighter.process(code)
 
 	<button
 		type='button'
-		class='btn-outline absolute top-2 right-2 transition-all duration-200 opacity-0 group-hover/code:opacity-100'
+		class='btn-outline absolute top-2 right-2 opacity-0 transition-all duration-200 group-hover/code:opacity-100'
 		onclick={`navigator.clipboard.writeText("${code}"); document.dispatchEvent(new CustomEvent('basecoat:toast', {
     detail: {
       config: {

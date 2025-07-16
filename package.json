@@ -9,7 +9,7 @@
 		"build": "deno run -A npm:astro build",
 		"preview": "deno run -A --unstable ./dist/server/entry.mjs",
 		"format": "deno run -A npm:prettier --write .",
-		"lint": "deno run -A npm:eslint src/",
+		"lint": "deno run -A npm:eslint . --ext .js,.jsx,.ts,.tsx,.astro",
 		"test": "deno test --env-file -A --no-check",
 		"generate": "deno run -A scripts/generate.ts",
 		"prepare": "husky install",
@@ -34,13 +34,16 @@
 		"@semantic-release/git": "^10.0.1",
 		"@semantic-release/github": "^9.2.6",
 		"@semantic-release/release-notes-generator": "^12.1.0",
-		"@typescript-eslint/eslint-plugin": "^7.2.0",
-		"@typescript-eslint/parser": "^7.2.0",
+		"@typescript-eslint/eslint-plugin": "^7.18.0",
+		"@typescript-eslint/parser": "^7.18.0",
 		"eslint": "^8.57.0",
+		"eslint-config-prettier": "^10.1.5",
+		"eslint-plugin-astro": "^1.3.1",
 		"eslint-plugin-prettier": "^5.5.1",
 		"husky": "^8.0.3",
 		"prettier": "^3.3.1",
 		"prettier-plugin-astro": "^0.14.0",
+		"prettier-plugin-tailwindcss": "^0.6.14",
 		"semantic-release": "^23.0.0"
 	}
 }

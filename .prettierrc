@@ -1,4 +1,5 @@
 {
+	"$schema": "https://json.schemastore.org/prettierrc",
 	"arrowParens": "always",
 	"bracketSameLine": true,
 	"bracketSpacing": true,
@@ -14,5 +15,14 @@
 	"singleQuote": true,
 	"tabWidth": 2,
 	"trailingComma": "all",
-	"useTabs": true
+	"useTabs": true,
+	"overrides": [
+		{
+			"files": "*.astro",
+			"options": {
+				"parser": "astro"
+			}
+		}
+	],
+	"plugins": ["prettier-plugin-astro", "prettier-plugin-tailwindcss"]
 }

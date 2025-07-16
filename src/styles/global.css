@@ -39,14 +39,16 @@
 	--font-display: 'Geist', 'sans-serif';
 	--font-sans: 'Geist', 'sans-serif';
 	--font-mono: 'GeistMono', 'monospace';
+	--grid-guide: oklch(0.93 0 0);
 }
 
-.grid-box {
-	--border-color: #e7e7e7;
+@layer base {
+	.dark {
+		--grid-guide: oklch(0.32 0 0);
+	}
+}
+
+@utility grid-box {
 	width: 100%;
-	box-shadow: 0 0 0 1px var(--border-color);
-}
-
-html.dark .grid-box {
-	--border-color: #323232;
+	box-shadow: 0 0 0 1px var(--grid-guide);
 }

@@ -4,7 +4,8 @@ node_modules/
 
 # Build output
 dist/
-public/assets/
+public/
+avatars/
 .astro/
 
 # Generated files

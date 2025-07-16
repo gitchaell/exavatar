@@ -37,8 +37,8 @@ const code = `https://exavatar.deno.dev${path}`
 
 <Layout>
 	<header
-		class='grid-box grid grid-flow-row auto-rows-min content-center col-[1/13] row-[3/5] md:col-[3/11] md:row-[2/4]'>
-		<h2 class='text-3xl content-end text-center font-semibold'>Playground</h2>
+		class='grid-box col-[1/13] row-[3/5] grid grid-flow-row auto-rows-min content-center md:col-[3/11] md:row-[2/4]'>
+		<h2 class='content-end text-center text-3xl font-semibold'>Playground</h2>
 		<p class='text-md content-center text-center text-pretty'>
 			Use the avatar API to generate dynamic images.
 		</p>
@@ -46,11 +46,11 @@ const code = `https://exavatar.deno.dev${path}`
 
 	<main class='contents'>
 		<section class='grid-box relative col-[3/11] row-[6/12] md:col-[4/6] md:row-[6/12]'>
-			<span class='badge-secondary absolute z-20 top-2 right-2'>{params.size}x{params.size}</span>
+			<span class='badge-secondary absolute top-2 right-2 z-20'>{params.size}x{params.size}</span>
 
 			<img
 				id='preview'
-				class='block mx-auto p-1 h-full absolute z-10 inset-0 aspect-square object-cover'
+				class='absolute inset-0 z-10 mx-auto block aspect-square h-full object-cover p-1'
 				src={path}
 				alt={'Preview:' + params.set + ':' + params.id}
 			/>
@@ -60,14 +60,14 @@ const code = `https://exavatar.deno.dev${path}`
 			method='GET'
 			action=''
 			class='contents'>
-			<div class='grid-box grid px-2 col-[2/12] row-[13/14] md:col-[7/10] md:row-[5/6]'>
+			<div class='grid-box col-[2/12] row-[13/14] grid px-2 md:col-[7/10] md:row-[5/6]'>
 				<label class='label grid grid-cols-10 md:grid-cols-3'>
 					<span class='col-[1/4] md:col-[1/2]'><span class='font-light'>Avatar.</span>Set</span>
 
 					<select
 						name='set'
 						id='avatar-set'
-						class='select w-full col-[4/11] md:col-[2/4]'
+						class='select col-[4/11] w-full md:col-[2/4]'
 						onchange='this.form.submit()'>
 						<option value=''></option>
 						{
@@ -83,14 +83,14 @@ const code = `https://exavatar.deno.dev${path}`
 				</label>
 			</div>
 
-			<div class='grid-box grid px-2 col-[2/12] row-[14/15] md:col-[7/10] md:row-[6/7]'>
+			<div class='grid-box col-[2/12] row-[14/15] grid px-2 md:col-[7/10] md:row-[6/7]'>
 				<label class='label grid grid-cols-10 md:grid-cols-3'>
 					<span class='col-[1/4] md:col-[1/2]'><span class='font-light'>Avatar.</span>Id</span>
 
 					<select
 						name='id'
 						id='avatar-id'
-						class='select w-full col-[4/11] md:col-[2/4]'
+						class='select col-[4/11] w-full md:col-[2/4]'
 						onchange='this.form.submit()'>
 						<option value=''></option>
 						{
@@ -106,14 +106,14 @@ const code = `https://exavatar.deno.dev${path}`
 				</label>
 			</div>
 
-			<div class='grid-box grid px-2 col-[2/12] row-[15/16] md:col-[7/10] md:row-[7/8]'>
+			<div class='grid-box col-[2/12] row-[15/16] grid px-2 md:col-[7/10] md:row-[7/8]'>
 				<label class='label grid grid-cols-10 md:grid-cols-3'>
 					<span class='col-[1/4] md:col-[1/2]'><span class='font-light'>Avatar.</span>Size</span>
 
 					<select
 						name='size'
 						id='avatar-size'
-						class='select w-full col-[4/11] md:col-[2/4]'
+						class='select col-[4/11] w-full md:col-[2/4]'
 						onchange='this.form.submit()'>
 						<option value=''></option>
 						{
@@ -129,14 +129,14 @@ const code = `https://exavatar.deno.dev${path}`
 				</label>
 			</div>
 
-			<div class='grid-box grid px-2 col-[2/12] row-[16/17] md:col-[7/10] md:row-[8/9]'>
+			<div class='grid-box col-[2/12] row-[16/17] grid px-2 md:col-[7/10] md:row-[8/9]'>
 				<label class='label grid grid-cols-10 md:grid-cols-3'>
 					<span class='col-[1/4] md:col-[1/2]'><span class='font-light'>Avatar.</span>Format</span>
 
 					<select
 						name='format'
 						id='avatar-format'
-						class='select w-full col-[4/11] md:col-[2/4]'
+						class='select col-[4/11] w-full md:col-[2/4]'
 						onchange='this.form.submit()'>
 						<option value=''></option>
 						{
@@ -152,7 +152,7 @@ const code = `https://exavatar.deno.dev${path}`
 				</label>
 			</div>
 
-			<div class='grid-box grid px-2 col-[2/12] row-[17/18] md:col-[7/10] md:row-[9/10]'>
+			<div class='grid-box col-[2/12] row-[17/18] grid px-2 md:col-[7/10] md:row-[9/10]'>
 				<label class='label grid grid-cols-10 md:grid-cols-3'>
 					<span class='col-[1/4] md:col-[1/2]'><span class='font-light'>Avatar.</span>Text</span>
 
@@ -161,14 +161,14 @@ const code = `https://exavatar.deno.dev${path}`
 						id='avatar-text'
 						type='text'
 						maxlength='2'
-						class='input w-full col-[4/11] md:col-[2/4]'
+						class='input col-[4/11] w-full md:col-[2/4]'
 						value={params.text}
 						onchange='this.form.submit()'
 					/>
 				</label>
 			</div>
 
-			<div class='grid-box grid px-2 col-[2/12] row-[18/19] md:col-[7/10] md:row-[10/11]'>
+			<div class='grid-box col-[2/12] row-[18/19] grid px-2 md:col-[7/10] md:row-[10/11]'>
 				<label class='label grid grid-cols-10 md:grid-cols-3'>
 					<span class='col-[1/4] md:col-[1/2]'><span class='font-light'>Avatar.</span>Color</span>
 
@@ -176,7 +176,7 @@ const code = `https://exavatar.deno.dev${path}`
 						name='color'
 						id='avatar-color'
 						type='color'
-						class='input w-full col-[4/11] md:col-[2/4]'
+						class='input col-[4/11] w-full md:col-[2/4]'
 						value={params.color}
 						onchange='this.form.submit()'
 					/>
@@ -184,7 +184,7 @@ const code = `https://exavatar.deno.dev${path}`
 			</div>
 
 			<div
-				class='grid-box grid grid-cols-2 items-center gap-2 px-2 col-[2/12] row-[20/21] md:col-[7/10] md:row-[12/13]'>
+				class='grid-box col-[2/12] row-[20/21] grid grid-cols-2 items-center gap-2 px-2 md:col-[7/10] md:row-[12/13]'>
 				<button
 					type='button'
 					class='btn btn-secondary'
@@ -212,7 +212,7 @@ const code = `https://exavatar.deno.dev${path}`
 		</form>
 
 		<Code
-			class='grid-box text-center content-center overflow-hidden p-3 col-[1/13] row-[22/24] md:row-[14/16] md:col-[3/11]'
+			class='grid-box col-[1/13] row-[22/24] content-center overflow-hidden p-3 text-center md:col-[3/11] md:row-[14/16]'
 			code={code}
 		/>
 	</main>
