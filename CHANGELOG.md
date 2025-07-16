@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.5.0](https://github.com/gitchaell/exavatar/compare/v1.4.0...v1.5.0) (2025-07-16)
+
+### ✨ Features
+
+- add basecoat UI components and improve layout with grid system
+  ([3a22ece](https://github.com/gitchaell/exavatar/commit/3a22ecea240b73f5fd05880c63d49fe8e9c6290e))
+- add dark mode toggle button with local storage persistence
+  ([dbd6799](https://github.com/gitchaell/exavatar/commit/dbd67996c9384d3c4ea5e94251b1110903cd0332))
+- add Geist and GeistMono variable fonts with CSS configuration
+  ([42c249e](https://github.com/gitchaell/exavatar/commit/42c249e4c28c788b347eb2f1e686fa260ba77c9c))
+- add view transitions and remove empty string test cases in Avatar spec
+  ([a14f55b](https://github.com/gitchaell/exavatar/commit/a14f55b0b4491b22aba5ccedf38445b39ec473e8))
+
+### ♻️ Code Refactoring
+
+- convert form inputs to server-side handling and improve URL syntax highlighting
+  ([aaaad44](https://github.com/gitchaell/exavatar/commit/aaaad442c3a49bcb1a0b89b32e321743c1ad5153))
+- move URL syntax highlighting into Code component and improve grid layout
+  ([3806f69](https://github.com/gitchaell/exavatar/commit/3806f69fc3fc86c8b0d4e78e5f2a8fa61bdb5481))
+
 ## [1.4.0](https://github.com/gitchaell/exavatar/compare/v1.3.4...v1.4.0) (2025-07-09)
 
 ### ✨ Features
