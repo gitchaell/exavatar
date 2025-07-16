@@ -37,16 +37,15 @@ const code = `https://exavatar.deno.dev${path}`
 
 <Layout>
 	<header
-		class='grid-box grid grid-flow-row auto-rows-min col-span-full row-start-3 place-content-center px-4 h-24 md:row-start-2'>
+		class='grid-box grid grid-flow-row auto-rows-min content-center col-[1/13] row-[3/5] md:col-[3/11] md:row-[2/4]'>
 		<h2 class='text-3xl content-end text-center font-semibold'>Playground</h2>
 		<p class='text-md content-center text-center text-pretty'>
 			Use the avatar API to generate dynamic images.
 		</p>
 	</header>
 
-	<main
-		class='grid-box grid grid-cols-12 grid-flow-row auto-rows-[48px] col-span-full row-start-5 row-span-20 md:row-start-4 pb-32'>
-		<section class='relative grid-box col-start-4 col-span-6 row-start-2 row-span-5'>
+	<main class='contents'>
+		<section class='grid-box relative col-[3/11] row-[6/12] md:col-[4/6] md:row-[6/12]'>
 			<span class='badge-secondary absolute z-20 top-2 right-2'>{params.size}x{params.size}</span>
 
 			<img
@@ -60,15 +59,15 @@ const code = `https://exavatar.deno.dev${path}`
 		<form
 			method='GET'
 			action=''
-			class='grid-box grid grid-cols-12 grid-flow-row auto-rows-[48px] col-span-full row-start-8 row-span-10'>
-			<div class='grid items-center col-start-2 row-start-2 col-span-10 px-2'>
-				<label class='label grid grid-cols-10'>
-					<span class='col-span-3'><span class='font-light'>Avatar.</span>Set</span>
+			class='contents'>
+			<div class='grid-box grid px-2 col-[2/12] row-[13/14] md:col-[7/10] md:row-[5/6]'>
+				<label class='label grid grid-cols-10 md:grid-cols-3'>
+					<span class='col-[1/4] md:col-[1/2]'><span class='font-light'>Avatar.</span>Set</span>
 
 					<select
 						name='set'
 						id='avatar-set'
-						class='select w-full col-span-7'
+						class='select w-full col-[4/11] md:col-[2/4]'
 						onchange='this.form.submit()'>
 						<option value=''></option>
 						{
@@ -84,14 +83,14 @@ const code = `https://exavatar.deno.dev${path}`
 				</label>
 			</div>
 
-			<div class='grid items-center col-start-2 row-start-3 col-span-10 px-2'>
-				<label class='label grid grid-cols-10'>
-					<span class='col-span-3'><span class='font-light'>Avatar.</span>Id</span>
+			<div class='grid-box grid px-2 col-[2/12] row-[14/15] md:col-[7/10] md:row-[6/7]'>
+				<label class='label grid grid-cols-10 md:grid-cols-3'>
+					<span class='col-[1/4] md:col-[1/2]'><span class='font-light'>Avatar.</span>Id</span>
 
 					<select
 						name='id'
 						id='avatar-id'
-						class='select w-full col-span-7'
+						class='select w-full col-[4/11] md:col-[2/4]'
 						onchange='this.form.submit()'>
 						<option value=''></option>
 						{
@@ -107,14 +106,14 @@ const code = `https://exavatar.deno.dev${path}`
 				</label>
 			</div>
 
-			<div class='grid items-center col-start-2 row-start-4 col-span-10 px-2'>
-				<label class='label grid grid-cols-10'>
-					<span class='col-span-3'><span class='font-light'>Avatar.</span>Size</span>
+			<div class='grid-box grid px-2 col-[2/12] row-[15/16] md:col-[7/10] md:row-[7/8]'>
+				<label class='label grid grid-cols-10 md:grid-cols-3'>
+					<span class='col-[1/4] md:col-[1/2]'><span class='font-light'>Avatar.</span>Size</span>
 
 					<select
 						name='size'
 						id='avatar-size'
-						class='select w-full col-span-7'
+						class='select w-full col-[4/11] md:col-[2/4]'
 						onchange='this.form.submit()'>
 						<option value=''></option>
 						{
@@ -130,14 +129,14 @@ const code = `https://exavatar.deno.dev${path}`
 				</label>
 			</div>
 
-			<div class='grid items-center col-start-2 row-start-5 col-span-10 px-2'>
-				<label class='label grid grid-cols-10'>
-					<span class='col-span-3'><span class='font-light'>Avatar.</span>Format</span>
+			<div class='grid-box grid px-2 col-[2/12] row-[16/17] md:col-[7/10] md:row-[8/9]'>
+				<label class='label grid grid-cols-10 md:grid-cols-3'>
+					<span class='col-[1/4] md:col-[1/2]'><span class='font-light'>Avatar.</span>Format</span>
 
 					<select
 						name='format'
 						id='avatar-format'
-						class='select w-full col-span-7'
+						class='select w-full col-[4/11] md:col-[2/4]'
 						onchange='this.form.submit()'>
 						<option value=''></option>
 						{
@@ -153,39 +152,39 @@ const code = `https://exavatar.deno.dev${path}`
 				</label>
 			</div>
 
-			<div class='grid items-center col-start-2 row-start-6 col-span-10 px-2'>
-				<label class='label grid grid-cols-10'>
-					<span class='col-span-3'><span class='font-light'>Avatar.</span>Text</span>
+			<div class='grid-box grid px-2 col-[2/12] row-[17/18] md:col-[7/10] md:row-[9/10]'>
+				<label class='label grid grid-cols-10 md:grid-cols-3'>
+					<span class='col-[1/4] md:col-[1/2]'><span class='font-light'>Avatar.</span>Text</span>
 
 					<input
 						name='text'
 						id='avatar-text'
 						type='text'
 						maxlength='2'
-						class='input w-full col-span-7'
-						placeholder='AB'
+						class='input w-full col-[4/11] md:col-[2/4]'
 						value={params.text}
 						onchange='this.form.submit()'
 					/>
 				</label>
 			</div>
 
-			<div class='grid items-center col-start-2 row-start-7 col-span-10 px-2'>
-				<label class='label grid grid-cols-10'>
-					<span class='col-span-3'><span class='font-light'>Avatar.</span>Color</span>
+			<div class='grid-box grid px-2 col-[2/12] row-[18/19] md:col-[7/10] md:row-[10/11]'>
+				<label class='label grid grid-cols-10 md:grid-cols-3'>
+					<span class='col-[1/4] md:col-[1/2]'><span class='font-light'>Avatar.</span>Color</span>
 
 					<input
 						name='color'
 						id='avatar-color'
 						type='color'
-						class='input w-full col-span-7'
+						class='input w-full col-[4/11] md:col-[2/4]'
 						value={params.color}
 						onchange='this.form.submit()'
 					/>
 				</label>
 			</div>
 
-			<div class='grid grid-cols-2 items-center col-start-2 row-start-9 col-span-10 gap-2 px-2'>
+			<div
+				class='grid-box grid grid-cols-2 items-center gap-2 px-2 col-[2/12] row-[20/21] md:col-[7/10] md:row-[12/13]'>
 				<button
 					type='button'
 					class='btn btn-secondary'
@@ -213,7 +212,7 @@ const code = `https://exavatar.deno.dev${path}`
 		</form>
 
 		<Code
-			class='grid-box p-3 col-start-1 col-span-12 wrap-anywhere row-start-18 row-span-2'
+			class='grid-box text-center content-center overflow-hidden p-3 col-[1/13] row-[22/24] md:row-[14/16] md:col-[3/11]'
 			code={code}
 		/>
 	</main>

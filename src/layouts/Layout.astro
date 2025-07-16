@@ -62,15 +62,16 @@ import GridPattern from '../components/GridPattern.astro'
 		<ViewTransitions />
 	</head>
 
-	<body class='h-full min-h-full overflow-x-hidden overflow-y-auto'>
-		<nav class='grid grid-cols-12 grid-rows-2 col-span-full md:grid-rows-1 h-24 md:h-12'>
+	<body
+		class='grid grid-cols-12 bg-transparent bg-repeat h-[200dvh] min-h-screen overflow-x-hidden overflow-y-auto'>
+		<nav class='contents'>
 			<h1
-				class='grid-box col-span-7 md:col-span-3 text-2xl font-bold italic place-content-center text-center'>
+				class='grid-box text-2xl font-bold italic place-content-center text-center col-[1/5] row-[1/2] md:col-[3/5] md:row-[1/2]'>
 				Exavatar
 			</h1>
 
 			<div
-				class='grid-box grid grid-flow-col auto-cols-max col-span-full row-start-2 md:col-span-6 md:row-start-1 md:col-start-4 items-center gap-2 px-1 overflow-x-auto overflow-y-hidden'>
+				class='grid-box grid grid-flow-col auto-cols-max justify-center items-center gap-2 px-1 overflow-x-auto overflow-y-hidden col-[1/13] row-[2/3] md:col-[5/9] md:row-[1/2]'>
 				<a
 					href='/'
 					class='btn-ghost'
@@ -87,7 +88,7 @@ import GridPattern from '../components/GridPattern.astro'
 			</div>
 
 			<div
-				class='grid-box grid grid-flow-col auto-cols-max col-span-5 md:col-span-3 items-center gap-2 px-2 justify-end'>
+				class='grid-box grid grid-flow-col auto-cols-max justify-end items-center gap-2 px-2 col-[5/13] row-[1/2] md:col-[9/11] md:row-[1/2]'>
 				<button
 					type='button'
 					aria-label='Toggle dark mode'

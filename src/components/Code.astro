@@ -1,6 +1,5 @@
 ---
 import { HTMLAttributes } from 'astro/types'
-import { UrlSyntaxHighlighter } from './UrlSyntaxHighlighter'
 import Icon from './Icon.astro'
 
 interface Props extends HTMLAttributes<'code'> {
@@ -9,6 +8,111 @@ interface Props extends HTMLAttributes<'code'> {
 
 const { code, class: otherClasses, ...rest } = Astro.props as Props
 
+type UrlTokenType =
+	| 'protocol'
+	| 'hostname'
+	| 'port'
+	| 'pathname'
+	| 'search-key'
+	| 'search-operator'
+	| 'search-value'
+	| 'hash'
+	| 'href'
+
+class UrlToken {
+	content: string
+	type: UrlTokenType
+
+	constructor(content: string, type: UrlTokenType) {
+		this.type = type
+		this.content = content.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+	}
+
+	get bgColor() {
+		switch (this.type) {
+			case 'protocol':
+				return 'text-sky-500 dark:text-sky-400'
+			case 'hostname':
+				return 'text-emerald-500 dark:text-emerald-400'
+			case 'port':
+				return 'text-violet-500 dark:text-violet-400'
+			case 'pathname':
+				return 'text-yellow-500 dark:text-yellow-400'
+			case 'search-key':
+				return 'text-orange-500 dark:text-orange-400'
+			case 'search-operator':
+				return 'text-violet-500 dark:text-violet-400'
+			case 'search-value':
+				return 'text-pink-500 dark:text-pink-400'
+			case 'hash':
+				return 'text-sky-500 dark:text-sky-400'
+			default:
+				return 'text-slate-500 dark:text-slate-400'
+		}
+	}
+
+	get html() {
+		return `<span class="${this.type} ${this.bgColor}">${this.content}</span>`
+	}
+}
+
+class UrlSyntaxHighlighter {
+	static process(code: string): string {
+		return this.tokenize(code)
+			.map((token) => token.html)
+			.join('')
+	}
+
+	static tokenize(url: string): UrlToken[] {
+		try {
+			const parts = new URL(url)
+
+			const tokens: UrlToken[] = []
+
+			tokens.push(new UrlToken(parts.protocol + '//', 'protocol'))
+			tokens.push(new UrlToken(parts.hostname, 'hostname'))
+
+			if (parts.port) {
+				tokens.push(new UrlToken(parts.port, 'port'))
+			}
+
+			if (parts.pathname) {
+				tokens.push(new UrlToken(parts.pathname, 'pathname'))
+			}
+
+			if ([...parts.searchParams].length > 0) {
+				tokens.push(new UrlToken('?', 'search-operator'))
+
+				const entries = [...parts.searchParams.entries()]
+
+				for (let index = 0; index < entries.length; index++) {
+					const [key, value] = entries[index]
+
+					if (value === null || value === undefined || value === '') {
+						continue
+					}
+
+					tokens.push(new UrlToken(key, 'search-key'))
+					tokens.push(new UrlToken('=', 'search-operator'))
+					tokens.push(new UrlToken(value, 'search-value'))
+
+					if (index < entries.length - 1) {
+						tokens.push(new UrlToken('&', 'search-operator'))
+					}
+				}
+			}
+
+			if (parts.hash) {
+				tokens.push(new UrlToken(parts.hash, 'hash'))
+			}
+
+			return tokens
+		} catch {
+			return [new UrlToken(url, 'href')]
+		}
+	}
+}
+
 const html = UrlSyntaxHighlighter.process(code)
 ---
 
@@ -16,7 +120,7 @@ const html = UrlSyntaxHighlighter.process(code)
 	class={'relative group/code ' + otherClasses}
 	{...rest}>
 	<code
-		class='block w-full h-full'
+		class='block w-full wrap-anywhere'
 		set:html={html}
 	/>
 
