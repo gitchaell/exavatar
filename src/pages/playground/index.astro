@@ -1,13 +1,13 @@
 ---
-import { avatarSets, getDefaultAvatarSet } from '../core/domain/AvatarSet'
-import { avatarIds, getDefaultAvatarId } from '../core/domain/AvatarId'
-import { avatarSizes } from '../core/domain/AvatarSize'
-import { avatarFormats, defaultAvatarFormat } from '../core/domain/AvatarFormat'
-import { defaultAvatarText } from '../core/domain/AvatarText'
-import { defaultAvatarColor } from '../core/domain/AvatarColor'
-import Code from '../components/Code.astro'
-import Layout from '../layouts/Layout.astro'
-import Icon from '../components/Icon.astro'
+import { avatarSets, getDefaultAvatarSet } from '../../core/domain/AvatarSet'
+import { avatarIds, getDefaultAvatarId } from '../../core/domain/AvatarId'
+import { avatarSizes } from '../../core/domain/AvatarSize'
+import { avatarFormats, defaultAvatarFormat } from '../../core/domain/AvatarFormat'
+import { defaultAvatarText } from '../../core/domain/AvatarText'
+import { defaultAvatarColor } from '../../core/domain/AvatarColor'
+import Code from '../../components/Code.astro'
+import Layout from '../../layouts/Layout.astro'
+import Icon from '../../components/Icon.astro'
 
 const searchParams = Astro.url.searchParams
 const hasSearchParams = searchParams.size > 0

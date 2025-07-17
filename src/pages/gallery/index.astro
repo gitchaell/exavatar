@@ -1,0 +1,115 @@
+---
+import { Avatar } from '../../core/domain/Avatar'
+import { avatarSets } from '../../core/domain/AvatarSet'
+import { avatarIdsMap } from '../../core/domain/AvatarId'
+import Layout from '../../layouts/Layout.astro'
+import Icon from '../../components/Icon.astro'
+
+const searchParams = Astro.url.searchParams
+const selectedSet = searchParams.get('set') || 'animals'
+const searchQuery = searchParams.get('search')?.toLowerCase() || ''
+
+const filteredAvatars = avatarIdsMap[selectedSet as keyof typeof avatarIdsMap]
+	.filter((id) => id.toLowerCase().includes(searchQuery))
+	.map((id) => Avatar.create({ set: selectedSet, id, size: '256', format: 'webp' }))
+---
+
+<Layout title='Avatar Gallery'>
+	<header
+		class='grid-box col-[1/13] row-[3/5] grid grid-flow-row auto-rows-min content-center md:col-[3/11] md:row-[2/4]'>
+		<h1 class='text-center text-3xl font-semibold'>Avatar Gallery</h1>
+		<p class='text-md text-center text-pretty'>Browse and discover all available avatar styles</p>
+	</header>
+
+	<main class='contents'>
+		<form
+			method='GET'
+			action=''
+			class='contents'>
+			<div
+				class='grid-box col-[2/12] row-[6/9] grid grid-flow-row auto-rows-auto p-2 md:col-[3/11] md:row-[5/7]'>
+				<div class='grid grid-flow-row auto-rows-fr md:auto-cols-fr md:grid-flow-col md:gap-2'>
+					<select
+						class='select w-full'
+						name='set'
+						onchange='this.form.submit()'>
+						{
+							avatarSets.map((set) => (
+								<option
+									value={set}
+									selected={selectedSet === set}>
+									{set}
+								</option>
+							))
+						}
+					</select>
+
+					<input
+						class='input w-full'
+						type='text'
+						name='search'
+						placeholder='Search...'
+						value={searchQuery}
+					/>
+				</div>
+
+				<div class='grid grid-flow-col items-center justify-between'>
+					<div class='text-sm'>
+						Showing {filteredAvatars.length}
+						{filteredAvatars.length === 1 ? 'avatar' : 'avatars'}
+						{searchQuery && ` matching "${searchQuery}"`}
+					</div>
+
+					<div class='grid auto-cols-max grid-flow-col items-center gap-2'>
+						<button
+							type='button'
+							class='btn btn-secondary'
+							onclick='window.location.replace("/gallery")'>
+							Reset
+						</button>
+
+						<button
+							class='btn'
+							type='submit'>
+							Search
+						</button>
+					</div>
+				</div>
+			</div>
+		</form>
+
+		<div
+			class='gallery col-[2/12] row-[10/none] md:col-[3/11] md:row-[8/none]'
+			data-card-total={filteredAvatars.length}>
+			{
+				filteredAvatars.map((avatar) => (
+					<a
+						href={`/playground?id=${avatar.id.value}&set=${avatar.set.value}&size=${avatar.size.value}&format=${avatar.format.value}`}
+						class={
+							'grid-box relative ' +
+							(['grid-cross-tl', 'grid-cross-tr', 'grid-cross-bl', 'grid-cross-br'][
+								Math.floor(Math.random() * 4 * 4)
+							] || '')
+						}>
+						<img
+							src={`/api/avatar?set=${avatar.set.value}&id=${avatar.id.value}&size=${avatar.size.value}&format=${avatar.format.value}`}
+							alt={'Preview:' + avatar.set.value + ':' + avatar.id.value}
+							class='absolute inset-0 z-10 mx-auto block aspect-square h-full object-cover p-1'
+							loading='lazy'
+						/>
+					</a>
+				))
+			}
+		</div>
+
+		{
+			filteredAvatars.length === 0 && (
+				<div class='alert grid-box col-[2/12] row-[10/12]'>
+					<Icon name='info' />
+					<h2>No avatars found</h2>
+					<section>Try adjusting your search or filter to find what you're looking for.</section>
+				</div>
+			)
+		}
+	</main>
+</Layout>

@@ -38,7 +38,11 @@ export class Avatar {
 		this.filepath = `${this.set.value}/${this.size.value}/${this.filename}`
 	}
 
+	static create(props: AvatarProps): Avatar {
+		return new Avatar(props)
+	}
+
 	hasText(): boolean {
-		return this.text.value.length > 0
+		return this.text.hasText()
 	}
 }

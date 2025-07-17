@@ -22,6 +22,10 @@ export class AvatarText {
 
 		return new AvatarText(input)
 	}
+
+	hasText(): boolean {
+		return this.value.length > 0
+	}
 }
 
 export class AvatarTextNotValidError extends ExavatarError {

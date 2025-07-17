@@ -67,6 +67,7 @@
 		content: '';
 		position: absolute;
 		background: var(--grid-cross);
+		z-index: 1;
 	}
 
 	/* Línea horizontal */
@@ -139,5 +140,37 @@
 	&::after {
 		bottom: var(--grid-cross-offset);
 		right: var(--grid-cross-line-offset);
+	}
+}
+
+@utility gallery {
+	--card-height: calc(48px * 4);
+	--card-total: attr(data-card-total type(number));
+	display: grid;
+	grid-template-columns: repeat(var(--columns, 2), 1fr);
+	grid-template-rows: repeat(auto-fill, var(--card-height));
+	height: calc(var(--card-height) * var(--card-total) / var(--columns, 2));
+	padding-bottom: 400px;
+
+	& > * {
+		height: var(--card-height);
+	}
+
+	@media (max-width: 639px) {
+		--columns: 2;
+	}
+
+	@media (min-width: 640px) {
+		--columns: 2;
+	}
+
+	@media (min-width: 768px) {
+		--columns: 4;
+		--card-height: calc(48px * 6);
+	}
+
+	@media (min-width: 1024px) {
+		--columns: 4;
+		--card-height: calc(48px * 6);
 	}
 }
