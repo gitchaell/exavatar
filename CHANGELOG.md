@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.6.0](https://github.com/gitchaell/exavatar/compare/v1.5.0...v1.6.0) (2025-07-17)
+
+### ✨ Features
+
+- add decorative cross markers to grid boxes with corner positioning utilities
+  ([c56e6f5](https://github.com/gitchaell/exavatar/commit/c56e6f5568f38e52459a4d662e7494dbbca70345))
+- add gallery page and refactor playground into separate route
+  ([5e806de](https://github.com/gitchaell/exavatar/commit/5e806de52f0fa03c0dd71bf07c4c868b15679d22))
+
 ## [1.5.0](https://github.com/gitchaell/exavatar/compare/v1.4.0...v1.5.0) (2025-07-16)
 
 ### ✨ Features
