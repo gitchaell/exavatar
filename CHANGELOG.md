@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.7.0](https://github.com/gitchaell/exavatar/compare/v1.6.0...v1.7.0) (2025-07-18)
+
+### ✨ Features
+
+- add Rick and Morty avatar assets in multiple resolutions
+  ([7a1413e](https://github.com/gitchaell/exavatar/commit/7a1413e4f5c5b5383d18837ea5ef280202da899a))
+
 ## [1.6.0](https://github.com/gitchaell/exavatar/compare/v1.5.0...v1.6.0) (2025-07-17)
 
 ### ✨ Features
