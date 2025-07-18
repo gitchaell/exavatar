@@ -3,6 +3,27 @@ import '../styles/global.css'
 // import { ViewTransitions } from 'astro:transitions'
 import Icon from '../components/Icon.astro'
 import GridPattern from '../components/GridPattern.astro'
+
+interface Props {
+	title?: string
+	description?: string
+	image?: string
+	url?: string
+	type?: 'website' | 'article'
+	noindex?: boolean
+}
+
+const {
+	title = 'Exavatar - Dynamic Avatar Generation API',
+	description = 'Generate beautiful, customizable avatars instantly with our powerful API. Built with Deno and Astro for lightning-fast performance.',
+	image = '/og-image.png',
+	url = Astro.url.href,
+	type = 'website',
+	noindex = false,
+} = Astro.props
+
+const canonicalUrl = new URL(url, Astro.site).href
+const ogImage = new URL(image, Astro.site).href
 ---
 
 <!doctype html>
@@ -12,23 +33,126 @@ import GridPattern from '../components/GridPattern.astro'
 	<head>
 		<meta charset='UTF-8' />
 		<meta
-			name='description'
-			content='Dynamic avatar generation API built with Deno and Astro'
-		/>
-		<meta
 			name='viewport'
-			content='width=device-width'
-		/>
-		<link
-			rel='icon'
-			type='image/svg+xml'
-			href='/favicon.svg'
+			content='width=device-width, initial-scale=1.0'
 		/>
 		<meta
 			name='generator'
 			content={Astro.generator}
 		/>
-		<title>Exavatar</title>
+
+		<title>{title}</title>
+		<meta
+			name='title'
+			content={title}
+		/>
+		<meta
+			name='description'
+			content={description}
+		/>
+		<meta
+			name='keywords'
+			content='avatar, API, generator, dynamic, customizable, Deno, Astro, profile picture, image generation'
+		/>
+		<meta
+			name='author'
+			content='Michaell Alavedra'
+		/>
+		<link
+			rel='canonical'
+			href={canonicalUrl}
+		/>
+
+		{
+			noindex && (
+				<meta
+					name='robots'
+					content='noindex, nofollow'
+				/>
+			)
+		}
+
+		<meta
+			property='og:type'
+			content={type}
+		/>
+		<meta
+			property='og:url'
+			content={canonicalUrl}
+		/>
+		<meta
+			property='og:title'
+			content={title}
+		/>
+		<meta
+			property='og:description'
+			content={description}
+		/>
+		<meta
+			property='og:image'
+			content={ogImage}
+		/>
+		<meta
+			property='og:image:width'
+			content='1200'
+		/>
+		<meta
+			property='og:image:height'
+			content='630'
+		/>
+		<meta
+			property='og:site_name'
+			content='Exavatar'
+		/>
+
+		<meta
+			property='twitter:card'
+			content='summary_large_image'
+		/>
+		<meta
+			property='twitter:url'
+			content={canonicalUrl}
+		/>
+		<meta
+			property='twitter:title'
+			content={title}
+		/>
+		<meta
+			property='twitter:description'
+			content={description}
+		/>
+		<meta
+			property='twitter:image'
+			content={ogImage}
+		/>
+
+		<link
+			rel='icon'
+			type='image/svg+xml'
+			href='/favicon.svg'
+		/>
+
+		<script is:inline type='application/ld+json'>
+			{
+				"@context": "https://schema.org",
+				"@type": "WebApplication",
+				"name": "Exavatar",
+				"description": "Dynamic avatar generation API built with Deno and Astro for creating beautiful, customizable profile pictures",
+				"url": "https://exavatar.deno.dev",
+				"applicationCategory": "DeveloperApplication",
+				"operatingSystem": "Web",
+				"offers": {
+					"@type": "Offer",
+					"price": "0",
+					"priceCurrency": "USD"
+				},
+				"creator": {
+					"@type": "Person",
+					"name": "Michael Alavedra",
+					"url": "https://github.com/gitchaell"
+				}
+			}
+		</script>
 
 		<script is:inline>
 			;(() => {
@@ -89,6 +213,20 @@ import GridPattern from '../components/GridPattern.astro'
 					class='btn-ghost'
 					aria-current='page'>
 					Gallery
+				</a>
+
+				<a
+					href='/docs'
+					class='btn-ghost'
+					aria-current='page'>
+					Docs
+				</a>
+
+				<a
+					href='/about'
+					class='btn-ghost'
+					aria-current='page'>
+					About
 				</a>
 			</div>
 

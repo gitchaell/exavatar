@@ -1,0 +1,188 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import Code from '../../components/Code.astro'
+---
+
+<Layout
+	title='API Documentation - Exavatar Avatar Generation API'
+	description='Complete API documentation for Exavatar. Learn how to generate beautiful avatars with our REST API. Includes examples, parameters, and integration guides.'>
+	<header
+		class='grid-box col-[1/13] row-[3/5] grid grid-flow-row auto-rows-min content-center md:col-[3/11] md:row-[2/4]'>
+		<h1 class='text-center text-3xl font-semibold'>API Documentation</h1>
+		<p class='text-md text-center text-balance'>
+			Complete guide to integrating Exavatar's avatar generation API into your applications
+		</p>
+	</header>
+
+	<main class='grid-box col-[2/12] row-[6/none] space-y-8 md:col-[3/11] md:row-[5/none]'>
+		<section class='space-y-4'>
+			<h2 class='text-2xl font-semibold'>Quick Start</h2>
+			<p class='text-pretty'>
+				Generate avatars instantly with a simple HTTP GET request. No authentication required.
+			</p>
+			<Code code='https://exavatar.deno.dev/api/avatar' />
+		</section>
+
+		<section class='space-y-4'>
+			<h2 class='text-2xl font-semibold'>API Endpoint</h2>
+			<div class='rounded-lg bg-gray-100 p-4 dark:bg-gray-800'>
+				<code class='text-sm'>GET https://exavatar.deno.dev/api/avatar</code>
+			</div>
+		</section>
+
+		<section class='space-y-4'>
+			<h2 class='text-2xl font-semibold'>Parameters</h2>
+			<div class='overflow-x-auto'>
+				<table class='w-full border-collapse border border-gray-300 dark:border-gray-600'>
+					<thead>
+						<tr class='bg-gray-50 dark:bg-gray-700'>
+							<th class='border border-gray-300 px-4 py-2 text-left dark:border-gray-600'
+								>Parameter</th
+							>
+							<th class='border border-gray-300 px-4 py-2 text-left dark:border-gray-600'>Type</th>
+							<th class='border border-gray-300 px-4 py-2 text-left dark:border-gray-600'
+								>Default</th
+							>
+							<th class='border border-gray-300 px-4 py-2 text-left dark:border-gray-600'
+								>Description</th
+							>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td class='border border-gray-300 px-4 py-2 dark:border-gray-600'><code>set</code></td
+							>
+							<td class='border border-gray-300 px-4 py-2 dark:border-gray-600'>string</td>
+							<td class='border border-gray-300 px-4 py-2 dark:border-gray-600'>random</td>
+							<td class='border border-gray-300 px-4 py-2 dark:border-gray-600'>Avatar set</td>
+						</tr>
+						<tr>
+							<td class='border border-gray-300 px-4 py-2 dark:border-gray-600'><code>id</code></td>
+							<td class='border border-gray-300 px-4 py-2 dark:border-gray-600'>string</td>
+							<td class='border border-gray-300 px-4 py-2 dark:border-gray-600'>random</td>
+							<td class='border border-gray-300 px-4 py-2 dark:border-gray-600'
+								>Unique avatar identifier</td
+							>
+						</tr>
+						<tr>
+							<td class='border border-gray-300 px-4 py-2 dark:border-gray-600'
+								><code>size</code></td
+							>
+							<td class='border border-gray-300 px-4 py-2 dark:border-gray-600'>number</td>
+							<td class='border border-gray-300 px-4 py-2 dark:border-gray-600'>256</td>
+							<td class='border border-gray-300 px-4 py-2 dark:border-gray-600'
+								>Image size in pixels (16-512)</td
+							>
+						</tr>
+						<tr>
+							<td class='border border-gray-300 px-4 py-2 dark:border-gray-600'
+								><code>format</code></td
+							>
+							<td class='border border-gray-300 px-4 py-2 dark:border-gray-600'>string</td>
+							<td class='border border-gray-300 px-4 py-2 dark:border-gray-600'>webp</td>
+							<td class='border border-gray-300 px-4 py-2 dark:border-gray-600'
+								>Output format (png, webp, svg)</td
+							>
+						</tr>
+						<tr>
+							<td class='border border-gray-300 px-4 py-2 dark:border-gray-600'
+								><code>color</code></td
+							>
+							<td class='border border-gray-300 px-4 py-2 dark:border-gray-600'>string</td>
+							<td class='border border-gray-300 px-4 py-2 dark:border-gray-600'>random</td>
+							<td class='border border-gray-300 px-4 py-2 dark:border-gray-600'
+								>Background color (hex)</td
+							>
+						</tr>
+						<tr>
+							<td class='border border-gray-300 px-4 py-2 dark:border-gray-600'
+								><code>text</code></td
+							>
+							<td class='border border-gray-300 px-4 py-2 dark:border-gray-600'>string</td>
+							<td class='border border-gray-300 px-4 py-2 dark:border-gray-600'>-</td>
+							<td class='border border-gray-300 px-4 py-2 dark:border-gray-600'
+								>Custom text overlay (2 chars)</td
+							>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</section>
+
+		<section class='space-y-4'>
+			<h2 class='text-2xl font-semibold'>Examples</h2>
+
+			<div class='space-y-6'>
+				<div>
+					<h3 class='text-lg font-medium'>Basic Avatar</h3>
+					<Code code='https://exavatar.deno.dev/api/avatar' />
+				</div>
+
+				<div>
+					<h3 class='text-lg font-medium'>Custom Style and Size</h3>
+					<Code code='https://exavatar.deno.dev/api/avatar?set=animals&id=dinosaur&size=128' />
+				</div>
+
+				<div>
+					<h3 class='text-lg font-medium'>Text Overlay</h3>
+					<Code code='https://exavatar.deno.dev/api/avatar?text=JD&color=%2300d4aa' />
+				</div>
+			</div>
+		</section>
+
+		<section class='space-y-4'>
+			<h2 class='text-2xl font-semibold'>Integration Examples</h2>
+
+			<div class='space-y-6'>
+				<div>
+					<h3 class='text-lg font-medium'>HTML</h3>
+					<Code
+						code='<img src="https://exavatar.deno.dev/api/avatar?set=animals&id=dinosaur" alt="User Avatar" />'
+					/>
+				</div>
+
+				<div>
+					<h3 class='text-lg font-medium'>JavaScript</h3>
+					<Code
+						code='const avatarUrl = `https://exavatar.deno.dev/api/avatar?set=${set}&id=${id}&size=${size}`;\nfetch(avatarUrl)\n  .then(response => response.blob())\n  .then(blob => {\n    const imageUrl = URL.createObjectURL(blob);\n    document.getElementById("avatar").src = imageUrl;\n  });'
+					/>
+				</div>
+
+				<div>
+					<h3 class='text-lg font-medium'>React</h3>
+					<Code
+						code='function Avatar({ userId, size = 256 }) {\n  const avatarUrl = `https://exavatar.deno.dev/api/avatar?id=${id}&size=${size}`;\n  return <img src={avatarUrl} alt="User Avatar" width={size} height={size} />;\n}'
+					/>
+				</div>
+			</div>
+		</section>
+
+		<section class='space-y-4'>
+			<h2 class='text-2xl font-semibold'>Rate Limits</h2>
+			<p class='text-pretty'>
+				Currently, there are no rate limits imposed on the API. However, we recommend implementing
+				client-side caching to improve performance and reduce unnecessary requests.
+			</p>
+		</section>
+
+		<section class='space-y-4'>
+			<h2 class='text-2xl font-semibold'>Support</h2>
+			<p class='text-pretty'>
+				Need help or have questions? Check out our
+				<a
+					href='/playground'
+					class='text-blue-600 hover:underline dark:text-blue-400'
+					>interactive playground</a
+				>
+				or visit our
+				<a
+					href='https://github.com/gitchaell/exavatar'
+					class='text-blue-600 hover:underline dark:text-blue-400'
+					target='_blank'>
+					GitHub repository
+				</a>
+				for more information.
+			</p>
+		</section>
+	</main>
+</Layout>

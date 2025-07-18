@@ -16,11 +16,16 @@ const filteredAvatars = avatarIdsMap[selectedSet as keyof typeof avatarIdsMap]
 	)
 ---
 
-<Layout title='Avatar Gallery'>
+<Layout
+	title='Avatar Gallery - Browse All Available Styles | Exavatar'
+	description='Explore our complete collection of avatar styles and designs. Browse hundreds of unique avatars across different sets and find the perfect style for your project.'>
 	<header
 		class='grid-box col-[1/13] row-[3/5] grid grid-flow-row auto-rows-min content-center md:col-[3/11] md:row-[2/4]'>
-		<h1 class='text-center text-3xl font-semibold'>Avatar Gallery</h1>
-		<p class='text-md text-center text-pretty'>Browse and discover all available avatar styles</p>
+		<h1 class='content-end text-center text-3xl font-semibold'>Avatar Gallery</h1>
+		<p class='text-md content-center text-center text-balance'>
+			Discover our complete collection of avatar styles and designs. Browse hundreds of unique
+			avatars to find the perfect match for your project.
+		</p>
 	</header>
 
 	<main class='contents'>

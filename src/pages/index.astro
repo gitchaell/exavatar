@@ -35,12 +35,15 @@ const path = `/api/avatar?${new URLSearchParams(params).toString()}`
 const code = `https://exavatar.deno.dev${path}`
 ---
 
-<Layout>
+<Layout
+	title='Exavatar - Dynamic Avatar Generation API | Create Beautiful Avatars Instantly'
+	description='Generate stunning, customizable avatars with our powerful API. Choose from multiple styles, sizes, and formats. Perfect for developers building modern applications.'>
 	<header
 		class='grid-box col-[1/13] row-[3/5] grid grid-flow-row auto-rows-min content-center md:col-[3/11] md:row-[2/4]'>
-		<h2 class='content-end text-center text-3xl font-semibold'>Avatar Playground</h2>
-		<p class='text-md content-center text-center text-pretty'>
-			Use the avatar API to generate dynamic images.
+		<h1 class='content-end text-center text-3xl font-semibold'>Avatar Playground</h1>
+		<p class='text-md content-center text-center text-balance'>
+			Create and customize beautiful avatars with our powerful API. Choose from multiple styles,
+			adjust colors, and generate high-quality images instantly.
 		</p>
 	</header>
 

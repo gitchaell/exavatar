@@ -2,7 +2,7 @@
 	"name": "exavatar",
 	"type": "module",
 	"version": "1.0.0",
-	"description": "Dynamic avatar generation API built with Deno and Astro",
+	"description": "Generate beautiful, customizable avatars instantly with our powerful API. Built with Deno and Astro for lightning-fast performance.",
 	"scripts": {
 		"dev": "deno run --env-file -A npm:astro dev",
 		"start": "deno run --env-file=.env.prod -A npm:astro dev",

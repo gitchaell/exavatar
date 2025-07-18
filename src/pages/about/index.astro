@@ -1,0 +1,123 @@
+---
+import Layout from '../../layouts/Layout.astro'
+---
+
+<Layout
+	title='About Exavatar - The Future of Avatar Generation'
+	description='Learn about Exavatar, the powerful avatar generation API built with modern web technologies. Discover our mission to make beautiful avatars accessible to everyone.'>
+	<header
+		class='grid-box col-[1/13] row-[3/5] grid grid-flow-row auto-rows-min content-center md:col-[3/11] md:row-[2/4]'>
+		<h1 class='text-center text-3xl font-semibold'>About Exavatar</h1>
+		<p class='text-md content-center text-center text-balance'>
+			The future of avatar generation is here
+		</p>
+	</header>
+
+	<main class='grid-box col-[2/12] row-[6/none] space-y-8 md:col-[3/11] md:row-[5/none]'>
+		<section class='space-y-4'>
+			<h2 class='text-2xl font-semibold'>Our Mission</h2>
+			<p class='text-pretty'>
+				At Exavatar, we believe that every application deserves beautiful, unique avatars. Our
+				mission is to provide developers with the most powerful, flexible, and easy-to-use avatar
+				generation API available today.
+			</p>
+			<p class='text-pretty'>
+				Built with modern web technologies like Deno and Astro, Exavatar delivers lightning-fast
+				performance while maintaining the highest standards of code quality and developer
+				experience.
+			</p>
+		</section>
+
+		<section class='space-y-4'>
+			<h2 class='text-2xl font-semibold'>Why Choose Exavatar?</h2>
+			<div class='grid gap-6 md:grid-cols-2'>
+				<div class='space-y-2'>
+					<h3 class='text-lg font-medium'>🚀 Lightning Fast</h3>
+					<p class='text-sm text-gray-600 dark:text-gray-400'>
+						Built on Deno's high-performance runtime, our API generates avatars in milliseconds.
+					</p>
+				</div>
+				<div class='space-y-2'>
+					<h3 class='text-lg font-medium'>🎨 Highly Customizable</h3>
+					<p class='text-sm text-gray-600 dark:text-gray-400'>
+						Choose from multiple styles, colors, sizes, and formats to match your brand perfectly.
+					</p>
+				</div>
+				<div class='space-y-2'>
+					<h3 class='text-lg font-medium'>🔧 Developer Friendly</h3>
+					<p class='text-sm text-gray-600 dark:text-gray-400'>
+						Simple REST API with comprehensive documentation and interactive playground.
+					</p>
+				</div>
+				<div class='space-y-2'>
+					<h3 class='text-lg font-medium'>📱 Always Available</h3>
+					<p class='text-sm text-gray-600 dark:text-gray-400'>
+						Deployed on Deno Deploy for 99.9% uptime and global edge distribution.
+					</p>
+				</div>
+			</div>
+		</section>
+
+		<section class='space-y-4'>
+			<h2 class='text-2xl font-semibold'>Technology Stack</h2>
+			<p class='text-pretty'>
+				Exavatar is built with cutting-edge technologies to ensure optimal performance and developer
+				experience:
+			</p>
+			<ul class='list-disc space-y-2 pl-6'>
+				<li><strong>Deno</strong> - Modern, secure runtime for JavaScript and TypeScript</li>
+				<li><strong>Astro</strong> - Fast, content-focused web framework</li>
+				<li><strong>TypeScript</strong> - Type-safe development for better code quality</li>
+				<li>
+					<strong>Tailwind CSS</strong> - Utility-first CSS framework for rapid UI development
+				</li>
+				<li><strong>Deno Deploy</strong> - Serverless platform for global edge deployment</li>
+			</ul>
+		</section>
+
+		<section class='space-y-4'>
+			<h2 class='text-2xl font-semibold'>Open Source</h2>
+			<p class='text-pretty'>
+				Exavatar is proudly open source. We believe in transparency, community collaboration, and
+				giving back to the developer community. You can find our source code, contribute
+				improvements, or report issues on our GitHub repository.
+			</p>
+			<div class='flex gap-4'>
+				<a
+					href='https://github.com/gitchaell/exavatar'
+					target='_blank'
+					class='btn btn-primary'>
+					View on GitHub
+				</a>
+				<a
+					href='/docs'
+					class='btn btn-secondary'>
+					Read Documentation
+				</a>
+			</div>
+		</section>
+
+		<section class='space-y-4'>
+			<h2 class='text-2xl font-semibold'>Get Started</h2>
+			<p class='text-pretty'>
+				Ready to add beautiful avatars to your application? Get started in seconds with our simple
+				API:
+			</p>
+			<div class='rounded-lg bg-gray-100 p-4 dark:bg-gray-800'>
+				<code class='text-sm'>https://exavatar.deno.dev/api/avatar?set=animals&id=dinosaur</code>
+			</div>
+			<div class='flex gap-4'>
+				<a
+					href='/playground'
+					class='btn btn-primary'>
+					Try Playground
+				</a>
+				<a
+					href='/gallery'
+					class='btn btn-secondary'>
+					Browse Gallery
+				</a>
+			</div>
+		</section>
+	</main>
+</Layout>

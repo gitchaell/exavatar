@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://exavatar.deno.dev/sitemap.xml
+
+# Crawl-delay for politeness
+Crawl-delay: 1
