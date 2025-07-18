@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.9.0](https://github.com/gitchaell/exavatar/compare/v1.8.0...v1.9.0) (2025-07-18)
+
+### ✨ Features
+
+- add branding assets and SEO optimizations for website launch
+  ([8c75f4e](https://github.com/gitchaell/exavatar/commit/8c75f4e2e71c9e0e442eaf1752d0bcca160888bb))
+
 ## [1.8.0](https://github.com/gitchaell/exavatar/compare/v1.7.0...v1.8.0) (2025-07-18)
 
 ### ✨ Features
