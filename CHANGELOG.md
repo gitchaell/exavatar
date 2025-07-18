@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.8.0](https://github.com/gitchaell/exavatar/compare/v1.7.0...v1.8.0) (2025-07-18)
+
+### ✨ Features
+
+- add Rybbit analytics tracking script to layout template
+  ([939cd3c](https://github.com/gitchaell/exavatar/commit/939cd3cf6375a3dfa7e741276c455682c15853fd))
+
 ## [1.7.0](https://github.com/gitchaell/exavatar/compare/v1.6.0...v1.7.0) (2025-07-18)
 
 ### ✨ Features
