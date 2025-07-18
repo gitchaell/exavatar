@@ -1,17 +1,19 @@
 ---
 import { Avatar } from '../../core/domain/Avatar'
-import { avatarSets } from '../../core/domain/AvatarSet'
+import { avatarSets, AvatarSet, AvatarSetType } from '../../core/domain/AvatarSet'
 import { avatarIdsMap } from '../../core/domain/AvatarId'
 import Layout from '../../layouts/Layout.astro'
 import Icon from '../../components/Icon.astro'
 
 const searchParams = Astro.url.searchParams
-const selectedSet = searchParams.get('set') || 'animals'
+const selectedSet = searchParams.get('set') || AvatarSet.default().value.toString()
 const searchQuery = searchParams.get('search')?.toLowerCase() || ''
 
 const filteredAvatars = avatarIdsMap[selectedSet as keyof typeof avatarIdsMap]
 	.filter((id) => id.toLowerCase().includes(searchQuery))
-	.map((id) => Avatar.create({ set: selectedSet, id, size: '256', format: 'webp' }))
+	.map((id) =>
+		Avatar.create({ set: selectedSet as AvatarSetType, id, size: '256', format: 'webp' }),
+	)
 ---
 
 <Layout title='Avatar Gallery'>
@@ -84,7 +86,7 @@ const filteredAvatars = avatarIdsMap[selectedSet as keyof typeof avatarIdsMap]
 			{
 				filteredAvatars.map((avatar) => (
 					<a
-						href={`/playground?id=${avatar.id.value}&set=${avatar.set.value}&size=${avatar.size.value}&format=${avatar.format.value}`}
+						href={`/playground?set=${avatar.set.value}&id=${avatar.id.value}&size=${avatar.size.value}&format=${avatar.format.value}`}
 						class={
 							'grid-box relative ' +
 							(['grid-cross-tl', 'grid-cross-tr', 'grid-cross-bl', 'grid-cross-br'][
@@ -93,7 +95,7 @@ const filteredAvatars = avatarIdsMap[selectedSet as keyof typeof avatarIdsMap]
 						}>
 						<img
 							src={`/api/avatar?set=${avatar.set.value}&id=${avatar.id.value}&size=${avatar.size.value}&format=${avatar.format.value}`}
-							alt={'Preview:' + avatar.set.value + ':' + avatar.id.value}
+							alt='Avatar Preview'
 							class='absolute inset-0 z-10 mx-auto block aspect-square h-full object-cover p-1'
 							loading='lazy'
 						/>

@@ -1,56 +1,7 @@
 import { ExavatarError } from '../shared/ExavatarError.ts'
 import { AvatarSetType } from './AvatarSet.ts'
 
-export type AvatarAnimalIdTypes =
-	| 'ant'
-	| 'bear'
-	| 'bee'
-	| 'bull'
-	| 'camel'
-	| 'cat'
-	| 'chameleon'
-	| 'crab'
-	| 'crocodile'
-	| 'dinosaur'
-	| 'dog'
-	| 'dolphin'
-	| 'duck'
-	| 'eagle'
-	| 'elephant'
-	| 'flamingo'
-	| 'fox'
-	| 'frog'
-	| 'goat'
-	| 'gorilla'
-	| 'hedgehog'
-	| 'horse'
-	| 'kangaroo'
-	| 'koala'
-	| 'ladybug'
-	| 'lion'
-	| 'mammoth'
-	| 'mouse'
-	| 'octopus'
-	| 'owl'
-	| 'panda'
-	| 'parrot'
-	| 'penguin'
-	| 'pig'
-	| 'pufferfish'
-	| 'rabbit'
-	| 'raccoon'
-	| 'rooster'
-	| 'shark'
-	| 'slothbear'
-	| 'snake'
-	| 'tiger'
-	| 'turtle'
-	| 'whale'
-	| 'zebra'
-
-export type AvatarIdType = AvatarAnimalIdTypes
-
-export const avatarIdsMap: Record<AvatarSetType, AvatarIdType[]> = {
+export const avatarIdsMap = {
 	animals: [
 		'ant',
 		'bear',
@@ -98,35 +49,270 @@ export const avatarIdsMap: Record<AvatarSetType, AvatarIdType[]> = {
 		'whale',
 		'zebra',
 	],
-}
+	rick_morty: [
+		'ants_in_my_eyes_johnson',
+		'arbor_knight',
+		'baby_butthole',
+		'beau',
+		'beth_blocky',
+		'beth_child',
+		'beth_clone',
+		'beth_gunk',
+		'beth_inside_out',
+		'beth_original',
+		'beth',
+		'beth_the_destroyer',
+		'beth_wasteland',
+		'bigfoot',
+		'birdperson',
+		'bruce_chutback',
+		'chucksley',
+		'cisco',
+		'concerto',
+		'diane',
+		'dr_wong',
+		'dr_xenon_bloom',
+		'eyeholeman',
+		'flargo',
+		'floopy_doops',
+		'froopy',
+		'froopy_tommy',
+		'gearhead',
+		'girlfriend',
+		'gloop',
+		'gobo',
+		'gobpa',
+		'goobagobaga',
+		'gromflamite_general',
+		'gromflamite_soldier',
+		'hamurai',
+		'hemorrhage',
+		'humox_5',
+		'jaguar',
+		'jerry_blocky',
+		'jerry_easterclause',
+		'jerry_flamingo_dad',
+		'jerry_gunk',
+		'jerry_hermit',
+		'jerry_kimono',
+		'jerry_mooch',
+		'jerry_moving',
+		'jerry_original',
+		'jerry_ricklet_king',
+		'jerry_teen',
+		'jerry_victorian',
+		'jerry_wasteland',
+		'kiara',
+		'leon',
+		'little_bits',
+		'mom_jerry',
+		'morty_ancient',
+		'morty_arcade',
+		'morty_beard',
+		'morty_buff',
+		'morty_cop',
+		'morty_default',
+		'morty_dog',
+		'morty_drone',
+		'morty_evil',
+		'morty_evil_rabbit',
+		'morty_geriatric',
+		'morty_gunk',
+		'morty_hawaiian',
+		'morty_hippie',
+		'morty_hobo',
+		'morty_karate',
+		'morty_mascot',
+		'morty_miami',
+		'morty_no_mercy',
+		'morty_old',
+		'morty_pickle',
+		'morty_rabbit',
+		'morty_ronin',
+		'morty_santa',
+		'morty_scruffy',
+		'morty_skeleton',
+		'morty_snowman',
+		'morty_three_eye',
+		'morty_unkempt',
+		'morty_wizard',
+		'mr_always_wants_to_be_hunter',
+		'mr_butthole',
+		'mr_goldenfold',
+		'mr_jellybean',
+		'mr_needful',
+		'mr_nimbus',
+		'mr_president',
+		'mrs_butthole',
+		'mrs_president',
+		'mr_stealy',
+		'nick',
+		'noob_noob',
+		'observer',
+		'paul_fleischman',
+		'planetina',
+		'prax',
+		'priix',
+		'princess_poneta',
+		'rick_800',
+		'rick_alien',
+		'rick_aqua',
+		'rick_bald',
+		'rick_beard',
+		'rick_beefcake',
+		'rick_blocky',
+		'rick_bubblegum',
+		'rick_chair',
+		'rick_commander',
+		'rick_commuter',
+		'rick_constellatio',
+		'rick_construction',
+		'rick_cop',
+		'rick_cowboy',
+		'rick_crow',
+		'rick_cyclops',
+		'rick_d99',
+		'rick_dandy',
+		'rick_deepthroat',
+		'rick_default',
+		'rick_doofus',
+		'rick_dr_whome',
+		'rick_dude',
+		'rick_evil',
+		'rick_fancy',
+		'rick_farmer',
+		'rick_federation_prison',
+		'rick_fisher',
+		'rick_flat_top',
+		'rick_four_eyes',
+		'rick_funnel',
+		'rick_general',
+		'rick_ghostcatcher',
+		'rick_golfer',
+		'rick_grandpa',
+		'rick_greaser',
+		'rick_grunge',
+		'rick_guilt_candidate',
+		'rick_guilty',
+		'rick_gunk',
+		'rick_hacker',
+		'rick_hawaiian',
+		'rick_hippie',
+		'rick_homesteader',
+		'rick_jar_head',
+		'rick_john_rick',
+		'rick_junk_yard',
+		'rick_karate',
+		'rick_lep_rickaun',
+		'rick_lion_dancer',
+		'rick_lizard',
+		'rick_memory',
+		'rick_miami',
+		'rick_missy',
+		'rick_morty',
+		'rick_murder_patrol',
+		'rick_mustache',
+		'rick_ninja',
+		'rick_novelist',
+		'rick_phantom',
+		'rick_pickle',
+		'rick_pickle_rat_suit',
+		'rick_prime',
+		'rick_rader',
+		'rick_robot',
+		'rick_santa',
+		'rick_sash_and_cape',
+		'rick_scrooge',
+		'rick_sherlock',
+		'rick_shibuya',
+		'rick_simple',
+		'rick_smooth',
+		'rick_space_suit',
+		'rick_space_trooper',
+		'rick_spiritual_leader',
+		'rick_star_spangled',
+		'rick_super_fan',
+		'rick_supreme_guard',
+		'rick_surfer_dude',
+		'rick_survivor',
+		'rick_swap_shop',
+		'rick_swimmer',
+		'rick_teacher',
+		'rick_teddy',
+		'rick_the_scientist_known_as',
+		'rick_tiny',
+		'rick_tournament',
+		'rick_turberlent',
+		'rick_turkey',
+		'rick_tycoon',
+		'rick_valentines_day',
+		'rick_vapour_wave',
+		'rick_victorian',
+		'rick_warrior',
+		'rick_wasteland',
+		'rick_weird',
+		'rick_zarchez',
+		'rick_zero',
+		'risotto_groupon',
+		'roy',
+		'scary_terry',
+		'schleemypants',
+		'shmupiedoop',
+		'shonoopy_bloopers',
+		'sleepy_garry',
+		'squanchy',
+		'summer_attribute_slider',
+		'summer_blocky',
+		'summer_day',
+		'summer_dragon_rider',
+		'summer_fyre_sale',
+		'summer_glorzo',
+		'summer_gotron_suit',
+		'summer_gunk',
+		'summer_hawaiian',
+		'summer_inside_out',
+		'summer_original',
+		'summer',
+		'summer_tech_ceo',
+		'summer_wasteland',
+		'tinkles',
+		'tommy',
+		'truckula',
+		'viscount_of_venus',
+	],
+} as const
 
-export const avatarIds: AvatarIdType[] = [...Object.entries(avatarIdsMap).flatMap(([, ids]) => ids)]
-
-export const getDefaultAvatarId = (): AvatarIdType =>
-	avatarIds[Math.floor(Math.random() * avatarIds.length)]
+export type AvatarAnimalIdTypes = (typeof avatarIdsMap)['animals'][number]
+export type AvatarRickAndMortyIdTypes = (typeof avatarIdsMap)['rick_morty'][number]
+export type AvatarIdType = AvatarAnimalIdTypes | AvatarRickAndMortyIdTypes
 
 export class AvatarId {
 	private constructor(public readonly value: AvatarIdType) {}
 
-	static create(input: unknown): AvatarId {
-		if (input === null || input === undefined || input === '') {
-			return new AvatarId(getDefaultAvatarId())
+	static default(set: AvatarSetType): AvatarId {
+		const map = avatarIdsMap[set]
+		const id = map[Math.floor(Math.random() * map.length)] as AvatarIdType
+		return new AvatarId(id)
+	}
+
+	static create(input: unknown, set: AvatarSetType): AvatarId {
+		if (
+			typeof input === 'string' &&
+			(avatarIdsMap[set] as unknown as AvatarIdType[]).includes(input as AvatarIdType)
+		) {
+			return new AvatarId(input as AvatarIdType)
 		}
 
-		if (typeof input !== 'string') {
-			throw new AvatarIdNotValidError(input)
-		}
-
-		if (!avatarIds.includes(input as AvatarIdType)) {
-			throw new AvatarIdNotValidError(input)
-		}
-
-		return new AvatarId(input as AvatarIdType)
+		return AvatarId.default(set)
 	}
 }
 
 export class AvatarIdNotValidError extends ExavatarError {
 	constructor(id: unknown) {
-		super(`Avatar.id <<${id}>> is not valid. Expected a valid id like: ${avatarIds.join(', ')}.`)
+		super(
+			`Avatar.id <<${id}>> is not valid. Expected a valid id like: ${Object.values(avatarIdsMap)
+				.flatMap((id) => id)
+				.join(', ')}.`,
+		)
 	}
 }

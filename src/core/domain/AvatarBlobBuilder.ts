@@ -7,12 +7,12 @@ import { AvatarFormatType } from './AvatarFormat.ts'
 export class AvatarBlobBuilder {
 	static async build(
 		avatar: Avatar,
-	): Promise<{ data: Uint8Array; type: AvatarFormatType | 'svg' }> {
+	): Promise<{ data: Uint8Array; type: AvatarFormatType | 'svg+xml' }> {
 		try {
 			if (avatar.hasText()) {
 				return {
 					data: AvatarSvgBuilder.build(avatar),
-					type: 'svg',
+					type: 'svg+xml',
 				}
 			}
 

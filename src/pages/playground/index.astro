@@ -1,34 +1,34 @@
 ---
-import { avatarSets, getDefaultAvatarSet } from '../../core/domain/AvatarSet'
-import { avatarIds, getDefaultAvatarId } from '../../core/domain/AvatarId'
+import { Avatar } from '../../core/domain/Avatar'
+import { avatarSets } from '../../core/domain/AvatarSet'
+import { avatarIdsMap } from '../../core/domain/AvatarId'
 import { avatarSizes } from '../../core/domain/AvatarSize'
-import { avatarFormats, defaultAvatarFormat } from '../../core/domain/AvatarFormat'
-import { defaultAvatarText } from '../../core/domain/AvatarText'
-import { defaultAvatarColor } from '../../core/domain/AvatarColor'
+import { avatarFormats } from '../../core/domain/AvatarFormat'
 import Code from '../../components/Code.astro'
 import Layout from '../../layouts/Layout.astro'
 import Icon from '../../components/Icon.astro'
 
 const searchParams = Astro.url.searchParams
 const hasSearchParams = searchParams.size > 0
+const defaultParams = Avatar.default()
 
-const params =
+const params: Record<string, string> =
 	hasSearchParams ?
 		{
-			set: searchParams.get('set') || '',
-			id: searchParams.get('id') || '',
-			size: searchParams.get('size') || '',
-			format: searchParams.get('format') || '',
-			text: searchParams.get('text') || '',
-			color: searchParams.get('color') || '',
+			set: searchParams.get('set')!,
+			id: searchParams.get('id')!,
+			size: searchParams.get('size')!,
+			format: searchParams.get('format')!,
+			text: searchParams.get('text')!,
+			color: searchParams.get('color')!,
 		}
 	:	{
-			set: getDefaultAvatarSet().toString(),
-			id: getDefaultAvatarId().toString(),
-			size: '256',
-			format: defaultAvatarFormat.toString(),
-			text: defaultAvatarText.toString(),
-			color: defaultAvatarColor.toString(),
+			set: defaultParams.set.value.toString(),
+			id: defaultParams.id.value.toString(),
+			size: defaultParams.size.value.toString(),
+			format: defaultParams.format.value.toString(),
+			text: defaultParams.text.value.toString(),
+			color: defaultParams.color.value.toString(),
 		}
 
 const path = `/api/avatar?${new URLSearchParams(params).toString()}`
@@ -47,13 +47,19 @@ const code = `https://exavatar.deno.dev${path}`
 	<main class='contents'>
 		<section
 			class='grid-box grid-cross-br relative col-[3/11] row-[6/12] md:col-[4/6] md:row-[6/12]'>
-			<span class='badge-secondary absolute top-2 right-2 z-20'>{params.size}x{params.size}</span>
+			{
+				params.size && (
+					<span class='badge-secondary absolute top-2 right-2 z-20'>
+						{params.size}x{params.size}
+					</span>
+				)
+			}
 
 			<img
 				id='preview'
 				class='absolute inset-0 z-10 mx-auto block aspect-square h-full object-cover p-1'
 				src={path}
-				alt={'Preview:' + params.set + ':' + params.id}
+				alt='Avatar Preview'
 				loading='lazy'
 			/>
 		</section>
@@ -96,7 +102,7 @@ const code = `https://exavatar.deno.dev${path}`
 						onchange='this.form.submit()'>
 						<option value=''></option>
 						{
-							avatarIds.map((id) => (
+							avatarIdsMap[params.set].map((id) => (
 								<option
 									value={id}
 									selected={params.id === id}>

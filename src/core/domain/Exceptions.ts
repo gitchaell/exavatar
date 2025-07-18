@@ -5,3 +5,9 @@ export class AvatarNotFoundError extends ExavatarError {
 		super('Avatar not found')
 	}
 }
+
+export class AvatarSvgBuilderError extends ExavatarError {
+	constructor() {
+		super('Avatar SVG builder error')
+	}
+}

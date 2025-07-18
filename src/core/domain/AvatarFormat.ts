@@ -1,17 +1,19 @@
 import { ExavatarError } from '../shared/ExavatarError.ts'
 
-export type AvatarFormatType = 'png' | 'jpeg' | 'webp'
+export const avatarFormats = ['png', 'jpeg', 'webp'] as const
 
-export const avatarFormats: AvatarFormatType[] = ['png', 'jpeg', 'webp']
-
-export const defaultAvatarFormat: AvatarFormatType = 'webp'
+export type AvatarFormatType = (typeof avatarFormats)[number]
 
 export class AvatarFormat {
 	private constructor(public readonly value: AvatarFormatType) {}
 
+	static default() {
+		return new AvatarFormat('webp')
+	}
+
 	static create(input: unknown): AvatarFormat {
 		if (input === null || input === undefined || input === '') {
-			return new AvatarFormat(defaultAvatarFormat)
+			return AvatarFormat.default()
 		}
 
 		if (typeof input !== 'string') {

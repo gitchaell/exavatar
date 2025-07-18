@@ -1,31 +1,23 @@
 import { ExavatarError } from '../shared/ExavatarError.ts'
 
-export type AvatarSizeType = 16 | 32 | 64 | 128 | 256 | 512 | 1024
+export const avatarSizes = ['16', '32', '64', '128', '256', '512', '1024'] as const
 
-export const avatarSizes: AvatarSizeType[] = [16, 32, 64, 128, 256, 512, 1024]
-
-export const getDefaultAvatarSize = (): AvatarSizeType =>
-	avatarSizes[Math.floor(Math.random() * avatarSizes.length)]
+export type AvatarSizeType = (typeof avatarSizes)[number]
 
 export class AvatarSize {
 	private constructor(public readonly value: AvatarSizeType) {}
 
+	static default() {
+		// const size = avatarSizes[Math.floor(Math.random() * avatarSizes.length)]
+		return new AvatarSize('256')
+	}
+
 	static create(input: unknown): AvatarSize {
-		if (input === null || input === undefined || input === '') {
-			return new AvatarSize(getDefaultAvatarSize())
+		if (typeof input === 'string' && avatarSizes.includes(input as AvatarSizeType)) {
+			return new AvatarSize(input as AvatarSizeType)
 		}
 
-		if (typeof input !== 'string') {
-			throw new AvatarSizeNotValidError(input)
-		}
-
-		const size = Number(input)
-
-		if (!avatarSizes.includes(size as AvatarSizeType)) {
-			throw new AvatarSizeNotValidError(input)
-		}
-
-		return new AvatarSize(size as AvatarSizeType)
+		return AvatarSize.default()
 	}
 }
 

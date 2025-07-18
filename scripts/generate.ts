@@ -10,8 +10,8 @@ const CONFIG = {
 	sizes: [16, 32, 64, 128, 256, 512, 1024],
 	formats: ['png', 'jpeg', 'webp'] as const,
 	inputDir: resolve(ROOT_DIR, 'scripts/input'),
-	outputDir: resolve(ROOT_DIR, 'public/assets'),
-	sets: ['animals'] as const,
+	outputDir: resolve(ROOT_DIR, 'avatars'),
+	sets: ['rick_morty'] as const,
 	concurrency: 4,
 }
 
@@ -104,3 +104,7 @@ async function generate() {
 if (import.meta.main) {
 	generate().catch(console.error)
 }
+
+/*
+for file in /home/micha/devprojects/exavatar/scripts/input/rick_morty/*; do basename "${file%.*}"; done > /home/micha/devprojects/exavatar/scripts/input/types.txt
+*/

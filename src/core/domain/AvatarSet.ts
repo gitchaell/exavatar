@@ -1,29 +1,23 @@
 import { ExavatarError } from '../shared/ExavatarError.ts'
 
-export type AvatarSetType = 'animals'
+export const avatarSets = ['animals', 'rick_morty'] as const
 
-export const avatarSets: AvatarSetType[] = ['animals']
-
-export const getDefaultAvatarSet = (): AvatarSetType =>
-	avatarSets[Math.floor(Math.random() * avatarSets.length)]
+export type AvatarSetType = (typeof avatarSets)[number]
 
 export class AvatarSet {
 	private constructor(public readonly value: AvatarSetType) {}
 
+	static default(): AvatarSet {
+		const set = avatarSets[Math.floor(Math.random() * avatarSets.length)]
+		return new AvatarSet(set)
+	}
+
 	static create(input: unknown): AvatarSet {
-		if (input === null || input === undefined || input === '') {
-			return new AvatarSet(getDefaultAvatarSet())
+		if (typeof input === 'string' && avatarSets.includes(input as AvatarSetType)) {
+			return new AvatarSet(input as AvatarSetType)
 		}
 
-		if (typeof input !== 'string') {
-			throw new AvatarSetNotValidError(input)
-		}
-
-		if (!avatarSets.includes(input as AvatarSetType)) {
-			throw new AvatarSetNotValidError(input)
-		}
-
-		return new AvatarSet(input as AvatarSetType)
+		return AvatarSet.default()
 	}
 }
 

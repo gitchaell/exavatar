@@ -1,7 +1,7 @@
 import { assert } from 'https://deno.land/std@0.224.0/assert/assert.ts'
-import { assertRejects } from 'https://deno.land/std@0.224.0/assert/assert_rejects.ts'
 import { assertEquals } from 'https://deno.land/std@0.224.0/assert/assert_equals.ts'
 import { AvatarService } from '../src/core/application/services/AvatarService.ts'
+import { AvatarSizeType } from '../src/core/domain/AvatarSize.ts'
 
 const service = new AvatarService()
 
@@ -15,7 +15,7 @@ Deno.test({
 			const result = await service.generate({ text: 'MA' })
 
 			assert(result.data.length > 0, 'Generated avatar data should not be empty')
-			assertEquals(result.type, 'svg', 'Default format should be svg')
+			assertEquals(result.type, 'svg+xml', 'Default format should be svg')
 			console.log(
 				`[TEST] Successfully generated ${result.type} avatar (${result.data.length} bytes)`,
 			)
@@ -29,7 +29,7 @@ Deno.test({
 			})
 
 			assert(result.data.length > 0, 'Generated avatar data should not be empty')
-			assertEquals(result.type, 'svg', 'Should respect custom format')
+			assertEquals(result.type, 'svg+xml', 'Should respect custom format')
 			console.log(
 				`[TEST] Successfully generated ${result.type} avatar with custom color (${result.data.length} bytes)`,
 			)
@@ -47,13 +47,6 @@ Deno.test({
 			)
 		})
 
-		await t.step('should throw when image is missing and no text provided', async () => {
-			console.log('[TEST] Testing error case: missing image and no text')
-
-			await assertRejects(() => service.generate({ id: 'missing', set: 'animals' }), Error)
-			console.log('[TEST] Correctly threw error for missing image and no text')
-		})
-
 		await t.step('should handle special characters in text', async () => {
 			const specialTexts = ['@#', '12', '你好', '😊']
 
@@ -66,7 +59,7 @@ Deno.test({
 		})
 
 		await t.step('should respect size parameter', async () => {
-			const sizes = ['64', '128', '256']
+			const sizes = ['64', '128', '256'] as AvatarSizeType[]
 
 			for (const size of sizes) {
 				console.log(`[TEST] Testing avatar generation with size: ${size}`)

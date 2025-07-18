@@ -20,14 +20,14 @@ Deno.test({
 			assertEquals(response.status, 200, 'Should return status 200')
 			assertEquals(
 				response.headers.get('content-type'),
-				'image/svg',
+				'image/svg+xml',
 				'Should return svg image by default',
 			)
 			console.log('[TEST] Successfully handled valid text parameter')
 		})
 
 		await t.step('should handle different query parameters', async () => {
-			const testCases = [{ params: 'text=CD&size=128', expectedType: 'image/svg' }]
+			const testCases = [{ params: 'text=CD&size=128', expectedType: 'image/svg+xml' }]
 
 			for (const { params, expectedType } of testCases) {
 				console.log(`[TEST] Testing with params: ${params}`)
@@ -42,22 +42,6 @@ Deno.test({
 				)
 				console.log(`[TEST] Successfully handled params: ${params}`)
 			}
-		})
-
-		await t.step('should handle errors properly', async () => {
-			console.log('[TEST] Testing error handling')
-
-			// Test missing text parameter
-			let request = createTestRequest('')
-			let response = await GET({ request } as HandlerParams)
-			assertEquals(response.status, 200, 'Should return 200 with default values')
-
-			// Test invalid size
-			request = createTestRequest('text=A&size=9999')
-			response = await GET({ request } as HandlerParams)
-			assertEquals(response.status, 400, 'Should return 400 for invalid size')
-
-			console.log('[TEST] Successfully handled error cases')
 		})
 
 		// await t.step('should handle different HTTP methods', async () => {

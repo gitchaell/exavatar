@@ -2,29 +2,35 @@ import { ExavatarError } from '../shared/ExavatarError.ts'
 
 export const TEXT_LENGTH = 2
 
-export const defaultAvatarText: string = ''
-
 export class AvatarText {
 	private constructor(public readonly value: string) {}
 
+	static default() {
+		return new AvatarText('')
+	}
+
 	static create(input: unknown): AvatarText {
-		if (input === null || input === undefined || input === '') {
-			return new AvatarText(defaultAvatarText)
+		if (typeof input === 'string' && input.trim().length === TEXT_LENGTH) {
+			return new AvatarText(input.trim().toUpperCase())
 		}
 
-		if (typeof input !== 'string') {
-			throw new AvatarTextNotValidError(input)
-		}
-
-		if (input.length !== TEXT_LENGTH) {
-			throw new AvatarTextNotValidError(input)
-		}
-
-		return new AvatarText(input)
+		return AvatarText.default()
 	}
 
 	hasText(): boolean {
 		return this.value.length > 0
+	}
+
+	escaped(): string {
+		return this.value
+			.replace(/&/g, '&amp;')
+			.replace(/</g, '&lt;')
+			.replace(/>/g, '&gt;')
+			.replace(/"/g, '&quot;')
+			.replace(/'/g, '&#039;')
+			.replace(/\n/g, '')
+			.replace(/\s+/g, '')
+			.trim()
 	}
 }
 
