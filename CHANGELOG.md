@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.11.0](https://github.com/gitchaell/exavatar/compare/v1.10.1...v1.11.0) (2025-07-28)
+
+### ✨ Features
+
+- add SampleCode component and improve code display with wrap option
+  ([2832159](https://github.com/gitchaell/exavatar/commit/2832159690e06bb0c16d9719c1455a76b33af79e))
+- enable error tracking, session replay, and web vitals in Rybbit analytics
+  ([5ab1bc9](https://github.com/gitchaell/exavatar/commit/5ab1bc979c4e6e7e3c01ffcd181f141e6c2b7d49))
+
+### ♻️ Code Refactoring
+
+- migrate to repository pattern with builder and local storage
+  ([1f94029](https://github.com/gitchaell/exavatar/commit/1f94029d1a2387dfaba26a38a468908579cac9d7))
+
 ## [1.10.1](https://github.com/gitchaell/exavatar/compare/v1.10.0...v1.10.1) (2025-07-28)
 
 ### ♻️ Code Refactoring
