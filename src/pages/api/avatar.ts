@@ -4,12 +4,10 @@ import { ExavatarError } from '../../core/shared/ExavatarError.ts'
 import { environment } from '../../core/shared/Environment.ts'
 
 export const GET: APIRoute = async ({ request }) => {
-	const url = new URL(request.url)
 	const service = new AvatarService()
 
 	try {
-		const params = Object.fromEntries(url.searchParams)
-		const { data, type } = await service.generate(params)
+		const { data, type } = await service.generate(new URL(request.url))
 
 		return new Response(data, {
 			headers: {

@@ -45,6 +45,7 @@
 	--grid-cross-thick: 2px;
 	--grid-cross-offset: calc(var(--grid-cross-size) / -2);
 	--grid-cross-line-offset: calc(var(--grid-cross-thick) / -2);
+	--grid-box-height-base: 48px;
 }
 
 @layer base {
@@ -57,6 +58,10 @@
 @utility grid-box {
 	width: 100%;
 	box-shadow: 0 0 0 1px var(--grid-guide);
+}
+
+@utility box-height-* {
+	height: calc(var(--grid-box-height-base) * --value(integer));
 }
 
 @utility grid-cross {

@@ -24,19 +24,9 @@ export class Avatar {
 
 	readonly filepath: string
 	readonly filename: string
-	fileblob?: Uint8Array
 
-	constructor(props: AvatarProps) {
-		this.set = AvatarSet.create(props.set)
-		this.id = AvatarId.create(props.id, this.set.value)
-		this.size = AvatarSize.create(props.size)
-		this.format = AvatarFormat.create(props.format)
-		this.color = AvatarColor.create(props.color)
-		this.text = AvatarText.create(props.text)
-
-		this.filename = `${this.id.value}.${this.format.value}`
-		this.filepath = `${this.set.value}/${this.size.value}/${this.filename}`
-	}
+	readonly imagesrc: string
+	readonly codeurl: string
 
 	static default() {
 		const set = AvatarSet.default()
@@ -53,6 +43,48 @@ export class Avatar {
 
 	static create(props: AvatarProps): Avatar {
 		return new Avatar(props)
+	}
+
+	static fromUrl(url: URL): Avatar {
+		if (url?.searchParams?.size > 0) {
+			return new Avatar({
+				set: url.searchParams.get('set') as AvatarSetType,
+				id: url.searchParams.get('id') as AvatarIdType,
+				size: url.searchParams.get('size') as AvatarSizeType,
+				format: url.searchParams.get('format') as AvatarFormatType,
+				color: url.searchParams.get('color') as string,
+				text: url.searchParams.get('text') as string,
+			})
+		}
+
+		return Avatar.default()
+	}
+
+	constructor(props: AvatarProps) {
+		this.set = AvatarSet.create(props.set)
+		this.id = AvatarId.create(props.id, this.set.value)
+		this.size = AvatarSize.create(props.size)
+		this.format = AvatarFormat.create(props.format)
+		this.color = AvatarColor.create(props.color)
+		this.text = AvatarText.create(props.text)
+
+		this.filename = `${this.id.value}.${this.format.value}`
+		this.filepath = `${this.set.value}/${this.size.value}/${this.filename}`
+
+		this.imagesrc = this.getImageSrc()
+		this.codeurl = `https://exavatar.deno.dev${this.imagesrc}`
+	}
+
+	private getImageSrc(): string {
+		const path = `/api/avatar`
+		const params = []
+		if (this.set.value) params.push(`set=${encodeURIComponent(this.set.value)}`)
+		if (this.id.value) params.push(`id=${encodeURIComponent(this.id.value)}`)
+		if (this.size.value) params.push(`size=${encodeURIComponent(this.size.value)}`)
+		if (this.format.value) params.push(`format=${encodeURIComponent(this.format.value)}`)
+		if (this.color.value) params.push(`color=${encodeURIComponent(this.color.value)}`)
+		if (this.text.value) params.push(`text=${encodeURIComponent(this.text.value)}`)
+		return params?.length > 0 ? `${path}?${params.join('&')}` : path
 	}
 
 	hasText(): boolean {

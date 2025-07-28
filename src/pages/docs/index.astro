@@ -1,188 +1,281 @@
 ---
 import Layout from '../../layouts/Layout.astro'
-import Code from '../../components/Code.astro'
+import AvatarCode from '../../components/AvatarCode.astro'
+import { Code } from 'astro:components'
+import { AvatarSize, avatarSizes } from '../../core/domain/AvatarSize'
+import { AvatarFormat, avatarFormats } from '../../core/domain/AvatarFormat'
+
+const codes = {
+	html: `<img src="https://exavatar.deno.dev/api/avatar" />`,
+
+	css: `.avatar {
+	background-image: url('https://exavatar.deno.dev/api/avatar');
+	background-size: cover;
+}`,
+
+	javascript: `const image = new Image(256, 256); image.src = \`https://exavatar.deno.dev/api/avatar\`;`,
+
+	react: `export const Avatar = () => (<img src="https://exavatar.deno.dev/api/avatar" />)`,
+
+	angular: `@Component({
+	template: '<img src="https://exavatar.deno.dev/api/avatar" />'
+})
+export class Avatar { }`,
+
+	svelte: `<script>
+	$: src = 'https://exavatar.deno.dev/api/avatar';
+</script>
+<img src={src} />`,
+
+	astro: `---
+const src = 'https://exavatar.deno.dev/api/avatar';
+---
+<img src={src} />`,
+}
 ---
 
 <Layout
 	title='API Documentation - Exavatar Avatar Generation API'
 	description='Complete API documentation for Exavatar. Learn how to generate beautiful avatars with our REST API. Includes examples, parameters, and integration guides.'>
 	<header
-		class='grid-box col-[1/13] row-[3/5] grid grid-flow-row auto-rows-min content-center md:col-[3/11] md:row-[2/4]'>
-		<h1 class='text-center text-3xl font-semibold'>API Documentation</h1>
-		<p class='text-md text-center text-balance'>
+		class='grid-box box-height-2 col-[1/13] row-[3/5] grid grid-flow-row auto-rows-min content-center md:col-[3/11] md:row-[2/4]'>
+		<h1 class='content-end text-center text-3xl font-semibold'>API Documentation</h1>
+		<p class='text-md line-clamp-2 content-center text-center text-balance'>
 			Complete guide to integrating Exavatar's avatar generation API into your applications
 		</p>
 	</header>
 
-	<main class='grid-box col-[2/12] row-[6/none] space-y-8 md:col-[3/11] md:row-[5/none]'>
-		<section class='space-y-4'>
-			<h2 class='text-2xl font-semibold'>Quick Start</h2>
-			<p class='text-pretty'>
+	<main class='contents'>
+		<section class='contents'>
+			<h2
+				class='grid-box box-height-1 col-[2/12] row-[6/7] content-center px-4 text-2xl font-semibold md:col-[3/11] md:row-[5/6]'>
+				Quick Start
+			</h2>
+			<p
+				class='grid-box box-height-1 col-[2/12] row-[7/8] content-center overflow-auto px-4 text-pretty md:col-[3/11] md:row-[6/7]'>
 				Generate avatars instantly with a simple HTTP GET request. No authentication required.
 			</p>
-			<Code code='https://exavatar.deno.dev/api/avatar' />
+			<AvatarCode
+				class='grid-box box-height-1 col-[2/12] row-[8/9] content-center px-4 md:col-[3/11] md:row-[7/8]'
+				code='https://exavatar.deno.dev/api/avatar'
+			/>
 		</section>
 
-		<section class='space-y-4'>
-			<h2 class='text-2xl font-semibold'>API Endpoint</h2>
-			<div class='rounded-lg bg-gray-100 p-4 dark:bg-gray-800'>
-				<code class='text-sm'>GET https://exavatar.deno.dev/api/avatar</code>
-			</div>
+		<section class='contents'>
+			<h2
+				class='grid-box box-height-1 col-[2/12] row-[10/11] content-center px-4 text-2xl font-semibold md:col-[3/11] md:row-[9/10]'>
+				API Endpoint
+			</h2>
+			<Code
+				class='grid-box box-height-1 col-[2/12] row-[11/12] content-center px-4 md:col-[3/11] md:row-[10/11]'
+				code='GET https://exavatar.deno.dev/api/avatar'
+				lang='http'
+			/>
 		</section>
 
-		<section class='space-y-4'>
-			<h2 class='text-2xl font-semibold'>Parameters</h2>
-			<div class='overflow-x-auto'>
-				<table class='w-full border-collapse border border-gray-300 dark:border-gray-600'>
+		<section class='contents'>
+			<h2
+				class='grid-box box-height-1 col-[2/12] row-[13/14] content-center px-4 text-2xl font-semibold md:col-[3/11] md:row-[12/13]'>
+				Parameters
+			</h2>
+
+			<div
+				class='grid-box box-height-7 col-[2/12] row-[14/21] overflow-x-auto md:col-[3/11] md:row-[13/20]'>
+				<table class='table h-full w-full'>
 					<thead>
-						<tr class='bg-gray-50 dark:bg-gray-700'>
-							<th class='border border-gray-300 px-4 py-2 text-left dark:border-gray-600'
-								>Parameter</th
-							>
-							<th class='border border-gray-300 px-4 py-2 text-left dark:border-gray-600'>Type</th>
-							<th class='border border-gray-300 px-4 py-2 text-left dark:border-gray-600'
-								>Default</th
-							>
-							<th class='border border-gray-300 px-4 py-2 text-left dark:border-gray-600'
-								>Description</th
-							>
+						<tr class='box-height-1'>
+							<th class='text-left'>Parameter</th>
+							<th class='text-left'>Type</th>
+							<th class='text-left'>Default</th>
+							<th class='text-left'>Description</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td class='border border-gray-300 px-4 py-2 dark:border-gray-600'><code>set</code></td
-							>
-							<td class='border border-gray-300 px-4 py-2 dark:border-gray-600'>string</td>
-							<td class='border border-gray-300 px-4 py-2 dark:border-gray-600'>random</td>
-							<td class='border border-gray-300 px-4 py-2 dark:border-gray-600'>Avatar set</td>
+						<tr class='box-height-1'>
+							<td><span class='badge-secondary'>set</span></td>
+							<td><span class='badge-outline'>string</span></td>
+							<td>random</td>
+							<td>Avatars Set Identifier</td>
 						</tr>
-						<tr>
-							<td class='border border-gray-300 px-4 py-2 dark:border-gray-600'><code>id</code></td>
-							<td class='border border-gray-300 px-4 py-2 dark:border-gray-600'>string</td>
-							<td class='border border-gray-300 px-4 py-2 dark:border-gray-600'>random</td>
-							<td class='border border-gray-300 px-4 py-2 dark:border-gray-600'
-								>Unique avatar identifier</td
-							>
+						<tr class='box-height-1'>
+							<td><span class='badge-secondary'>id</span></td>
+							<td><span class='badge-outline'>string</span></td>
+							<td>random</td>
+							<td>Avatar Identifier</td>
 						</tr>
-						<tr>
-							<td class='border border-gray-300 px-4 py-2 dark:border-gray-600'
-								><code>size</code></td
-							>
-							<td class='border border-gray-300 px-4 py-2 dark:border-gray-600'>number</td>
-							<td class='border border-gray-300 px-4 py-2 dark:border-gray-600'>256</td>
-							<td class='border border-gray-300 px-4 py-2 dark:border-gray-600'
-								>Image size in pixels (16-512)</td
+						<tr class='box-height-1'>
+							<td><span class='badge-secondary'>size</span></td>
+							<td><span class='badge-outline'>number</span></td>
+							<td><span class='badge-outline'>{AvatarSize.default().value}</span></td>
+							<td
+								>Image size in pixels {
+									avatarSizes.map((size) => <span class='badge-outline'>{size}</span>)
+								}</td
 							>
 						</tr>
-						<tr>
-							<td class='border border-gray-300 px-4 py-2 dark:border-gray-600'
-								><code>format</code></td
-							>
-							<td class='border border-gray-300 px-4 py-2 dark:border-gray-600'>string</td>
-							<td class='border border-gray-300 px-4 py-2 dark:border-gray-600'>webp</td>
-							<td class='border border-gray-300 px-4 py-2 dark:border-gray-600'
-								>Output format (png, webp, svg)</td
-							>
-						</tr>
-						<tr>
-							<td class='border border-gray-300 px-4 py-2 dark:border-gray-600'
-								><code>color</code></td
-							>
-							<td class='border border-gray-300 px-4 py-2 dark:border-gray-600'>string</td>
-							<td class='border border-gray-300 px-4 py-2 dark:border-gray-600'>random</td>
-							<td class='border border-gray-300 px-4 py-2 dark:border-gray-600'
-								>Background color (hex)</td
+						<tr class='box-height-1'>
+							<td><span class='badge-secondary'>format</span></td>
+							<td><span class='badge-outline'>string</span></td>
+							<td><span class='badge-outline'>{AvatarFormat.default().value}</span></td>
+							<td
+								>Output format {
+									avatarFormats.map((format) => <span class='badge-outline'>{format}</span>)
+								}</td
 							>
 						</tr>
-						<tr>
-							<td class='border border-gray-300 px-4 py-2 dark:border-gray-600'
-								><code>text</code></td
-							>
-							<td class='border border-gray-300 px-4 py-2 dark:border-gray-600'>string</td>
-							<td class='border border-gray-300 px-4 py-2 dark:border-gray-600'>-</td>
-							<td class='border border-gray-300 px-4 py-2 dark:border-gray-600'
-								>Custom text overlay (2 chars)</td
-							>
+						<tr class='box-height-1'>
+							<td><span class='badge-secondary'>color</span></td>
+							<td><span class='badge-outline'>string</span></td>
+							<td>random</td>
+							<td>Background color (CSS syntax)</td>
+						</tr>
+						<tr class='box-height-1'>
+							<td><span class='badge-secondary'>text</span></td>
+							<td><span class='badge-outline'>string</span></td>
+							<td></td>
+							<td>Custom text overlay (2 chars)</td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
 		</section>
 
-		<section class='space-y-4'>
-			<h2 class='text-2xl font-semibold'>Examples</h2>
-
-			<div class='space-y-6'>
-				<div>
-					<h3 class='text-lg font-medium'>Basic Avatar</h3>
-					<Code code='https://exavatar.deno.dev/api/avatar' />
-				</div>
-
-				<div>
-					<h3 class='text-lg font-medium'>Custom Style and Size</h3>
-					<Code code='https://exavatar.deno.dev/api/avatar?set=animals&id=dinosaur&size=128' />
-				</div>
-
-				<div>
-					<h3 class='text-lg font-medium'>Text Overlay</h3>
-					<Code code='https://exavatar.deno.dev/api/avatar?text=JD&color=%2300d4aa' />
-				</div>
-			</div>
+		<section class='contents'>
+			<h2
+				class='grid-box box-height-1 col-[2/12] row-[22/23] content-center px-4 text-2xl font-semibold md:col-[3/11] md:row-[21/22]'>
+				Examples
+			</h2>
+			<h3
+				class='grid-box box-height-1 col-[2/12] row-[23/24] content-center px-4 text-lg font-medium md:col-[3/11] md:row-[22/23]'>
+				Random Avatar
+			</h3>
+			<AvatarCode
+				class='grid-box box-height-1 col-[2/12] row-[24/25] content-center px-4 md:col-[3/11] md:row-[23/24]'
+				code='https://exavatar.deno.dev/api/avatar'
+			/>
+			<h3
+				class='grid-box box-height-1 col-[2/12] row-[25/26] content-center px-4 text-lg font-medium md:col-[3/11] md:row-[24/25]'>
+				Custom Set and Id
+			</h3>
+			<AvatarCode
+				class='grid-box box-height-1 col-[2/12] row-[26/27] content-center px-4 md:col-[3/11] md:row-[25/26]'
+				code='https://exavatar.deno.dev/api/avatar?set=animals&id=dinosaur'
+			/>
+			<h3
+				class='grid-box box-height-1 col-[2/12] row-[27/28] content-center px-4 text-lg font-medium md:col-[3/11] md:row-[26/27]'>
+				Text Overlay
+			</h3>
+			<AvatarCode
+				class='grid-box box-height-1 col-[2/12] row-[28/29] content-center px-4 md:col-[3/11] md:row-[27/28]'
+				code='https://exavatar.deno.dev/api/avatar?text=JD&color=%2300d4aa'
+			/>
 		</section>
 
-		<section class='space-y-4'>
-			<h2 class='text-2xl font-semibold'>Integration Examples</h2>
-
-			<div class='space-y-6'>
-				<div>
-					<h3 class='text-lg font-medium'>HTML</h3>
-					<Code
-						code='<img src="https://exavatar.deno.dev/api/avatar?set=animals&id=dinosaur" alt="User Avatar" />'
-					/>
-				</div>
-
-				<div>
-					<h3 class='text-lg font-medium'>JavaScript</h3>
-					<Code
-						code='const avatarUrl = `https://exavatar.deno.dev/api/avatar?set=${set}&id=${id}&size=${size}`;\nfetch(avatarUrl)\n  .then(response => response.blob())\n  .then(blob => {\n    const imageUrl = URL.createObjectURL(blob);\n    document.getElementById("avatar").src = imageUrl;\n  });'
-					/>
-				</div>
-
-				<div>
-					<h3 class='text-lg font-medium'>React</h3>
-					<Code
-						code='function Avatar({ userId, size = 256 }) {\n  const avatarUrl = `https://exavatar.deno.dev/api/avatar?id=${id}&size=${size}`;\n  return <img src={avatarUrl} alt="User Avatar" width={size} height={size} />;\n}'
-					/>
-				</div>
-			</div>
+		<section class='contents'>
+			<h2
+				class='grid-box box-height-1 col-[2/12] row-[30/31] content-center px-4 text-2xl font-semibold md:col-[3/11] md:row-[29/30]'>
+				Integration Examples
+			</h2>
+			<h3
+				class='grid-box box-height-1 col-[2/12] row-[31/32] content-center px-4 text-lg font-medium md:col-[3/11] md:row-[30/31]'>
+				HTML
+			</h3>
+			<Code
+				class='grid-box box-height-1 col-[2/12] row-[32/33] content-center px-4 md:col-[3/11] md:row-[31/32]'
+				code={codes.html}
+				lang='html'
+			/>
+			<h3
+				class='grid-box box-height-1 col-[2/12] row-[33/34] content-center px-4 text-lg font-medium md:col-[3/11] md:row-[32/33]'>
+				CSS
+			</h3>
+			<Code
+				class='grid-box box-height-2 col-[2/12] row-[34/36] content-center px-4 md:col-[3/11] md:row-[33/35]'
+				code={codes.css}
+				lang='css'
+			/>
+			<h3
+				class='grid-box box-height-1 col-[2/12] row-[36/37] content-center px-4 text-lg font-medium md:col-[3/11] md:row-[35/36]'>
+				JavaScript
+			</h3>
+			<Code
+				class='grid-box box-height-1 col-[2/12] row-[37/38] content-center px-4 md:col-[3/11] md:row-[36/37]'
+				code={codes.javascript}
+				lang='javascript'
+			/>
+			<h3
+				class='grid-box box-height-1 col-[2/12] row-[38/39] content-center px-4 text-lg font-medium md:col-[3/11] md:row-[37/38]'>
+				React
+			</h3>
+			<Code
+				class='grid-box box-height-1 col-[2/12] row-[39/40] content-center px-4 md:col-[3/11] md:row-[38/39]'
+				code={codes.react}
+				lang='tsx'
+			/>
+			<h3
+				class='grid-box box-height-1 col-[2/12] row-[40/41] content-center px-4 text-lg font-medium md:col-[3/11] md:row-[39/40]'>
+				Angular
+			</h3>
+			<Code
+				class='grid-box box-height-2 col-[2/12] row-[41/43] content-center px-4 md:col-[3/11] md:row-[40/42]'
+				code={codes.angular}
+				lang='tsx'
+			/>
+			<h3
+				class='grid-box box-height-1 col-[2/12] row-[43/44] content-center px-4 text-lg font-medium md:col-[3/11] md:row-[42/43]'>
+				Svelte
+			</h3>
+			<Code
+				class='grid-box box-height-2 col-[2/12] row-[44/46] content-center px-4 md:col-[3/11] md:row-[43/45]'
+				code={codes.svelte}
+				lang='svelte'
+			/>
+			<h3
+				class='grid-box box-height-1 col-[2/12] row-[46/47] content-center px-4 text-lg font-medium md:col-[3/11] md:row-[45/46]'>
+				Astro
+			</h3>
+			<Code
+				class='grid-box box-height-2 col-[2/12] row-[47/49] content-center px-4 md:col-[3/11] md:row-[46/48]'
+				code={codes.astro}
+				lang='astro'
+			/>
 		</section>
 
-		<section class='space-y-4'>
-			<h2 class='text-2xl font-semibold'>Rate Limits</h2>
-			<p class='text-pretty'>
+		<section class='contents'>
+			<h2
+				class='grid-box box-height-1 col-[2/12] row-[50/51] content-center px-4 text-2xl font-semibold md:col-[3/11] md:row-[49/50]'>
+				Rate Limits
+			</h2>
+			<p
+				class='grid-box box-height-2 col-[2/12] row-[51/53] content-center overflow-auto px-4 text-pretty md:col-[3/11] md:row-[50/52]'>
 				Currently, there are no rate limits imposed on the API. However, we recommend implementing
 				client-side caching to improve performance and reduce unnecessary requests.
 			</p>
 		</section>
 
-		<section class='space-y-4'>
-			<h2 class='text-2xl font-semibold'>Support</h2>
-			<p class='text-pretty'>
+		<section class='contents'>
+			<h2
+				class='grid-box box-height-1 col-[2/12] row-[54/55] content-center px-4 text-2xl font-semibold md:col-[3/11] md:row-[53/54]'>
+				Support
+			</h2>
+			<p
+				class='grid-box box-height-2 col-[2/12] row-[55/57] content-center overflow-auto px-4 text-pretty md:col-[3/11] md:row-[54/56]'>
 				Need help or have questions? Check out our
 				<a
 					href='/playground'
-					class='text-blue-600 hover:underline dark:text-blue-400'
+					class='font-medium text-blue-600 hover:underline dark:text-blue-500'
 					>interactive playground</a
 				>
 				or visit our
 				<a
 					href='https://github.com/gitchaell/exavatar'
-					class='text-blue-600 hover:underline dark:text-blue-400'
-					target='_blank'>
+					target='_blank'
+					class='font-medium text-blue-600 hover:underline dark:text-blue-500'>
 					GitHub repository
 				</a>
 				for more information.
 			</p>
+			<div class='box-height-10 col-[2/12] row-[57/67] md:col-[3/11] md:row-[57/67]'></div>
 		</section>
 	</main>
 </Layout>

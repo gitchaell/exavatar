@@ -4,56 +4,32 @@ import { avatarSets } from '../../core/domain/AvatarSet'
 import { avatarIdsMap } from '../../core/domain/AvatarId'
 import { avatarSizes } from '../../core/domain/AvatarSize'
 import { avatarFormats } from '../../core/domain/AvatarFormat'
-import Code from '../../components/Code.astro'
+import AvatarCode from '../../components/AvatarCode.astro'
 import Layout from '../../layouts/Layout.astro'
 import Icon from '../../components/Icon.astro'
 
-const searchParams = Astro.url.searchParams
-const hasSearchParams = searchParams.size > 0
-const defaultParams = Avatar.default()
-
-const params: Record<string, string> =
-	hasSearchParams ?
-		{
-			set: searchParams.get('set')!,
-			id: searchParams.get('id')!,
-			size: searchParams.get('size')!,
-			format: searchParams.get('format')!,
-			text: searchParams.get('text')!,
-			color: searchParams.get('color')!,
-		}
-	:	{
-			set: defaultParams.set.value.toString(),
-			id: defaultParams.id.value.toString(),
-			size: defaultParams.size.value.toString(),
-			format: defaultParams.format.value.toString(),
-			text: defaultParams.text.value.toString(),
-			color: defaultParams.color.value.toString(),
-		}
-
-const path = `/api/avatar?${new URLSearchParams(params).toString()}`
-const code = `https://exavatar.deno.dev${path}`
+const avatar = Avatar.fromUrl(Astro.url)
 ---
 
 <Layout
-	title='Avatar Playground - Test & Customize Your Avatars | Exavatar'
-	description='Interactive playground to test and customize avatar generation. Experiment with different styles, colors, sizes, and formats in real-time.'>
+	title='Exavatar - Dynamic Avatar Generation API | Create Beautiful Avatars Instantly'
+	description='Generate stunning, customizable avatars with our powerful API. Choose from multiple styles, sizes, and formats. Perfect for developers building modern applications.'>
 	<header
-		class='grid-box col-[1/13] row-[3/5] grid grid-flow-row auto-rows-min content-center md:col-[3/11] md:row-[2/4]'>
+		class='grid-box box-height-2 col-[1/13] row-[3/5] grid grid-flow-row auto-rows-min content-center md:col-[3/11] md:row-[2/4]'>
 		<h1 class='content-end text-center text-3xl font-semibold'>Avatar Playground</h1>
-		<p class='text-md content-center text-center text-balance'>
-			Experiment with our avatar API in real-time. Customize styles, colors, and formats to create
-			the perfect avatar for your application.
+		<p class='text-md line-clamp-2 content-center text-center text-balance'>
+			Create and customize beautiful avatars with our powerful API. Choose from multiple styles,
+			adjust colors, and generate high-quality images instantly.
 		</p>
 	</header>
 
 	<main class='contents'>
 		<section
-			class='grid-box grid-cross-br relative col-[3/11] row-[6/12] md:col-[4/6] md:row-[6/12]'>
+			class='grid-box box-height-6 grid-cross-br relative col-[3/11] row-[6/12] md:col-[4/6] md:row-[6/12]'>
 			{
-				params.size && (
+				avatar.size.value && (
 					<span class='badge-secondary absolute top-2 right-2 z-20'>
-						{params.size}x{params.size}
+						{avatar.size.value}x{avatar.size.value}
 					</span>
 				)
 			}
@@ -61,7 +37,7 @@ const code = `https://exavatar.deno.dev${path}`
 			<img
 				id='preview'
 				class='absolute inset-0 z-10 mx-auto block aspect-square h-full object-cover p-1'
-				src={path}
+				src={avatar.imagesrc}
 				alt='Avatar Preview'
 				loading='lazy'
 			/>
@@ -71,7 +47,8 @@ const code = `https://exavatar.deno.dev${path}`
 			method='GET'
 			action=''
 			class='contents'>
-			<div class='grid-box col-[2/12] row-[13/14] grid px-2 md:col-[7/10] md:row-[5/6]'>
+			<div
+				class='grid-box box-height-1 col-[2/12] row-[13/14] grid px-2 md:col-[7/10] md:row-[5/6]'>
 				<label class='label grid grid-cols-10 md:grid-cols-3'>
 					<span class='col-[1/4] md:col-[1/2]'><span class='font-light'>Avatar.</span>Set</span>
 
@@ -85,7 +62,7 @@ const code = `https://exavatar.deno.dev${path}`
 							avatarSets.map((set) => (
 								<option
 									value={set}
-									selected={params.set === set}>
+									selected={avatar.set.value === set}>
 									{set}
 								</option>
 							))
@@ -94,7 +71,8 @@ const code = `https://exavatar.deno.dev${path}`
 				</label>
 			</div>
 
-			<div class='grid-box col-[2/12] row-[14/15] grid px-2 md:col-[7/10] md:row-[6/7]'>
+			<div
+				class='grid-box box-height-1 col-[2/12] row-[14/15] grid px-2 md:col-[7/10] md:row-[6/7]'>
 				<label class='label grid grid-cols-10 md:grid-cols-3'>
 					<span class='col-[1/4] md:col-[1/2]'><span class='font-light'>Avatar.</span>Id</span>
 
@@ -105,10 +83,10 @@ const code = `https://exavatar.deno.dev${path}`
 						onchange='this.form.submit()'>
 						<option value=''></option>
 						{
-							avatarIdsMap[params.set].map((id) => (
+							avatarIdsMap[avatar.set.value].map((id) => (
 								<option
 									value={id}
-									selected={params.id === id}>
+									selected={avatar.id.value === id}>
 									{id}
 								</option>
 							))
@@ -117,7 +95,8 @@ const code = `https://exavatar.deno.dev${path}`
 				</label>
 			</div>
 
-			<div class='grid-box col-[2/12] row-[15/16] grid px-2 md:col-[7/10] md:row-[7/8]'>
+			<div
+				class='grid-box box-height-1 col-[2/12] row-[15/16] grid px-2 md:col-[7/10] md:row-[7/8]'>
 				<label class='label grid grid-cols-10 md:grid-cols-3'>
 					<span class='col-[1/4] md:col-[1/2]'><span class='font-light'>Avatar.</span>Size</span>
 
@@ -131,7 +110,7 @@ const code = `https://exavatar.deno.dev${path}`
 							avatarSizes.map((size) => (
 								<option
 									value={size}
-									selected={+params.size === +size}>
+									selected={avatar.size.value === size}>
 									{size}
 								</option>
 							))
@@ -140,7 +119,8 @@ const code = `https://exavatar.deno.dev${path}`
 				</label>
 			</div>
 
-			<div class='grid-box col-[2/12] row-[16/17] grid px-2 md:col-[7/10] md:row-[8/9]'>
+			<div
+				class='grid-box box-height-1 col-[2/12] row-[16/17] grid px-2 md:col-[7/10] md:row-[8/9]'>
 				<label class='label grid grid-cols-10 md:grid-cols-3'>
 					<span class='col-[1/4] md:col-[1/2]'><span class='font-light'>Avatar.</span>Format</span>
 
@@ -154,7 +134,7 @@ const code = `https://exavatar.deno.dev${path}`
 							avatarFormats.map((format) => (
 								<option
 									value={format}
-									selected={params.format === format}>
+									selected={avatar.format.value === format}>
 									{format}
 								</option>
 							))
@@ -163,7 +143,8 @@ const code = `https://exavatar.deno.dev${path}`
 				</label>
 			</div>
 
-			<div class='grid-box col-[2/12] row-[17/18] grid px-2 md:col-[7/10] md:row-[9/10]'>
+			<div
+				class='grid-box box-height-1 col-[2/12] row-[17/18] grid px-2 md:col-[7/10] md:row-[9/10]'>
 				<label class='label grid grid-cols-10 md:grid-cols-3'>
 					<span class='col-[1/4] md:col-[1/2]'><span class='font-light'>Avatar.</span>Text</span>
 
@@ -173,14 +154,14 @@ const code = `https://exavatar.deno.dev${path}`
 						type='text'
 						maxlength='2'
 						class='input col-[4/11] w-full md:col-[2/4]'
-						value={params.text}
+						value={avatar.text.value}
 						onchange='this.form.submit()'
 					/>
 				</label>
 			</div>
 
 			<div
-				class='grid-box grid-cross-bl col-[2/12] row-[18/19] grid px-2 md:col-[7/10] md:row-[10/11]'>
+				class='grid-box box-height-1 grid-cross-bl col-[2/12] row-[18/19] grid px-2 md:col-[7/10] md:row-[10/11]'>
 				<label class='label grid grid-cols-10 md:grid-cols-3'>
 					<span class='col-[1/4] md:col-[1/2]'><span class='font-light'>Avatar.</span>Color</span>
 
@@ -189,14 +170,14 @@ const code = `https://exavatar.deno.dev${path}`
 						id='avatar-color'
 						type='color'
 						class='input col-[4/11] w-full md:col-[2/4]'
-						value={params.color}
+						value={avatar.color.value}
 						onchange='this.form.submit()'
 					/>
 				</label>
 			</div>
 
 			<div
-				class='grid-box col-[2/12] row-[20/21] grid grid-cols-2 items-center gap-2 px-2 md:col-[7/10] md:row-[12/13]'>
+				class='grid-box box-height-1 col-[2/12] row-[20/21] grid grid-cols-2 items-center gap-2 px-2 md:col-[7/10] md:row-[12/13]'>
 				<button
 					type='button'
 					class='btn btn-secondary'
@@ -223,9 +204,9 @@ const code = `https://exavatar.deno.dev${path}`
 			</div>
 		</form>
 
-		<Code
-			class='grid-box col-[1/13] row-[22/24] content-center overflow-hidden p-3 text-center md:col-[3/11] md:row-[14/16]'
-			code={code}
+		<AvatarCode
+			class='grid-box box-height-2 col-[1/13] row-[22/24] content-center overflow-hidden p-3 text-center md:col-[3/11] md:row-[14/16]'
+			code={avatar.codeurl}
 		/>
 	</main>
 </Layout>

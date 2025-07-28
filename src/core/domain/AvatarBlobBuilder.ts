@@ -1,8 +1,8 @@
 import { Avatar } from './Avatar.ts'
 import { environment, baseUrl } from '../shared/Environment.ts'
 import { AvatarSvgBuilder } from './AvatarSvgBuilder.ts'
-import { AvatarNotFoundError } from './Exceptions.ts'
 import { AvatarFormatType } from './AvatarFormat.ts'
+import { ExavatarError } from '../shared/ExavatarError.ts'
 
 export class AvatarBlobBuilder {
 	static async build(
@@ -35,5 +35,11 @@ export class AvatarBlobBuilder {
 			console.error(error)
 			throw new AvatarNotFoundError()
 		}
+	}
+}
+
+export class AvatarNotFoundError extends ExavatarError {
+	constructor() {
+		super('Avatar not found')
 	}
 }

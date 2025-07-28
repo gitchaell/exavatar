@@ -39,7 +39,7 @@ curl "https://exavatar.deno.dev/api/avatar?set=animals&id=dinosaur&size=256&form
 | `set`     | string | `random` | Avatar style set                  |
 | `id`      | string | `random` | Unique avatar identifier          |
 | `size`    | number | `256`    | Image size in pixels              |
-| `format`  | string | `webp`   | Output format (png, webp, svg)    |
+| `format`  | string | `webp`   | Output image format               |
 | `color`   | string | `random` | Background color (hex)            |
 | `text`    | string |          | Custom text overlay (max 2 chars) |
 

@@ -1,70 +1,87 @@
 ---
 import Layout from '../../layouts/Layout.astro'
+import AvatarCode from '../../components/AvatarCode.astro'
 ---
 
 <Layout
 	title='About Exavatar - The Future of Avatar Generation'
 	description='Learn about Exavatar, the powerful avatar generation API built with modern web technologies. Discover our mission to make beautiful avatars accessible to everyone.'>
 	<header
-		class='grid-box col-[1/13] row-[3/5] grid grid-flow-row auto-rows-min content-center md:col-[3/11] md:row-[2/4]'>
-		<h1 class='text-center text-3xl font-semibold'>About Exavatar</h1>
-		<p class='text-md content-center text-center text-balance'>
+		class='grid-box box-height-2 col-[1/13] row-[3/5] grid grid-flow-row auto-rows-min content-center md:col-[3/11] md:row-[2/4]'>
+		<h1 class='content-end text-center text-3xl font-semibold'>About Exavatar</h1>
+		<p class='text-md line-clamp-2 content-center text-center text-balance'>
 			The future of avatar generation is here
 		</p>
 	</header>
 
-	<main class='grid-box col-[2/12] row-[6/none] space-y-8 md:col-[3/11] md:row-[5/none]'>
-		<section class='space-y-4'>
-			<h2 class='text-2xl font-semibold'>Our Mission</h2>
-			<p class='text-pretty'>
-				At Exavatar, we believe that every application deserves beautiful, unique avatars. Our
-				mission is to provide developers with the most powerful, flexible, and easy-to-use avatar
-				generation API available today.
-			</p>
-			<p class='text-pretty'>
-				Built with modern web technologies like Deno and Astro, Exavatar delivers lightning-fast
-				performance while maintaining the highest standards of code quality and developer
-				experience.
+	<main class='contents'>
+		<section class='contents'>
+			<h2
+				class='grid-box box-height-1 col-[2/12] row-[6/7] content-center px-4 text-2xl font-semibold md:col-[3/11] md:row-[5/6]'>
+				Our Mission
+			</h2>
+			<p
+				class='grid-box box-height-4 col-[2/12] row-[7/11] content-center overflow-auto px-4 text-pretty md:col-[3/11] md:row-[6/10]'>
+				We believe that every application deserves beautiful, unique avatars. Our mission is to
+				provide developers with the most powerful, flexible, and easy-to-use avatar generation API
+				available today.
+				<br /><br />
+				Built with modern web technologies like Deno and Astro, Exavatar delivers lightning-fast performance
+				while maintaining the highest standards of code quality and developer experience.
 			</p>
 		</section>
 
-		<section class='space-y-4'>
-			<h2 class='text-2xl font-semibold'>Why Choose Exavatar?</h2>
-			<div class='grid gap-6 md:grid-cols-2'>
-				<div class='space-y-2'>
-					<h3 class='text-lg font-medium'>🚀 Lightning Fast</h3>
-					<p class='text-sm text-gray-600 dark:text-gray-400'>
-						Built on Deno's high-performance runtime, our API generates avatars in milliseconds.
-					</p>
-				</div>
-				<div class='space-y-2'>
-					<h3 class='text-lg font-medium'>🎨 Highly Customizable</h3>
-					<p class='text-sm text-gray-600 dark:text-gray-400'>
-						Choose from multiple styles, colors, sizes, and formats to match your brand perfectly.
-					</p>
-				</div>
-				<div class='space-y-2'>
-					<h3 class='text-lg font-medium'>🔧 Developer Friendly</h3>
-					<p class='text-sm text-gray-600 dark:text-gray-400'>
-						Simple REST API with comprehensive documentation and interactive playground.
-					</p>
-				</div>
-				<div class='space-y-2'>
-					<h3 class='text-lg font-medium'>📱 Always Available</h3>
-					<p class='text-sm text-gray-600 dark:text-gray-400'>
-						Deployed on Deno Deploy for 99.9% uptime and global edge distribution.
-					</p>
-				</div>
-			</div>
+		<section class='contents'>
+			<h2
+				class='grid-box box-height-1 col-[2/12] row-[12/13] content-center px-4 text-2xl font-semibold md:col-[3/11] md:row-[11/12]'>
+				Why Choose Exavatar?
+			</h2>
+			<h3
+				class='grid-box box-height-1 col-[2/12] row-[13/14] content-center px-4 text-lg font-medium md:col-[3/11] md:row-[12/13]'>
+				🚀 Lightning Fast
+			</h3>
+			<p
+				class='grid-box box-height-1 col-[2/12] row-[14/15] content-center overflow-auto px-4 text-sm md:col-[3/11] md:row-[13/14]'>
+				Built on Deno's high-performance runtime, our API generates avatars in milliseconds.
+			</p>
+			<h3
+				class='grid-box box-height-1 col-[2/12] row-[15/16] content-center px-4 text-lg font-medium md:col-[3/11] md:row-[14/15]'>
+				🎨 Highly Customizable
+			</h3>
+			<p
+				class='grid-box box-height-1 col-[2/12] row-[16/17] content-center overflow-auto px-4 text-sm md:col-[3/11] md:row-[15/16]'>
+				Choose from multiple styles, colors, sizes, and formats to match your brand perfectly.
+			</p>
+			<h3
+				class='grid-box box-height-1 col-[2/12] row-[17/18] content-center px-4 text-lg font-medium md:col-[3/11] md:row-[16/17]'>
+				🔧 Developer Friendly
+			</h3>
+			<p
+				class='grid-box box-height-1 col-[2/12] row-[18/19] content-center overflow-auto px-4 text-sm md:col-[3/11] md:row-[17/18]'>
+				Simple REST API with comprehensive documentation and interactive playground.
+			</p>
+			<h3
+				class='grid-box box-height-1 col-[2/12] row-[19/20] content-center px-4 text-lg font-medium md:col-[3/11] md:row-[18/19]'>
+				📱 Always Available
+			</h3>
+			<p
+				class='grid-box box-height-1 col-[2/12] row-[20/21] content-center overflow-auto px-4 text-sm md:col-[3/11] md:row-[19/20]'>
+				Deployed on Deno Deploy for 99.9% uptime and global edge distribution.
+			</p>
 		</section>
 
-		<section class='space-y-4'>
-			<h2 class='text-2xl font-semibold'>Technology Stack</h2>
-			<p class='text-pretty'>
-				Exavatar is built with cutting-edge technologies to ensure optimal performance and developer
-				experience:
+		<section class='contents'>
+			<h2
+				class='grid-box box-height-1 col-[2/12] row-[22/23] content-center px-4 text-2xl font-semibold md:col-[3/11] md:row-[21/22]'>
+				Technology Stack
+			</h2>
+			<p
+				class='grid-box box-height-1 col-[2/12] row-[23/24] content-center overflow-auto px-4 md:col-[3/11] md:row-[22/23]'>
+				Exavatar is built with modern web technologies to ensure performance, reliability, and
+				developer experience:
 			</p>
-			<ul class='list-disc space-y-2 pl-6'>
+			<ul
+				class='grid-box box-height-3 col-[2/12] row-[24/27] list-disc content-center space-y-2 overflow-auto px-4 pl-10 md:col-[3/11] md:row-[23/26]'>
 				<li><strong>Deno</strong> - Modern, secure runtime for JavaScript and TypeScript</li>
 				<li><strong>Astro</strong> - Fast, content-focused web framework</li>
 				<li><strong>TypeScript</strong> - Type-safe development for better code quality</li>
@@ -75,49 +92,54 @@ import Layout from '../../layouts/Layout.astro'
 			</ul>
 		</section>
 
-		<section class='space-y-4'>
-			<h2 class='text-2xl font-semibold'>Open Source</h2>
-			<p class='text-pretty'>
-				Exavatar is proudly open source. We believe in transparency, community collaboration, and
-				giving back to the developer community. You can find our source code, contribute
-				improvements, or report issues on our GitHub repository.
+		<section class='contents'>
+			<h2
+				class='grid-box box-height-1 col-[2/12] row-[28/29] content-center px-4 text-2xl font-semibold md:col-[3/11] md:row-[27/28]'>
+				Open Source
+			</h2>
+			<p
+				class='grid-box box-height-2 col-[2/12] row-[29/31] content-center overflow-auto px-4 md:col-[3/11] md:row-[28/30]'>
+				Exavatar is proudly open source! We believe in transparency and community collaboration. You
+				can explore our codebase, contribute improvements, or report issues on GitHub.
 			</p>
-			<div class='flex gap-4'>
+			<div
+				class='grid-box box-height-1 col-[2/12] row-[31/32] content-center space-x-4 px-4 md:col-[3/11] md:row-[30/31]'>
 				<a
 					href='https://github.com/gitchaell/exavatar'
 					target='_blank'
 					class='btn btn-primary'>
 					View on GitHub
 				</a>
-				<a
-					href='/docs'
-					class='btn btn-secondary'>
-					Read Documentation
-				</a>
 			</div>
 		</section>
 
-		<section class='space-y-4'>
-			<h2 class='text-2xl font-semibold'>Get Started</h2>
-			<p class='text-pretty'>
-				Ready to add beautiful avatars to your application? Get started in seconds with our simple
-				API:
+		<section class='contents'>
+			<h2
+				class='grid-box box-height-1 col-[2/12] row-[33/34] content-center px-4 text-2xl font-semibold md:col-[3/11] md:row-[32/33]'>
+				Get Started
+			</h2>
+			<p
+				class='grid-box box-height-1 col-[2/12] row-[34/35] content-center overflow-auto px-4 md:col-[3/11] md:row-[33/34]'>
+				Ready to generate your first avatar? Try our API now:
 			</p>
-			<div class='rounded-lg bg-gray-100 p-4 dark:bg-gray-800'>
-				<code class='text-sm'>https://exavatar.deno.dev/api/avatar?set=animals&id=dinosaur</code>
-			</div>
-			<div class='flex gap-4'>
+			<AvatarCode
+				code='https://exavatar.deno.dev/api/avatar?set=animals&id=dinosaur'
+				class='grid-box box-height-1 col-[2/12] row-[35/36] content-center px-4 md:col-[3/11] md:row-[34/35]'
+			/>
+			<div
+				class='grid-box box-height-1 col-[2/12] row-[36/37] content-center space-x-4 px-4 md:col-[3/11] md:row-[35/36]'>
 				<a
 					href='/playground'
 					class='btn btn-primary'>
 					Try Playground
 				</a>
 				<a
-					href='/gallery'
+					href='/docs'
 					class='btn btn-secondary'>
-					Browse Gallery
+					Read Docs
 				</a>
 			</div>
+			<div class='box-height-10 col-[2/12] row-[37/47] md:col-[3/11] md:row-[36/46]'></div>
 		</section>
 	</main>
 </Layout>
