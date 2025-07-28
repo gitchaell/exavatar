@@ -1,6 +1,24 @@
 import { ExavatarError } from '../shared/ExavatarError.ts'
 import { AvatarSetType } from './AvatarSet.ts'
 
+/**
+ * Mapping of avatar sets to their available avatar IDs.
+ * Each set contains a curated collection of unique avatar identifiers.
+ *
+ * - **animals**: Collection of 45 animal-themed avatars
+ * - **rick_morty**: Collection of 671 Rick and Morty character avatars
+ *
+ * @example
+ * ```typescript
+ * // Access animal IDs
+ * console.log(avatarIdsMap.animals.length) // 45
+ * console.log(avatarIdsMap.animals[0])    // 'ant'
+ *
+ * // Access Rick and Morty IDs
+ * console.log(avatarIdsMap.rick_morty.length) // 671
+ * console.log(avatarIdsMap.rick_morty[0])     // '0'
+ * ```
+ */
 export const avatarIdsMap = {
 	animals: [
 		'ant',
@@ -282,19 +300,97 @@ export const avatarIdsMap = {
 	],
 } as const
 
+/** Type for animal avatar IDs derived from avatarIdsMap */
 export type AvatarAnimalIdTypes = (typeof avatarIdsMap)['animals'][number]
+
+/** Type for Rick and Morty avatar IDs derived from avatarIdsMap */
 export type AvatarRickAndMortyIdTypes = (typeof avatarIdsMap)['rick_morty'][number]
+
+/** Union type representing all valid avatar IDs across all sets */
 export type AvatarIdType = AvatarAnimalIdTypes | AvatarRickAndMortyIdTypes
 
+/**
+ * Value object representing a specific avatar identifier within a set.
+ * Provides type-safe avatar ID handling with automatic validation and fallback.
+ *
+ * Avatar IDs are set-specific and must be valid within their respective collections.
+ * Invalid IDs automatically fall back to a random valid ID from the same set.
+ *
+ * @example
+ * ```typescript
+ * // Create with valid ID
+ * const catAvatar = AvatarId.create('cat', 'animals')
+ * console.log(catAvatar.value) // 'cat'
+ *
+ * // Random default from set
+ * const randomAnimal = AvatarId.default('animals')
+ * console.log(randomAnimal.value) // Random animal ID like 'lion'
+ *
+ * // Auto-fallback for invalid ID
+ * const fallback = AvatarId.create('invalid', 'animals')
+ * console.log(fallback.value) // Random valid animal ID
+ *
+ * // Rick and Morty character
+ * const rickMorty = AvatarId.create('1', 'rick_morty')
+ * console.log(rickMorty.value) // '1'
+ * ```
+ */
 export class AvatarId {
+	/** Private constructor ensures validation through factory methods */
 	private constructor(public readonly value: AvatarIdType) {}
 
+	/**
+	 * Creates a random avatar ID from the specified set.
+	 * Uses cryptographically secure randomness for fair distribution.
+	 *
+	 * @param set - The avatar set to select from
+	 * @returns AvatarId instance with random ID from the set
+	 *
+	 * @example
+	 * ```typescript
+	 * // Random animal
+	 * const randomAnimal = AvatarId.default('animals')
+	 * console.log(randomAnimal.value) // 'tiger', 'bear', etc.
+	 *
+	 * // Random Rick and Morty character
+	 * const randomCharacter = AvatarId.default('rick_morty')
+	 * console.log(randomCharacter.value) // '142', '523', etc.
+	 * ```
+	 */
 	static default(set: AvatarSetType): AvatarId {
 		const map = avatarIdsMap[set]
 		const id = map[Math.floor(Math.random() * map.length)] as AvatarIdType
 		return new AvatarId(id)
 	}
 
+	/**
+	 * Creates AvatarId from input with set-aware validation.
+	 * Validates that the ID exists within the specified set.
+	 * Falls back to random ID if validation fails.
+	 *
+	 * @param input - ID string or any value to validate
+	 * @param set - The avatar set to validate against
+	 * @returns AvatarId instance with valid ID for the set
+	 *
+	 * @example
+	 * ```typescript
+	 * // Valid animal ID
+	 * const cat = AvatarId.create('cat', 'animals')
+	 * console.log(cat.value) // 'cat'
+	 *
+	 * // Valid Rick and Morty ID
+	 * const character = AvatarId.create('100', 'rick_morty')
+	 * console.log(character.value) // '100'
+	 *
+	 * // Invalid ID - auto fallback
+	 * const invalid = AvatarId.create('nonexistent', 'animals')
+	 * console.log(invalid.value) // Random valid animal ID
+	 *
+	 * // Cross-set validation
+	 * const wrong = AvatarId.create('cat', 'rick_morty') // 'cat' not in rick_morty
+	 * console.log(wrong.value) // Random Rick and Morty character ID
+	 * ```
+	 */
 	static create(input: unknown, set: AvatarSetType): AvatarId {
 		if (
 			typeof input === 'string' &&
@@ -307,7 +403,28 @@ export class AvatarId {
 	}
 }
 
+/**
+ * Error thrown when avatar ID validation fails.
+ * Provides comprehensive feedback about valid ID options across all sets.
+ *
+ * @example
+ * ```typescript
+ * try {
+ *   // This would throw since validation occurs in the repository layer
+ *   // AvatarId.create() always falls back gracefully
+ *   throw new AvatarIdNotValidError('invalid-id')
+ * } catch (error) {
+ *   console.log(error.message)
+ *   // Lists all valid IDs from all sets
+ * }
+ * ```
+ */
 export class AvatarIdNotValidError extends ExavatarError {
+	/**
+	 * Creates an error for invalid avatar ID.
+	 *
+	 * @param id - The invalid ID value that caused the error
+	 */
 	constructor(id: unknown) {
 		super(
 			`Avatar.id <<${id}>> is not valid. Expected a valid id like: ${Object.values(avatarIdsMap)

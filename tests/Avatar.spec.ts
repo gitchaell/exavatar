@@ -23,7 +23,6 @@ Deno.test({
 					id: 'ant',
 					format,
 				})
-				console.log(`[TEST] Testing filename generation for format: ${format}`)
 				assertEquals(
 					avatar.filename,
 					expected,
@@ -33,9 +32,6 @@ Deno.test({
 		})
 
 		await t.step('should throw error for invalid format', () => {
-			console.log('[TEST] Testing invalid format validation')
-
-			// Using type assertion with a more specific type
 			const invalidAvatar = {
 				set: 'animals' as AvatarSetType,
 				id: 'ant' as AvatarIdType,
@@ -43,7 +39,6 @@ Deno.test({
 			}
 
 			assertThrows(() => new Avatar(invalidAvatar), Error)
-			console.log('[TEST] Correctly threw error for invalid format')
 		})
 	},
 })
@@ -56,7 +51,6 @@ Deno.test({
 			const sizes = ['16', '64', '256', '512']
 			for (const size of sizes) {
 				const result = AvatarSize.create(size)
-				console.log(`[TEST] Created AvatarSize with value: ${result.value}`)
 				assertEquals(result.value, size)
 			}
 		})
@@ -70,7 +64,6 @@ Deno.test({
 		await t.step('should throw on invalid format', () => {
 			const invalidFormats = ['bmp', 'gif', 'tiff']
 			for (const format of invalidFormats) {
-				console.log(`[TEST] Testing invalid format: ${format}`)
 				assertThrows(() => AvatarFormat.create(format), Error)
 			}
 		})
@@ -93,7 +86,6 @@ Deno.test({
 		await t.step('should create with valid color', () => {
 			for (const color of validColors) {
 				const result = AvatarColor.create(color)
-				console.log(`[TEST] Created AvatarColor with value: ${result.value}`)
 				assertEquals(result.value, color)
 			}
 		})
