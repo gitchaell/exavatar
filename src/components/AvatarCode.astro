@@ -4,9 +4,10 @@ import Icon from './Icon.astro'
 
 interface Props extends HTMLAttributes<'code'> {
 	code: string
+	wrap?: boolean
 }
 
-const { code, class: otherClasses, ...rest } = Astro.props as Props
+const { code, wrap = false, class: otherClasses, ...rest } = Astro.props as Props
 
 type UrlTokenType =
 	| 'protocol'
@@ -120,7 +121,7 @@ const html = UrlSyntaxHighlighter.process(code)
 	class={'relative group/code ' + otherClasses}
 	{...rest}>
 	<code
-		class='block w-full wrap-anywhere'
+		class={'block w-full ' + (wrap ? 'wrap-anywhere' : 'whitespace-nowrap overflow-x-auto')}
 		set:html={html}
 	/>
 
@@ -140,6 +141,5 @@ const html = UrlSyntaxHighlighter.process(code)
     }
   }))`}>
 		<Icon name='copy' />
-		Copy
 	</button>
 </section>

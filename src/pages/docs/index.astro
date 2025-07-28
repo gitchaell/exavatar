@@ -1,28 +1,30 @@
 ---
-import Layout from '../../layouts/Layout.astro'
-import AvatarCode from '../../components/AvatarCode.astro'
 import { AvatarSize, avatarSizes } from '../../core/domain/AvatarSize'
 import { AvatarFormat, avatarFormats } from '../../core/domain/AvatarFormat'
+import Layout from '../../layouts/Layout.astro'
+import AvatarCode from '../../components/AvatarCode.astro'
+import SampleCode from '../../components/SampleCode.astro'
 
 const codes = {
 	html: `<img src="https://exavatar.deno.dev/api/avatar" />`,
 
 	css: `.avatar {
-	background-image: url('https://exavatar.deno.dev/api/avatar');
-	background-size: cover;
+  background-image: url('https://exavatar.deno.dev/api/avatar');
+  background-size: cover;
 }`,
 
-	javascript: `const image = new Image(256, 256); image.src = \`https://exavatar.deno.dev/api/avatar\`;`,
+	javascript: `const image = new Image(256, 256);
+image.src = 'https://exavatar.deno.dev/api/avatar';`,
 
 	react: `export const Avatar = () => (<img src="https://exavatar.deno.dev/api/avatar" />)`,
 
 	angular: `@Component({
-	template: '<img src="https://exavatar.deno.dev/api/avatar" />'
+  template: '<img src="https://exavatar.deno.dev/api/avatar" />'
 })
 export class Avatar { }`,
 
 	svelte: `<script>
-	$: src = 'https://exavatar.deno.dev/api/avatar';
+  $: src = 'https://exavatar.deno.dev/api/avatar';
 </script>
 <img src={src} />`,
 
@@ -65,7 +67,7 @@ const src = 'https://exavatar.deno.dev/api/avatar';
 				class='grid-box box-height-1 col-[2/12] row-[10/11] content-center px-4 text-2xl font-semibold md:col-[3/11] md:row-[9/10]'>
 				API Endpoint
 			</h2>
-			<AvatarCode
+			<SampleCode
 				class='grid-box box-height-1 col-[2/12] row-[11/12] content-center px-4 md:col-[3/11] md:row-[10/11]'
 				code='GET https://exavatar.deno.dev/api/avatar'
 			/>
@@ -178,7 +180,7 @@ const src = 'https://exavatar.deno.dev/api/avatar';
 				class='grid-box box-height-1 col-[2/12] row-[31/32] content-center px-4 text-lg font-medium md:col-[3/11] md:row-[30/31]'>
 				HTML
 			</h3>
-			<AvatarCode
+			<SampleCode
 				class='grid-box box-height-1 col-[2/12] row-[32/33] content-center px-4 md:col-[3/11] md:row-[31/32]'
 				code={codes.html}
 			/>
@@ -186,7 +188,7 @@ const src = 'https://exavatar.deno.dev/api/avatar';
 				class='grid-box box-height-1 col-[2/12] row-[33/34] content-center px-4 text-lg font-medium md:col-[3/11] md:row-[32/33]'>
 				CSS
 			</h3>
-			<AvatarCode
+			<SampleCode
 				class='grid-box box-height-2 col-[2/12] row-[34/36] content-center px-4 md:col-[3/11] md:row-[33/35]'
 				code={codes.css}
 			/>
@@ -194,7 +196,7 @@ const src = 'https://exavatar.deno.dev/api/avatar';
 				class='grid-box box-height-1 col-[2/12] row-[36/37] content-center px-4 text-lg font-medium md:col-[3/11] md:row-[35/36]'>
 				JavaScript
 			</h3>
-			<AvatarCode
+			<SampleCode
 				class='grid-box box-height-1 col-[2/12] row-[37/38] content-center px-4 md:col-[3/11] md:row-[36/37]'
 				code={codes.javascript}
 			/>
@@ -202,7 +204,7 @@ const src = 'https://exavatar.deno.dev/api/avatar';
 				class='grid-box box-height-1 col-[2/12] row-[38/39] content-center px-4 text-lg font-medium md:col-[3/11] md:row-[37/38]'>
 				React
 			</h3>
-			<AvatarCode
+			<SampleCode
 				class='grid-box box-height-1 col-[2/12] row-[39/40] content-center px-4 md:col-[3/11] md:row-[38/39]'
 				code={codes.react}
 			/>
@@ -210,7 +212,7 @@ const src = 'https://exavatar.deno.dev/api/avatar';
 				class='grid-box box-height-1 col-[2/12] row-[40/41] content-center px-4 text-lg font-medium md:col-[3/11] md:row-[39/40]'>
 				Angular
 			</h3>
-			<AvatarCode
+			<SampleCode
 				class='grid-box box-height-2 col-[2/12] row-[41/43] content-center px-4 md:col-[3/11] md:row-[40/42]'
 				code={codes.angular}
 			/>
@@ -218,7 +220,7 @@ const src = 'https://exavatar.deno.dev/api/avatar';
 				class='grid-box box-height-1 col-[2/12] row-[43/44] content-center px-4 text-lg font-medium md:col-[3/11] md:row-[42/43]'>
 				Svelte
 			</h3>
-			<AvatarCode
+			<SampleCode
 				class='grid-box box-height-2 col-[2/12] row-[44/46] content-center px-4 md:col-[3/11] md:row-[43/45]'
 				code={codes.svelte}
 			/>
@@ -226,7 +228,7 @@ const src = 'https://exavatar.deno.dev/api/avatar';
 				class='grid-box box-height-1 col-[2/12] row-[46/47] content-center px-4 text-lg font-medium md:col-[3/11] md:row-[45/46]'>
 				Astro
 			</h3>
-			<AvatarCode
+			<SampleCode
 				class='grid-box box-height-2 col-[2/12] row-[47/49] content-center px-4 md:col-[3/11] md:row-[46/48]'
 				code={codes.astro}
 			/>

@@ -11,6 +11,7 @@ const searchQuery = searchParams.get('search')?.toLowerCase() || ''
 
 const filteredAvatars = avatarIdsMap[selectedSet as keyof typeof avatarIdsMap]
 	.filter((id) => id.toLowerCase().search(searchQuery) !== -1)
+	.sort(() => 0.5 - Math.random())
 	.map((id) =>
 		Avatar.create({ set: selectedSet as AvatarSetType, id, size: '256', format: 'webp' }),
 	)
