@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.10.0](https://github.com/gitchaell/exavatar/compare/v1.9.1...v1.10.0) (2025-07-28)
+
+### ✨ Features
+
+- add client:load directive to code blocks for client-side rendering
+  ([d55f250](https://github.com/gitchaell/exavatar/commit/d55f2500e4e8b49903c28d2342624d077e6ed02f))
+
 ## [1.9.1](https://github.com/gitchaell/exavatar/compare/v1.9.0...v1.9.1) (2025-07-28)
 
 ### ♻️ Code Refactoring
