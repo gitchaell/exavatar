@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.10.1](https://github.com/gitchaell/exavatar/compare/v1.10.0...v1.10.1) (2025-07-28)
+
+### ♻️ Code Refactoring
+
+- replace Code component with custom AvatarCode component across documentation page
+  ([f3bc1fa](https://github.com/gitchaell/exavatar/commit/f3bc1faea0bb078497a6274e76d7b1905839c92d))
+
 ## [1.10.0](https://github.com/gitchaell/exavatar/compare/v1.9.1...v1.10.0) (2025-07-28)
 
 ### ✨ Features
