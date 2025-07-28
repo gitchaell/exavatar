@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.9.1](https://github.com/gitchaell/exavatar/compare/v1.9.0...v1.9.1) (2025-07-28)
+
+### ♻️ Code Refactoring
+
+- reorganize layouts and components with new grid system and styling
+  ([de7a794](https://github.com/gitchaell/exavatar/commit/de7a794fe8b733d8b597cb14de4e0535669359c7))
+
 ## [1.9.0](https://github.com/gitchaell/exavatar/compare/v1.8.0...v1.9.0) (2025-07-18)
 
 ### ✨ Features
