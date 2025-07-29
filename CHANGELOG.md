@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.12.0](https://github.com/gitchaell/exavatar/compare/v1.11.0...v1.12.0) (2025-07-29)
+
+### ✨ Features
+
+- add Adventure Time character avatars in multiple resolutions
+  ([6623987](https://github.com/gitchaell/exavatar/commit/6623987d26e4ea10bf4f7c2b99801980b9d138d6))
+
 ## [1.11.0](https://github.com/gitchaell/exavatar/compare/v1.10.1...v1.11.0) (2025-07-28)
 
 ### ✨ Features
