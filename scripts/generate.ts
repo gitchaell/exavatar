@@ -10,8 +10,9 @@ const CONFIG = {
 	sizes: [16, 32, 64, 128, 256, 512, 1024],
 	formats: ['png', 'jpeg', 'webp'] as const,
 	inputDir: resolve(ROOT_DIR, 'scripts/input'),
+	inputExt: 'webp',
 	outputDir: resolve(ROOT_DIR, 'avatars'),
-	sets: ['rick_morty'] as const,
+	sets: ['adventure_time'] as const,
 	concurrency: 4,
 }
 
@@ -19,7 +20,7 @@ let processed = 0
 let total = 0
 
 async function processImage(entryPath: string, set: string) {
-	const base = basename(entryPath, '.png')
+	const base = basename(entryPath, `.${CONFIG.inputExt}`)
 	const data = await Deno.readFile(entryPath)
 
 	const tasks = CONFIG.sizes.flatMap((size) =>
@@ -76,14 +77,14 @@ async function generate() {
 		const entries = []
 		for await (const entry of walk(setPath, {
 			maxDepth: 1,
-			exts: ['.png'],
+			exts: [CONFIG.inputExt],
 			includeDirs: false,
 		})) {
 			entries.push(entry.path)
 		}
 
 		if (entries.length === 0) {
-			console.log(`⚠️  No se encontraron archivos PNG en: ${setPath}`)
+			console.log(`⚠️  No se encontraron archivos ${CONFIG.inputExt} en: ${setPath}`)
 			continue
 		}
 
@@ -106,5 +107,6 @@ if (import.meta.main) {
 }
 
 /*
-for file in /home/micha/devprojects/exavatar/scripts/input/rick_morty/*; do basename "${file%.*}"; done > /home/micha/devprojects/exavatar/scripts/input/types.txt
+This is the command to generate the types.txt file
+for file in /home/micha/devprojects/exavatar/scripts/input/adventure_time/*; do basename "${file%.*}"; done > /home/micha/devprojects/exavatar/scripts/input/types.txt
 */

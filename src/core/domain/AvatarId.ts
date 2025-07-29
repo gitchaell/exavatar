@@ -11,12 +11,12 @@ import { AvatarSetType } from './AvatarSet.ts'
  * @example
  * ```typescript
  * // Access animal IDs
- * console.log(avatarIdsMap.animals.length) // 45
- * console.log(avatarIdsMap.animals[0])    // 'ant'
+ * console.log(avatarIdsMap.animals.length)
+ * console.log(avatarIdsMap.animals[0])
  *
  * // Access Rick and Morty IDs
- * console.log(avatarIdsMap.rick_morty.length) // 671
- * console.log(avatarIdsMap.rick_morty[0])     // '0'
+ * console.log(avatarIdsMap.rick_morty.length)
+ * console.log(avatarIdsMap.rick_morty[0])
  * ```
  */
 export const avatarIdsMap = {
@@ -66,6 +66,75 @@ export const avatarIdsMap = {
 		'turtle',
 		'whale',
 		'zebra',
+	],
+	adventure_time: [
+		'abracdaniel',
+		'ancient_psychic_tandem_war_elephant',
+		'banana_guard',
+		'banana_man',
+		'betty_golb',
+		'betty',
+		'billy_old',
+		'billy_the_lich',
+		'billy_young',
+		'bmo',
+		'bob',
+		'bufo',
+		'cake',
+		'candy_corn_grandma',
+		'canyon',
+		'chet',
+		'chocoberry',
+		'choose_goose',
+		'cinnamon',
+		'clarence',
+		'crunchy',
+		'donny',
+		'ethel',
+		'fern',
+		'finn_bionic',
+		'finn_old',
+		'finn',
+		'finn_young',
+		'fionna_warrior',
+		'fionna',
+		'fionna_work',
+		'flame_king',
+		'flame_princess',
+		'flame_queen',
+		'golb',
+		'Gunter',
+		'ice_king',
+		'jake',
+		'jake_young',
+		'jermaine',
+		'joshua',
+		'lady_rainicorn_look',
+		'lich',
+		'life_giving_magus',
+		'lordofevil_monster',
+		'lord_of_evil',
+		'lumpy_space_pricess',
+		'marceline_bat',
+		'marceline_queen',
+		'marceline',
+		'marceline_young',
+		'margaret',
+		'martin_render',
+		'martin_young',
+		'memow',
+		'minerva',
+		'mr_cupcake',
+		'older_simon',
+		'old_lady_his_hero',
+		'orgalorg',
+		'princess_bubblegum',
+		'princess_bubblegum_young',
+		'ricardio',
+		'sweetp_future',
+		'sweetp_lich',
+		'sweetp',
+		'young_simon',
 	],
 	rick_morty: [
 		'ants_in_my_eyes_johnson',

@@ -4,16 +4,17 @@ import { ExavatarError } from '../shared/ExavatarError.ts'
  * Available avatar sets/collections in the system.
  * Each set represents a themed collection of avatar images.
  *
- * - **animals**: Collection of 45 animal-themed avatars (cat, dog, lion, etc.)
- * - **rick_morty**: Collection of 671 Rick and Morty character avatars
+ * - **animals**: Collection animal-themed avatars (cat, dog, lion, etc.)
+ * - **adventure_time**: Collection Adventure Time character avatars
+ * - **rick_morty**: Collection Rick and Morty character avatars
  *
  * @example
  * ```typescript
- * console.log(avatarSets) // ['animals', 'rick_morty']
- * console.log(avatarSets.length) // 2
+ * console.log(avatarSets) // ['animals', 'adventure_time', 'rick_morty']
+ * console.log(avatarSets.length) // 3
  * ```
  */
-export const avatarSets = ['animals', 'rick_morty'] as const
+export const avatarSets = ['animals', 'adventure_time', 'rick_morty'] as const
 
 /** Type representing valid avatar set names */
 export type AvatarSetType = (typeof avatarSets)[number]
