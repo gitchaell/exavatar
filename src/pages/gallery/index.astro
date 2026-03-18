@@ -1,20 +1,30 @@
 ---
-import { Avatar } from '../../core/domain/Avatar'
-import { avatarSets, AvatarSet, AvatarSetType } from '../../core/domain/AvatarSet'
-import { avatarIdsMap } from '../../core/domain/AvatarId'
-import Layout from '../../layouts/Layout.astro'
-import Icon from '../../components/Icon.astro'
+import { Avatar } from '../../core/domain/Avatar';
+import {
+	avatarSets,
+	AvatarSet,
+	type AvatarSetType,
+} from '../../core/domain/AvatarSet';
+import { avatarIdsMap } from '../../core/domain/AvatarId';
+import Layout from '../../layouts/Layout.astro';
+import Icon from '../../components/Icon.astro';
 
-const searchParams = Astro.url.searchParams
-const selectedSet = searchParams.get('set') || AvatarSet.default().value.toString()
-const searchQuery = searchParams.get('search')?.toLowerCase() || ''
+const searchParams = Astro.url.searchParams;
+const selectedSet =
+	searchParams.get('set') || AvatarSet.default().value.toString();
+const searchQuery = searchParams.get('search')?.toLowerCase() || '';
 
 const filteredAvatars = avatarIdsMap[selectedSet as keyof typeof avatarIdsMap]
 	.filter((id) => id.toLowerCase().search(searchQuery) !== -1)
 	.sort(() => 0.5 - Math.random())
 	.map((id) =>
-		Avatar.create({ set: selectedSet as AvatarSetType, id, size: '256', format: 'webp' }),
-	)
+		Avatar.create({
+			set: selectedSet as AvatarSetType,
+			id,
+			size: '256',
+			format: 'webp',
+		}),
+	);
 ---
 
 <Layout

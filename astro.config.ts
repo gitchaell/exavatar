@@ -1,14 +1,14 @@
-import { defineConfig } from 'astro/config'
-import deno from '@deno/astro-adapter'
-import tailwindcss from '@tailwindcss/vite'
+import { defineConfig } from 'astro/config';
+import vercel from '@astrojs/vercel';
+import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://exavatar.deno.dev',
+	site: 'https://exavatar.vercel.app',
 	output: 'server',
-	adapter: deno(),
+	adapter: vercel(),
 	integrations: [],
 	vite: {
 		plugins: [tailwindcss()],
 	},
-})
+});

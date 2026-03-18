@@ -1,13 +1,18 @@
 ---
-import { HTMLAttributes } from 'astro/types'
-import Icon from './Icon.astro'
+import type { HTMLAttributes } from 'astro/types';
+import Icon from './Icon.astro';
 
 interface Props extends HTMLAttributes<'code'> {
-	code: string
-	wrap?: boolean
+	code: string;
+	wrap?: boolean;
 }
 
-const { code, wrap = false, class: otherClasses, ...rest } = Astro.props as Props
+const {
+	code,
+	wrap = false,
+	class: otherClasses,
+	...rest
+} = Astro.props as Props;
 ---
 
 <section

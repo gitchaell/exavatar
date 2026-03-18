@@ -1,7 +1,7 @@
-import { Avatar } from './Avatar.ts'
-import { AvatarFormatType } from './AvatarFormat.ts'
-import { AvatarBuilder } from './AvatarBuilder.ts'
-import { ExavatarError } from '../shared/ExavatarError.ts'
+import type { Avatar } from './Avatar.ts';
+import type { AvatarFormatType } from './AvatarFormat.ts';
+import { AvatarBuilder } from './AvatarBuilder.ts';
+import { ExavatarError } from '../shared/ExavatarError.ts';
 
 /**
  * Result data structure for avatar operations.
@@ -17,9 +17,9 @@ import { ExavatarError } from '../shared/ExavatarError.ts'
  */
 export interface AvatarResult {
 	/** Raw avatar data as bytes ready for HTTP response */
-	data: Uint8Array
+	data: Uint8Array;
 	/** MIME type for Content-Type header */
-	type: AvatarFormatType | 'svg+xml'
+	type: AvatarFormatType | 'svg+xml';
 }
 
 /**
@@ -65,7 +65,7 @@ export interface AvatarRepository {
 	 * // Returns: { data: Uint8Array, type: 'svg+xml' }
 	 * ```
 	 */
-	load(avatar: Avatar): Promise<AvatarResult>
+	load(avatar: Avatar): Promise<AvatarResult>;
 
 	/**
 	 * Builds an SVG avatar for text-based configurations.
@@ -82,7 +82,7 @@ export interface AvatarRepository {
 	 * // Returns: { data: Uint8Array, type: 'svg+xml' }
 	 * ```
 	 */
-	build(avatar: Avatar): Promise<AvatarResult>
+	build(avatar: Avatar): Promise<AvatarResult>;
 }
 
 /**
@@ -119,7 +119,7 @@ export abstract class AvatarBaseRepository implements AvatarRepository {
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	load(_avatar: Avatar): Promise<AvatarResult> {
-		throw new Error('Method not implemented')
+		throw new Error('Method not implemented');
 	}
 
 	/**
@@ -137,7 +137,10 @@ export abstract class AvatarBaseRepository implements AvatarRepository {
 	 * ```
 	 */
 	build(avatar: Avatar): Promise<AvatarResult> {
-		return Promise.resolve({ data: AvatarBuilder.build(avatar), type: 'svg+xml' })
+		return Promise.resolve({
+			data: AvatarBuilder.build(avatar),
+			type: 'svg+xml',
+		});
 	}
 }
 
@@ -171,7 +174,7 @@ export class AvatarNotFoundError extends ExavatarError {
 	 * ```
 	 */
 	constructor(cause?: string) {
-		super(`Avatar not found. ${cause}`)
-		this.cause = cause
+		super(`Avatar not found. ${cause}`);
+		this.cause = cause;
 	}
 }

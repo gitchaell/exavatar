@@ -1,5 +1,5 @@
-import { ExavatarError } from '../shared/ExavatarError.ts'
-import { AvatarSetType } from './AvatarSet.ts'
+import { ExavatarError } from '../shared/ExavatarError.ts';
+import type { AvatarSetType } from './AvatarSet.ts';
 
 /**
  * Mapping of avatar sets to their available avatar IDs.
@@ -367,16 +367,17 @@ export const avatarIdsMap = {
 		'truckula',
 		'viscount_of_venus',
 	],
-} as const
+} as const;
 
 /** Type for animal avatar IDs derived from avatarIdsMap */
-export type AvatarAnimalIdTypes = (typeof avatarIdsMap)['animals'][number]
+export type AvatarAnimalIdTypes = (typeof avatarIdsMap)['animals'][number];
 
 /** Type for Rick and Morty avatar IDs derived from avatarIdsMap */
-export type AvatarRickAndMortyIdTypes = (typeof avatarIdsMap)['rick_morty'][number]
+export type AvatarRickAndMortyIdTypes =
+	(typeof avatarIdsMap)['rick_morty'][number];
 
 /** Union type representing all valid avatar IDs across all sets */
-export type AvatarIdType = AvatarAnimalIdTypes | AvatarRickAndMortyIdTypes
+export type AvatarIdType = AvatarAnimalIdTypes | AvatarRickAndMortyIdTypes;
 
 /**
  * Value object representing a specific avatar identifier within a set.
@@ -427,9 +428,9 @@ export class AvatarId {
 	 * ```
 	 */
 	static default(set: AvatarSetType): AvatarId {
-		const map = avatarIdsMap[set]
-		const id = map[Math.floor(Math.random() * map.length)] as AvatarIdType
-		return new AvatarId(id)
+		const map = avatarIdsMap[set];
+		const id = map[Math.floor(Math.random() * map.length)] as AvatarIdType;
+		return new AvatarId(id);
 	}
 
 	/**
@@ -463,12 +464,14 @@ export class AvatarId {
 	static create(input: unknown, set: AvatarSetType): AvatarId {
 		if (
 			typeof input === 'string' &&
-			(avatarIdsMap[set] as unknown as AvatarIdType[]).includes(input as AvatarIdType)
+			(avatarIdsMap[set] as unknown as AvatarIdType[]).includes(
+				input as AvatarIdType,
+			)
 		) {
-			return new AvatarId(input as AvatarIdType)
+			return new AvatarId(input as AvatarIdType);
 		}
 
-		return AvatarId.default(set)
+		return AvatarId.default(set);
 	}
 }
 
@@ -496,9 +499,11 @@ export class AvatarIdNotValidError extends ExavatarError {
 	 */
 	constructor(id: unknown) {
 		super(
-			`Avatar.id <<${id}>> is not valid. Expected a valid id like: ${Object.values(avatarIdsMap)
+			`Avatar.id <<${id}>> is not valid. Expected a valid id like: ${Object.values(
+				avatarIdsMap,
+			)
 				.flatMap((id) => id)
 				.join(', ')}.`,
-		)
+		);
 	}
 }

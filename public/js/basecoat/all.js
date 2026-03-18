@@ -1,508 +1,550 @@
-;(() => {
+(() => {
 	const initDropdownMenu = (dropdownMenuComponent) => {
-		const trigger = dropdownMenuComponent.querySelector(':scope > button')
-		const popover = dropdownMenuComponent.querySelector(':scope > [data-popover]')
-		const menu = popover.querySelector('[role="menu"]')
+		const trigger = dropdownMenuComponent.querySelector(':scope > button');
+		const popover = dropdownMenuComponent.querySelector(
+			':scope > [data-popover]',
+		);
+		const menu = popover.querySelector('[role="menu"]');
 
 		if (!trigger || !menu || !popover) {
-			const missing = []
-			if (!trigger) missing.push('trigger')
-			if (!menu) missing.push('menu')
-			if (!popover) missing.push('popover')
+			const missing = [];
+			if (!trigger) missing.push('trigger');
+			if (!menu) missing.push('menu');
+			if (!popover) missing.push('popover');
 			console.error(
 				`Dropdown menu initialisation failed. Missing element(s): ${missing.join(', ')}`,
 				dropdownMenuComponent,
-			)
-			return
+			);
+			return;
 		}
 
-		let menuItems = []
-		let activeIndex = -1
+		let menuItems = [];
+		let activeIndex = -1;
 
 		const closePopover = (focusOnTrigger = true) => {
-			if (trigger.getAttribute('aria-expanded') === 'false') return
-			trigger.setAttribute('aria-expanded', 'false')
-			trigger.removeAttribute('aria-activedescendant')
-			popover.setAttribute('aria-hidden', 'true')
+			if (trigger.getAttribute('aria-expanded') === 'false') return;
+			trigger.setAttribute('aria-expanded', 'false');
+			trigger.removeAttribute('aria-activedescendant');
+			popover.setAttribute('aria-hidden', 'true');
 
 			if (focusOnTrigger) {
-				trigger.focus()
+				trigger.focus();
 			}
 
-			setActiveItem(-1)
-		}
+			setActiveItem(-1);
+		};
 
 		const openPopover = (initialSelection = false) => {
 			document.dispatchEvent(
 				new CustomEvent('basecoat:popover', {
 					detail: { source: dropdownMenuComponent },
 				}),
-			)
+			);
 
-			trigger.setAttribute('aria-expanded', 'true')
-			popover.setAttribute('aria-hidden', 'false')
-			menuItems = Array.from(menu.querySelectorAll('[role^="menuitem"]')).filter(
-				(item) => !item.hasAttribute('disabled') && item.getAttribute('aria-disabled') !== 'true',
-			)
+			trigger.setAttribute('aria-expanded', 'true');
+			popover.setAttribute('aria-hidden', 'false');
+			menuItems = Array.from(
+				menu.querySelectorAll('[role^="menuitem"]'),
+			).filter(
+				(item) =>
+					!item.hasAttribute('disabled') &&
+					item.getAttribute('aria-disabled') !== 'true',
+			);
 
 			if (menuItems.length > 0 && initialSelection) {
 				if (initialSelection === 'first') {
-					setActiveItem(0)
+					setActiveItem(0);
 				} else if (initialSelection === 'last') {
-					setActiveItem(menuItems.length - 1)
+					setActiveItem(menuItems.length - 1);
 				}
 			}
-		}
+		};
 
 		const setActiveItem = (index) => {
 			if (activeIndex > -1 && menuItems[activeIndex]) {
-				menuItems[activeIndex].classList.remove('active')
+				menuItems[activeIndex].classList.remove('active');
 			}
-			activeIndex = index
+			activeIndex = index;
 			if (activeIndex > -1 && menuItems[activeIndex]) {
-				const activeItem = menuItems[activeIndex]
-				activeItem.classList.add('active')
-				trigger.setAttribute('aria-activedescendant', activeItem.id)
+				const activeItem = menuItems[activeIndex];
+				activeItem.classList.add('active');
+				trigger.setAttribute('aria-activedescendant', activeItem.id);
 			} else {
-				trigger.removeAttribute('aria-activedescendant')
+				trigger.removeAttribute('aria-activedescendant');
 			}
-		}
+		};
 
 		trigger.addEventListener('click', () => {
-			const isExpanded = trigger.getAttribute('aria-expanded') === 'true'
+			const isExpanded = trigger.getAttribute('aria-expanded') === 'true';
 			if (isExpanded) {
-				closePopover()
+				closePopover();
 			} else {
-				openPopover(false)
+				openPopover(false);
 			}
-		})
+		});
 
 		dropdownMenuComponent.addEventListener('keydown', (event) => {
-			const isExpanded = trigger.getAttribute('aria-expanded') === 'true'
+			const isExpanded = trigger.getAttribute('aria-expanded') === 'true';
 
 			if (event.key === 'Escape') {
-				if (isExpanded) closePopover()
-				return
+				if (isExpanded) closePopover();
+				return;
 			}
 
 			if (!isExpanded) {
 				if (['Enter', ' '].includes(event.key)) {
-					event.preventDefault()
-					openPopover(false)
+					event.preventDefault();
+					openPopover(false);
 				} else if (event.key === 'ArrowDown') {
-					event.preventDefault()
-					openPopover('first')
+					event.preventDefault();
+					openPopover('first');
 				} else if (event.key === 'ArrowUp') {
-					event.preventDefault()
-					openPopover('last')
+					event.preventDefault();
+					openPopover('last');
 				}
-				return
+				return;
 			}
 
-			if (menuItems.length === 0) return
+			if (menuItems.length === 0) return;
 
-			let nextIndex = activeIndex
+			let nextIndex = activeIndex;
 
 			switch (event.key) {
 				case 'ArrowDown':
-					event.preventDefault()
-					nextIndex = activeIndex === -1 ? 0 : Math.min(activeIndex + 1, menuItems.length - 1)
-					break
+					event.preventDefault();
+					nextIndex =
+						activeIndex === -1
+							? 0
+							: Math.min(activeIndex + 1, menuItems.length - 1);
+					break;
 				case 'ArrowUp':
-					event.preventDefault()
-					nextIndex = activeIndex === -1 ? menuItems.length - 1 : Math.max(activeIndex - 1, 0)
-					break
+					event.preventDefault();
+					nextIndex =
+						activeIndex === -1
+							? menuItems.length - 1
+							: Math.max(activeIndex - 1, 0);
+					break;
 				case 'Home':
-					event.preventDefault()
-					nextIndex = 0
-					break
+					event.preventDefault();
+					nextIndex = 0;
+					break;
 				case 'End':
-					event.preventDefault()
-					nextIndex = menuItems.length - 1
-					break
+					event.preventDefault();
+					nextIndex = menuItems.length - 1;
+					break;
 				case 'Enter':
 				case ' ':
-					event.preventDefault()
-					menuItems[activeIndex]?.click()
-					closePopover()
-					return
+					event.preventDefault();
+					menuItems[activeIndex]?.click();
+					closePopover();
+					return;
 			}
 
 			if (nextIndex !== activeIndex) {
-				setActiveItem(nextIndex)
+				setActiveItem(nextIndex);
 			}
-		})
+		});
 
 		menu.addEventListener('mousemove', (event) => {
-			const menuItem = event.target.closest('[role^="menuitem"]')
+			const menuItem = event.target.closest('[role^="menuitem"]');
 			if (menuItem && menuItems.includes(menuItem)) {
-				const index = menuItems.indexOf(menuItem)
+				const index = menuItems.indexOf(menuItem);
 				if (index !== activeIndex) {
-					setActiveItem(index)
+					setActiveItem(index);
 				}
 			}
-		})
+		});
 
 		menu.addEventListener('mouseleave', () => {
-			setActiveItem(-1)
-		})
+			setActiveItem(-1);
+		});
 
 		menu.addEventListener('click', (event) => {
 			if (event.target.closest('[role^="menuitem"]')) {
-				closePopover()
+				closePopover();
 			}
-		})
+		});
 
 		document.addEventListener('click', (event) => {
 			if (!dropdownMenuComponent.contains(event.target)) {
-				closePopover()
+				closePopover();
 			}
-		})
+		});
 
 		document.addEventListener('basecoat:popover', (event) => {
 			if (event.detail.source !== dropdownMenuComponent) {
-				closePopover(false)
+				closePopover(false);
 			}
-		})
+		});
 
-		dropdownMenuComponent.dataset.dropdownMenuInitialized = true
-		dropdownMenuComponent.dispatchEvent(new CustomEvent('basecoat:initialized'))
-	}
+		dropdownMenuComponent.dataset.dropdownMenuInitialized = true;
+		dropdownMenuComponent.dispatchEvent(
+			new CustomEvent('basecoat:initialized'),
+		);
+	};
 
 	document
 		.querySelectorAll('.dropdown-menu:not([data-dropdown-menu-initialized])')
-		.forEach(initDropdownMenu)
+		.forEach(initDropdownMenu);
 
 	const observer = new MutationObserver((mutations) => {
 		mutations.forEach((mutation) => {
 			mutation.addedNodes.forEach((node) => {
-				if (node.nodeType !== Node.ELEMENT_NODE) return
-				if (node.matches('.dropdown-menu:not([data-dropdown-menu-initialized])')) {
-					initDropdownMenu(node)
+				if (node.nodeType !== Node.ELEMENT_NODE) return;
+				if (
+					node.matches('.dropdown-menu:not([data-dropdown-menu-initialized])')
+				) {
+					initDropdownMenu(node);
 				}
 				node
-					.querySelectorAll('.dropdown-menu:not([data-dropdown-menu-initialized])')
-					.forEach(initDropdownMenu)
-			})
-		})
-	})
+					.querySelectorAll(
+						'.dropdown-menu:not([data-dropdown-menu-initialized])',
+					)
+					.forEach(initDropdownMenu);
+			});
+		});
+	});
 
-	observer.observe(document.body, { childList: true, subtree: true })
-})()
-;(() => {
+	observer.observe(document.body, { childList: true, subtree: true });
+})();
+(() => {
 	const initPopover = (popoverComponent) => {
-		const trigger = popoverComponent.querySelector(':scope > button')
-		const content = popoverComponent.querySelector(':scope > [data-popover]')
+		const trigger = popoverComponent.querySelector(':scope > button');
+		const content = popoverComponent.querySelector(':scope > [data-popover]');
 
 		if (!trigger || !content) {
-			const missing = []
-			if (!trigger) missing.push('trigger')
-			if (!content) missing.push('content')
+			const missing = [];
+			if (!trigger) missing.push('trigger');
+			if (!content) missing.push('content');
 			console.error(
 				`Popover initialisation failed. Missing element(s): ${missing.join(', ')}`,
 				popoverComponent,
-			)
-			return
+			);
+			return;
 		}
 
 		const closePopover = (focusOnTrigger = true) => {
-			if (trigger.getAttribute('aria-expanded') === 'false') return
-			trigger.setAttribute('aria-expanded', 'false')
-			content.setAttribute('aria-hidden', 'true')
+			if (trigger.getAttribute('aria-expanded') === 'false') return;
+			trigger.setAttribute('aria-expanded', 'false');
+			content.setAttribute('aria-hidden', 'true');
 			if (focusOnTrigger) {
-				trigger.focus()
+				trigger.focus();
 			}
-		}
+		};
 
 		const openPopover = () => {
 			document.dispatchEvent(
 				new CustomEvent('basecoat:popover', {
 					detail: { source: popoverComponent },
 				}),
-			)
+			);
 
-			const elementToFocus = content.querySelector('[autofocus]')
+			const elementToFocus = content.querySelector('[autofocus]');
 			if (elementToFocus) {
 				content.addEventListener(
 					'transitionend',
 					() => {
-						elementToFocus.focus()
+						elementToFocus.focus();
 					},
 					{ once: true },
-				)
+				);
 			}
 
-			trigger.setAttribute('aria-expanded', 'true')
-			content.setAttribute('aria-hidden', 'false')
-		}
+			trigger.setAttribute('aria-expanded', 'true');
+			content.setAttribute('aria-hidden', 'false');
+		};
 
 		trigger.addEventListener('click', () => {
-			const isExpanded = trigger.getAttribute('aria-expanded') === 'true'
+			const isExpanded = trigger.getAttribute('aria-expanded') === 'true';
 			if (isExpanded) {
-				closePopover()
+				closePopover();
 			} else {
-				openPopover()
+				openPopover();
 			}
-		})
+		});
 
 		popoverComponent.addEventListener('keydown', (event) => {
 			if (event.key === 'Escape') {
-				closePopover()
+				closePopover();
 			}
-		})
+		});
 
 		document.addEventListener('click', (event) => {
 			if (!popoverComponent.contains(event.target)) {
-				closePopover()
+				closePopover();
 			}
-		})
+		});
 
 		document.addEventListener('basecoat:popover', (event) => {
 			if (event.detail.source !== popoverComponent) {
-				closePopover(false)
+				closePopover(false);
 			}
-		})
+		});
 
-		popoverComponent.dataset.popoverInitialized = true
-		popoverComponent.dispatchEvent(new CustomEvent('basecoat:initialized'))
-	}
+		popoverComponent.dataset.popoverInitialized = true;
+		popoverComponent.dispatchEvent(new CustomEvent('basecoat:initialized'));
+	};
 
-	document.querySelectorAll('.popover:not([data-popover-initialized])').forEach(initPopover)
+	document
+		.querySelectorAll('.popover:not([data-popover-initialized])')
+		.forEach(initPopover);
 
 	const observer = new MutationObserver((mutations) => {
 		mutations.forEach((mutation) => {
 			mutation.addedNodes.forEach((node) => {
-				if (node.nodeType !== Node.ELEMENT_NODE) return
+				if (node.nodeType !== Node.ELEMENT_NODE) return;
 				if (node.matches('.popover:not([data-popover-initialized])')) {
-					initPopover(node)
+					initPopover(node);
 				}
-				node.querySelectorAll('.popover:not([data-popover-initialized])').forEach(initPopover)
-			})
-		})
-	})
+				node
+					.querySelectorAll('.popover:not([data-popover-initialized])')
+					.forEach(initPopover);
+			});
+		});
+	});
 
-	observer.observe(document.body, { childList: true, subtree: true })
-})()
-;(() => {
+	observer.observe(document.body, { childList: true, subtree: true });
+})();
+(() => {
 	const initSelect = (selectComponent) => {
-		const trigger = selectComponent.querySelector(':scope > button')
-		const selectedLabel = trigger.querySelector(':scope > span')
-		const popover = selectComponent.querySelector(':scope > [data-popover]')
-		const listbox = popover.querySelector('[role="listbox"]')
-		const input = selectComponent.querySelector(':scope > input[type="hidden"]')
-		const filter = selectComponent.querySelector('header input[type="text"]')
+		const trigger = selectComponent.querySelector(':scope > button');
+		const selectedLabel = trigger.querySelector(':scope > span');
+		const popover = selectComponent.querySelector(':scope > [data-popover]');
+		const listbox = popover.querySelector('[role="listbox"]');
+		const input = selectComponent.querySelector(
+			':scope > input[type="hidden"]',
+		);
+		const filter = selectComponent.querySelector('header input[type="text"]');
 		if (!trigger || !popover || !listbox || !input) {
-			const missing = []
-			if (!trigger) missing.push('trigger')
-			if (!popover) missing.push('popover')
-			if (!listbox) missing.push('listbox')
-			if (!input) missing.push('input')
+			const missing = [];
+			if (!trigger) missing.push('trigger');
+			if (!popover) missing.push('popover');
+			if (!listbox) missing.push('listbox');
+			if (!input) missing.push('input');
 			console.error(
 				`Select component initialisation failed. Missing element(s): ${missing.join(', ')}`,
 				selectComponent,
-			)
-			return
+			);
+			return;
 		}
 
-		const options = Array.from(listbox.querySelectorAll('[role="option"]'))
-		let visibleOptions = [...options]
-		let activeIndex = -1
+		const options = Array.from(listbox.querySelectorAll('[role="option"]'));
+		let visibleOptions = [...options];
+		let activeIndex = -1;
 
 		const setActiveOption = (index) => {
 			if (activeIndex > -1 && options[activeIndex]) {
-				options[activeIndex].classList.remove('active')
+				options[activeIndex].classList.remove('active');
 			}
 
-			activeIndex = index
+			activeIndex = index;
 
 			if (activeIndex > -1) {
-				const activeOption = options[activeIndex]
-				activeOption.classList.add('active')
+				const activeOption = options[activeIndex];
+				activeOption.classList.add('active');
 				if (activeOption.id) {
-					trigger.setAttribute('aria-activedescendant', activeOption.id)
+					trigger.setAttribute('aria-activedescendant', activeOption.id);
 				} else {
-					trigger.removeAttribute('aria-activedescendant')
+					trigger.removeAttribute('aria-activedescendant');
 				}
 			} else {
-				trigger.removeAttribute('aria-activedescendant')
+				trigger.removeAttribute('aria-activedescendant');
 			}
-		}
+		};
 
 		const hasTransition = () => {
-			const style = getComputedStyle(popover)
-			return parseFloat(style.transitionDuration) > 0 || parseFloat(style.transitionDelay) > 0
-		}
+			const style = getComputedStyle(popover);
+			return (
+				parseFloat(style.transitionDuration) > 0 ||
+				parseFloat(style.transitionDelay) > 0
+			);
+		};
 
 		const updateValue = (option) => {
 			if (option) {
-				selectedLabel.innerHTML = option.dataset.label || option.innerHTML
-				input.value = option.dataset.value
+				selectedLabel.innerHTML = option.dataset.label || option.innerHTML;
+				input.value = option.dataset.value;
 				listbox
 					.querySelector('[role="option"][aria-selected="true"]')
-					?.removeAttribute('aria-selected')
-				option.setAttribute('aria-selected', 'true')
+					?.removeAttribute('aria-selected');
+				option.setAttribute('aria-selected', 'true');
 			}
-		}
+		};
 
 		const closePopover = (focusOnTrigger = true) => {
-			if (popover.getAttribute('aria-hidden') === 'true') return
+			if (popover.getAttribute('aria-hidden') === 'true') return;
 
 			if (filter) {
 				const resetFilter = () => {
-					filter.value = ''
-					visibleOptions = [...options]
-					options.forEach((opt) => opt.setAttribute('aria-hidden', 'false'))
-				}
+					filter.value = '';
+					visibleOptions = [...options];
+					options.forEach((opt) => opt.setAttribute('aria-hidden', 'false'));
+				};
 
 				if (hasTransition()) {
-					popover.addEventListener('transitionend', resetFilter, { once: true })
+					popover.addEventListener('transitionend', resetFilter, {
+						once: true,
+					});
 				} else {
-					resetFilter()
+					resetFilter();
 				}
 			}
 
-			if (focusOnTrigger) trigger.focus()
-			popover.setAttribute('aria-hidden', 'true')
-			trigger.setAttribute('aria-expanded', 'false')
-			setActiveOption(-1)
-		}
+			if (focusOnTrigger) trigger.focus();
+			popover.setAttribute('aria-hidden', 'true');
+			trigger.setAttribute('aria-expanded', 'false');
+			setActiveOption(-1);
+		};
 
 		const selectOption = (option) => {
-			if (!option) return
+			if (!option) return;
 
-			const oldValue = input.value
-			const newValue = option.dataset.value
+			const oldValue = input.value;
+			const newValue = option.dataset.value;
 
 			if (newValue != null && newValue !== oldValue) {
-				updateValue(option)
+				updateValue(option);
 			}
 
-			closePopover()
+			closePopover();
 
 			if (newValue !== oldValue) {
 				const event = new CustomEvent('change', {
 					detail: { value: newValue },
 					bubbles: true,
-				})
-				selectComponent.dispatchEvent(event)
+				});
+				selectComponent.dispatchEvent(event);
 			}
-		}
+		};
 
 		const selectByValue = (value) => {
-			const option = options.find((opt) => opt.dataset.value === value)
-			selectOption(option)
-		}
+			const option = options.find((opt) => opt.dataset.value === value);
+			selectOption(option);
+		};
 
 		if (filter) {
 			const filterOptions = () => {
-				const searchTerm = filter.value.trim().toLowerCase()
+				const searchTerm = filter.value.trim().toLowerCase();
 
-				setActiveOption(-1)
+				setActiveOption(-1);
 
-				visibleOptions = []
+				visibleOptions = [];
 				options.forEach((option) => {
-					const optionText = (option.dataset.label || option.textContent).trim().toLowerCase()
-					const matches = optionText.includes(searchTerm)
-					option.setAttribute('aria-hidden', String(!matches))
+					const optionText = (option.dataset.label || option.textContent)
+						.trim()
+						.toLowerCase();
+					const matches = optionText.includes(searchTerm);
+					option.setAttribute('aria-hidden', String(!matches));
 					if (matches) {
-						visibleOptions.push(option)
+						visibleOptions.push(option);
 					}
-				})
-			}
+				});
+			};
 
-			filter.addEventListener('input', filterOptions)
+			filter.addEventListener('input', filterOptions);
 		}
 
-		let initialOption = options.find((opt) => opt.dataset.value === input.value)
-		if (!initialOption && options.length > 0) initialOption = options[0]
+		let initialOption = options.find(
+			(opt) => opt.dataset.value === input.value,
+		);
+		if (!initialOption && options.length > 0) initialOption = options[0];
 
-		updateValue(initialOption)
+		updateValue(initialOption);
 
 		const handleKeyNavigation = (event) => {
-			const isPopoverOpen = popover.getAttribute('aria-hidden') === 'false'
+			const isPopoverOpen = popover.getAttribute('aria-hidden') === 'false';
 
-			if (!['ArrowDown', 'ArrowUp', 'Enter', 'Home', 'End', 'Escape'].includes(event.key)) {
-				return
+			if (
+				!['ArrowDown', 'ArrowUp', 'Enter', 'Home', 'End', 'Escape'].includes(
+					event.key,
+				)
+			) {
+				return;
 			}
 
 			if (!isPopoverOpen) {
 				if (event.key !== 'Enter' && event.key !== 'Escape') {
-					event.preventDefault()
-					trigger.click()
+					event.preventDefault();
+					trigger.click();
 				}
-				return
+				return;
 			}
 
-			event.preventDefault()
+			event.preventDefault();
 
 			if (event.key === 'Escape') {
-				closePopover()
-				return
+				closePopover();
+				return;
 			}
 
 			if (event.key === 'Enter') {
 				if (activeIndex > -1) {
-					selectOption(options[activeIndex])
+					selectOption(options[activeIndex]);
 				}
-				return
+				return;
 			}
 
-			if (visibleOptions.length === 0) return
+			if (visibleOptions.length === 0) return;
 
 			const currentVisibleIndex =
-				activeIndex > -1 ? visibleOptions.indexOf(options[activeIndex]) : -1
-			let nextVisibleIndex = currentVisibleIndex
+				activeIndex > -1 ? visibleOptions.indexOf(options[activeIndex]) : -1;
+			let nextVisibleIndex = currentVisibleIndex;
 
 			switch (event.key) {
 				case 'ArrowDown':
 					if (currentVisibleIndex < visibleOptions.length - 1) {
-						nextVisibleIndex = currentVisibleIndex + 1
+						nextVisibleIndex = currentVisibleIndex + 1;
 					}
-					break
+					break;
 				case 'ArrowUp':
 					if (currentVisibleIndex > 0) {
-						nextVisibleIndex = currentVisibleIndex - 1
+						nextVisibleIndex = currentVisibleIndex - 1;
 					} else if (currentVisibleIndex === -1) {
-						nextVisibleIndex = 0
+						nextVisibleIndex = 0;
 					}
-					break
+					break;
 				case 'Home':
-					nextVisibleIndex = 0
-					break
+					nextVisibleIndex = 0;
+					break;
 				case 'End':
-					nextVisibleIndex = visibleOptions.length - 1
-					break
+					nextVisibleIndex = visibleOptions.length - 1;
+					break;
 			}
 
 			if (nextVisibleIndex !== currentVisibleIndex) {
-				const newActiveOption = visibleOptions[nextVisibleIndex]
-				setActiveOption(options.indexOf(newActiveOption))
-				newActiveOption.scrollIntoView({ block: 'nearest', behavior: 'smooth' })
+				const newActiveOption = visibleOptions[nextVisibleIndex];
+				setActiveOption(options.indexOf(newActiveOption));
+				newActiveOption.scrollIntoView({
+					block: 'nearest',
+					behavior: 'smooth',
+				});
 			}
-		}
+		};
 
 		listbox.addEventListener('mousemove', (event) => {
-			const option = event.target.closest('[role="option"]')
+			const option = event.target.closest('[role="option"]');
 			if (option && visibleOptions.includes(option)) {
-				const index = options.indexOf(option)
+				const index = options.indexOf(option);
 				if (index !== activeIndex) {
-					setActiveOption(index)
+					setActiveOption(index);
 				}
 			}
-		})
+		});
 
 		listbox.addEventListener('mouseleave', () => {
-			const selectedOption = listbox.querySelector('[role="option"][aria-selected="true"]')
+			const selectedOption = listbox.querySelector(
+				'[role="option"][aria-selected="true"]',
+			);
 			if (selectedOption) {
-				setActiveOption(options.indexOf(selectedOption))
+				setActiveOption(options.indexOf(selectedOption));
 			} else {
-				setActiveOption(-1)
+				setActiveOption(-1);
 			}
-		})
+		});
 
-		trigger.addEventListener('keydown', handleKeyNavigation)
+		trigger.addEventListener('keydown', handleKeyNavigation);
 		if (filter) {
-			filter.addEventListener('keydown', handleKeyNavigation)
+			filter.addEventListener('keydown', handleKeyNavigation);
 		}
 
 		const openPopover = () => {
@@ -510,290 +552,307 @@
 				new CustomEvent('basecoat:popover', {
 					detail: { source: selectComponent },
 				}),
-			)
+			);
 
 			if (filter) {
 				if (hasTransition()) {
 					popover.addEventListener(
 						'transitionend',
 						() => {
-							filter.focus()
+							filter.focus();
 						},
 						{ once: true },
-					)
+					);
 				} else {
-					filter.focus()
+					filter.focus();
 				}
 			}
 
-			popover.setAttribute('aria-hidden', 'false')
-			trigger.setAttribute('aria-expanded', 'true')
+			popover.setAttribute('aria-hidden', 'false');
+			trigger.setAttribute('aria-expanded', 'true');
 
-			const selectedOption = listbox.querySelector('[role="option"][aria-selected="true"]')
+			const selectedOption = listbox.querySelector(
+				'[role="option"][aria-selected="true"]',
+			);
 			if (selectedOption) {
-				setActiveOption(options.indexOf(selectedOption))
-				selectedOption.scrollIntoView({ block: 'nearest' })
+				setActiveOption(options.indexOf(selectedOption));
+				selectedOption.scrollIntoView({ block: 'nearest' });
 			}
-		}
+		};
 
 		trigger.addEventListener('click', () => {
-			const isExpanded = trigger.getAttribute('aria-expanded') === 'true'
+			const isExpanded = trigger.getAttribute('aria-expanded') === 'true';
 			if (isExpanded) {
-				closePopover()
+				closePopover();
 			} else {
-				openPopover()
+				openPopover();
 			}
-		})
+		});
 
 		listbox.addEventListener('click', (event) => {
-			const clickedOption = event.target.closest('[role="option"]')
+			const clickedOption = event.target.closest('[role="option"]');
 			if (clickedOption) {
-				selectOption(clickedOption)
+				selectOption(clickedOption);
 			}
-		})
+		});
 
 		document.addEventListener('click', (event) => {
 			if (!selectComponent.contains(event.target)) {
-				closePopover(false)
+				closePopover(false);
 			}
-		})
+		});
 
 		document.addEventListener('basecoat:popover', (event) => {
 			if (event.detail.source !== selectComponent) {
-				closePopover(false)
+				closePopover(false);
 			}
-		})
+		});
 
-		popover.setAttribute('aria-hidden', 'true')
+		popover.setAttribute('aria-hidden', 'true');
 
-		selectComponent.selectByValue = selectByValue
-		selectComponent.dataset.selectInitialized = true
-		selectComponent.dispatchEvent(new CustomEvent('basecoat:initialized'))
-	}
+		selectComponent.selectByValue = selectByValue;
+		selectComponent.dataset.selectInitialized = true;
+		selectComponent.dispatchEvent(new CustomEvent('basecoat:initialized'));
+	};
 
-	document.querySelectorAll('div.select:not([data-select-initialized])').forEach(initSelect)
+	document
+		.querySelectorAll('div.select:not([data-select-initialized])')
+		.forEach(initSelect);
 
 	const observer = new MutationObserver((mutations) => {
 		mutations.forEach((mutation) => {
 			mutation.addedNodes.forEach((node) => {
 				if (node.nodeType === Node.ELEMENT_NODE) {
 					if (node.matches('div.select:not([data-select-initialized])')) {
-						initSelect(node)
+						initSelect(node);
 					}
-					node.querySelectorAll('div.select:not([data-select-initialized])').forEach(initSelect)
+					node
+						.querySelectorAll('div.select:not([data-select-initialized])')
+						.forEach(initSelect);
 				}
-			})
-		})
-	})
+			});
+		});
+	});
 
-	observer.observe(document.body, { childList: true, subtree: true })
-})()
-;(() => {
+	observer.observe(document.body, { childList: true, subtree: true });
+})();
+(() => {
 	// Monkey patching the history API to detect client-side navigation
 	if (!window.history.__basecoatPatched) {
-		const originalPushState = window.history.pushState
+		const originalPushState = window.history.pushState;
 		window.history.pushState = function (...args) {
-			originalPushState.apply(this, args)
-			window.dispatchEvent(new Event('basecoat:locationchange'))
-		}
+			originalPushState.apply(this, args);
+			window.dispatchEvent(new Event('basecoat:locationchange'));
+		};
 
-		const originalReplaceState = window.history.replaceState
+		const originalReplaceState = window.history.replaceState;
 		window.history.replaceState = function (...args) {
-			originalReplaceState.apply(this, args)
-			window.dispatchEvent(new Event('basecoat:locationchange'))
-		}
+			originalReplaceState.apply(this, args);
+			window.dispatchEvent(new Event('basecoat:locationchange'));
+		};
 
-		window.history.__basecoatPatched = true
+		window.history.__basecoatPatched = true;
 	}
 
 	const initSidebar = (sidebarComponent) => {
-		const initialOpen = sidebarComponent.dataset.initialOpen !== 'false'
-		const initialMobileOpen = sidebarComponent.dataset.initialMobileOpen === 'true'
-		const breakpoint = parseInt(sidebarComponent.dataset.breakpoint) || 768
+		const initialOpen = sidebarComponent.dataset.initialOpen !== 'false';
+		const initialMobileOpen =
+			sidebarComponent.dataset.initialMobileOpen === 'true';
+		const breakpoint = parseInt(sidebarComponent.dataset.breakpoint) || 768;
 
 		let open =
-			breakpoint > 0 ?
-				window.innerWidth >= breakpoint ?
-					initialOpen
-				:	initialMobileOpen
-			:	initialOpen
+			breakpoint > 0
+				? window.innerWidth >= breakpoint
+					? initialOpen
+					: initialMobileOpen
+				: initialOpen;
 
 		const updateCurrentPageLinks = () => {
-			const currentPath = window.location.pathname.replace(/\/$/, '')
+			const currentPath = window.location.pathname.replace(/\/$/, '');
 			sidebarComponent.querySelectorAll('a').forEach((link) => {
-				if (link.hasAttribute('data-ignore-current')) return
+				if (link.hasAttribute('data-ignore-current')) return;
 
-				const linkPath = new URL(link.href).pathname.replace(/\/$/, '')
+				const linkPath = new URL(link.href).pathname.replace(/\/$/, '');
 				if (linkPath === currentPath) {
-					link.setAttribute('aria-current', 'page')
+					link.setAttribute('aria-current', 'page');
 				} else {
-					link.removeAttribute('aria-current')
+					link.removeAttribute('aria-current');
 				}
-			})
-		}
+			});
+		};
 
 		const updateState = () => {
-			sidebarComponent.setAttribute('aria-hidden', !open)
+			sidebarComponent.setAttribute('aria-hidden', !open);
 			if (open) {
-				sidebarComponent.removeAttribute('inert')
+				sidebarComponent.removeAttribute('inert');
 			} else {
-				sidebarComponent.setAttribute('inert', '')
+				sidebarComponent.setAttribute('inert', '');
 			}
-		}
+		};
 
 		const setState = (state) => {
-			open = state
-			updateState()
-		}
+			open = state;
+			updateState();
+		};
 
-		const sidebarId = sidebarComponent.id
+		const sidebarId = sidebarComponent.id;
 
 		document.addEventListener('basecoat:sidebar', (event) => {
-			if (event.detail?.id && event.detail.id !== sidebarId) return
+			if (event.detail?.id && event.detail.id !== sidebarId) return;
 
 			switch (event.detail?.action) {
 				case 'open':
-					setState(true)
-					break
+					setState(true);
+					break;
 				case 'close':
-					setState(false)
-					break
+					setState(false);
+					break;
 				default:
-					setState(!open)
-					break
+					setState(!open);
+					break;
 			}
-		})
+		});
 
 		sidebarComponent.addEventListener('click', (event) => {
-			const target = event.target
-			const nav = sidebarComponent.querySelector('nav')
+			const target = event.target;
+			const nav = sidebarComponent.querySelector('nav');
 
-			const isMobile = window.innerWidth < breakpoint
+			const isMobile = window.innerWidth < breakpoint;
 
 			if (
 				isMobile &&
 				target.closest('a, button') &&
 				!target.closest('[data-keep-mobile-sidebar-open]')
 			) {
-				if (document.activeElement) document.activeElement.blur()
-				setState(false)
-				return
+				if (document.activeElement) document.activeElement.blur();
+				setState(false);
+				return;
 			}
 
 			if (target === sidebarComponent || (nav && !nav.contains(target))) {
-				if (document.activeElement) document.activeElement.blur()
-				setState(false)
+				if (document.activeElement) document.activeElement.blur();
+				setState(false);
 			}
-		})
+		});
 
-		window.addEventListener('popstate', updateCurrentPageLinks)
-		window.addEventListener('basecoat:locationchange', updateCurrentPageLinks)
+		window.addEventListener('popstate', updateCurrentPageLinks);
+		window.addEventListener('basecoat:locationchange', updateCurrentPageLinks);
 
-		updateState()
-		updateCurrentPageLinks()
-		sidebarComponent.dataset.sidebarInitialized = true
-		sidebarComponent.dispatchEvent(new CustomEvent('basecoat:initialized'))
-	}
+		updateState();
+		updateCurrentPageLinks();
+		sidebarComponent.dataset.sidebarInitialized = true;
+		sidebarComponent.dispatchEvent(new CustomEvent('basecoat:initialized'));
+	};
 
-	document.querySelectorAll('.sidebar:not([data-sidebar-initialized])').forEach(initSidebar)
+	document
+		.querySelectorAll('.sidebar:not([data-sidebar-initialized])')
+		.forEach(initSidebar);
 
 	const observer = new MutationObserver((mutations) => {
 		mutations.forEach((mutation) => {
 			mutation.addedNodes.forEach((node) => {
 				if (node.nodeType === Node.ELEMENT_NODE) {
 					if (node.matches('.sidebar:not([data-sidebar-initialized])')) {
-						initSidebar(node)
+						initSidebar(node);
 					}
-					node.querySelectorAll('.sidebar:not([data-sidebar-initialized])').forEach(initSidebar)
+					node
+						.querySelectorAll('.sidebar:not([data-sidebar-initialized])')
+						.forEach(initSidebar);
 				}
-			})
-		})
-	})
+			});
+		});
+	});
 
-	observer.observe(document.body, { childList: true, subtree: true })
-})()
-;(() => {
+	observer.observe(document.body, { childList: true, subtree: true });
+})();
+(() => {
 	const initTabs = (tabsComponent) => {
-		const tablist = tabsComponent.querySelector('[role="tablist"]')
-		if (!tablist) return
+		const tablist = tabsComponent.querySelector('[role="tablist"]');
+		if (!tablist) return;
 
-		const tabs = Array.from(tablist.querySelectorAll('[role="tab"]'))
+		const tabs = Array.from(tablist.querySelectorAll('[role="tab"]'));
 		const panels = tabs
 			.map((tab) => document.getElementById(tab.getAttribute('aria-controls')))
-			.filter(Boolean)
+			.filter(Boolean);
 
 		const selectTab = (tabToSelect) => {
 			tabs.forEach((tab, index) => {
-				tab.setAttribute('aria-selected', 'false')
-				tab.setAttribute('tabindex', '-1')
-				if (panels[index]) panels[index].hidden = true
-			})
+				tab.setAttribute('aria-selected', 'false');
+				tab.setAttribute('tabindex', '-1');
+				if (panels[index]) panels[index].hidden = true;
+			});
 
-			tabToSelect.setAttribute('aria-selected', 'true')
-			tabToSelect.setAttribute('tabindex', '0')
-			const activePanel = document.getElementById(tabToSelect.getAttribute('aria-controls'))
-			if (activePanel) activePanel.hidden = false
-		}
+			tabToSelect.setAttribute('aria-selected', 'true');
+			tabToSelect.setAttribute('tabindex', '0');
+			const activePanel = document.getElementById(
+				tabToSelect.getAttribute('aria-controls'),
+			);
+			if (activePanel) activePanel.hidden = false;
+		};
 
 		tablist.addEventListener('click', (event) => {
-			const clickedTab = event.target.closest('[role="tab"]')
-			if (clickedTab) selectTab(clickedTab)
-		})
+			const clickedTab = event.target.closest('[role="tab"]');
+			if (clickedTab) selectTab(clickedTab);
+		});
 
 		tablist.addEventListener('keydown', (event) => {
-			const currentTab = event.target
-			if (!tabs.includes(currentTab)) return
+			const currentTab = event.target;
+			if (!tabs.includes(currentTab)) return;
 
-			let nextTab
-			const currentIndex = tabs.indexOf(currentTab)
+			let nextTab;
+			const currentIndex = tabs.indexOf(currentTab);
 
 			switch (event.key) {
 				case 'ArrowRight':
-					nextTab = tabs[(currentIndex + 1) % tabs.length]
-					break
+					nextTab = tabs[(currentIndex + 1) % tabs.length];
+					break;
 				case 'ArrowLeft':
-					nextTab = tabs[(currentIndex - 1 + tabs.length) % tabs.length]
-					break
+					nextTab = tabs[(currentIndex - 1 + tabs.length) % tabs.length];
+					break;
 				case 'Home':
-					nextTab = tabs[0]
-					break
+					nextTab = tabs[0];
+					break;
 				case 'End':
-					nextTab = tabs[tabs.length - 1]
-					break
+					nextTab = tabs[tabs.length - 1];
+					break;
 				default:
-					return
+					return;
 			}
 
-			event.preventDefault()
-			selectTab(nextTab)
-			nextTab.focus()
-		})
+			event.preventDefault();
+			selectTab(nextTab);
+			nextTab.focus();
+		});
 
-		tabsComponent.dataset.tabsInitialized = true
-		tabsComponent.dispatchEvent(new CustomEvent('basecoat:initialized'))
-	}
+		tabsComponent.dataset.tabsInitialized = true;
+		tabsComponent.dispatchEvent(new CustomEvent('basecoat:initialized'));
+	};
 
-	document.querySelectorAll('.tabs:not([data-tabs-initialized])').forEach(initTabs)
+	document
+		.querySelectorAll('.tabs:not([data-tabs-initialized])')
+		.forEach(initTabs);
 
 	const observer = new MutationObserver((mutations) => {
 		mutations.forEach((mutation) => {
 			mutation.addedNodes.forEach((node) => {
 				if (node.nodeType === Node.ELEMENT_NODE) {
 					if (node.matches('.tabs:not([data-tabs-initialized])')) {
-						initTabs(node)
+						initTabs(node);
 					}
-					node.querySelectorAll('.tabs:not([data-tabs-initialized])').forEach(initTabs)
+					node
+						.querySelectorAll('.tabs:not([data-tabs-initialized])')
+						.forEach(initTabs);
 				}
-			})
-		})
-	})
+			});
+		});
+	});
 
-	observer.observe(document.body, { childList: true, subtree: true })
-})()
-;(() => {
-	let toaster
-	const toasts = new WeakMap()
-	let isPaused = false
+	observer.observe(document.body, { childList: true, subtree: true });
+})();
+(() => {
+	let toaster;
+	const toasts = new WeakMap();
+	let isPaused = false;
 	const ICONS = {
 		success:
 			'<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>',
@@ -802,130 +861,156 @@
 		info: '<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>',
 		warning:
 			'<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>',
-	}
+	};
 
 	function initToaster(toasterElement) {
-		if (toasterElement.dataset.toasterInitialized) return
-		toaster = toasterElement
+		if (toasterElement.dataset.toasterInitialized) return;
+		toaster = toasterElement;
 
-		toaster.addEventListener('mouseenter', pauseAllTimeouts)
-		toaster.addEventListener('mouseleave', resumeAllTimeouts)
+		toaster.addEventListener('mouseenter', pauseAllTimeouts);
+		toaster.addEventListener('mouseleave', resumeAllTimeouts);
 		toaster.addEventListener('click', (event) => {
-			const actionLink = event.target.closest('.toast footer a')
-			const actionButton = event.target.closest('.toast footer button')
+			const actionLink = event.target.closest('.toast footer a');
+			const actionButton = event.target.closest('.toast footer button');
 			if (actionLink || actionButton) {
-				closeToast(event.target.closest('.toast'))
+				closeToast(event.target.closest('.toast'));
 			}
-		})
+		});
 
-		toaster.querySelectorAll('.toast:not([data-toast-initialized])').forEach(initToast)
-		toaster.dataset.toasterInitialized = 'true'
-		toaster.dispatchEvent(new CustomEvent('basecoat:initialized'))
+		toaster
+			.querySelectorAll('.toast:not([data-toast-initialized])')
+			.forEach(initToast);
+		toaster.dataset.toasterInitialized = 'true';
+		toaster.dispatchEvent(new CustomEvent('basecoat:initialized'));
 	}
 
 	function initToast(element) {
-		if (element.dataset.toastInitialized) return
+		if (element.dataset.toastInitialized) return;
 
-		const duration = parseInt(element.dataset.duration)
+		const duration = parseInt(element.dataset.duration);
 		const timeoutDuration =
-			duration !== -1 ? duration || (element.dataset.category === 'error' ? 5000 : 3000) : -1
+			duration !== -1
+				? duration || (element.dataset.category === 'error' ? 5000 : 3000)
+				: -1;
 
 		const state = {
 			remainingTime: timeoutDuration,
 			timeoutId: null,
 			startTime: null,
-		}
+		};
 
 		if (timeoutDuration !== -1) {
 			if (isPaused) {
-				state.timeoutId = null
+				state.timeoutId = null;
 			} else {
-				state.startTime = Date.now()
-				state.timeoutId = setTimeout(() => closeToast(element), timeoutDuration)
+				state.startTime = Date.now();
+				state.timeoutId = setTimeout(
+					() => closeToast(element),
+					timeoutDuration,
+				);
 			}
 		}
-		toasts.set(element, state)
+		toasts.set(element, state);
 
-		element.dataset.toastInitialized = 'true'
+		element.dataset.toastInitialized = 'true';
 	}
 
 	function pauseAllTimeouts() {
-		if (isPaused) return
+		if (isPaused) return;
 
-		isPaused = true
+		isPaused = true;
 
-		toaster.querySelectorAll('.toast:not([aria-hidden="true"])').forEach((element) => {
-			if (!toasts.has(element)) return
+		toaster
+			.querySelectorAll('.toast:not([aria-hidden="true"])')
+			.forEach((element) => {
+				if (!toasts.has(element)) return;
 
-			const state = toasts.get(element)
-			if (state.timeoutId) {
-				clearTimeout(state.timeoutId)
-				state.timeoutId = null
-				state.remainingTime -= Date.now() - state.startTime
-			}
-		})
+				const state = toasts.get(element);
+				if (state.timeoutId) {
+					clearTimeout(state.timeoutId);
+					state.timeoutId = null;
+					state.remainingTime -= Date.now() - state.startTime;
+				}
+			});
 	}
 
 	function resumeAllTimeouts() {
-		if (!isPaused) return
+		if (!isPaused) return;
 
-		isPaused = false
+		isPaused = false;
 
-		toaster.querySelectorAll('.toast:not([aria-hidden="true"])').forEach((element) => {
-			if (!toasts.has(element)) return
+		toaster
+			.querySelectorAll('.toast:not([aria-hidden="true"])')
+			.forEach((element) => {
+				if (!toasts.has(element)) return;
 
-			const state = toasts.get(element)
-			if (state.remainingTime !== -1 && !state.timeoutId) {
-				if (state.remainingTime > 0) {
-					state.startTime = Date.now()
-					state.timeoutId = setTimeout(() => closeToast(element), state.remainingTime)
-				} else {
-					closeToast(element)
+				const state = toasts.get(element);
+				if (state.remainingTime !== -1 && !state.timeoutId) {
+					if (state.remainingTime > 0) {
+						state.startTime = Date.now();
+						state.timeoutId = setTimeout(
+							() => closeToast(element),
+							state.remainingTime,
+						);
+					} else {
+						closeToast(element);
+					}
 				}
-			}
-		})
+			});
 	}
 
 	function closeToast(element) {
-		if (!toasts.has(element)) return
+		if (!toasts.has(element)) return;
 
-		const state = toasts.get(element)
-		clearTimeout(state.timeoutId)
-		toasts.delete(element)
+		const state = toasts.get(element);
+		clearTimeout(state.timeoutId);
+		toasts.delete(element);
 
-		if (document.activeElement) document.activeElement.blur()
-		element.setAttribute('aria-hidden', 'true')
-		element.addEventListener('transitionend', () => element.remove(), { once: true })
+		if (document.activeElement) document.activeElement.blur();
+		element.setAttribute('aria-hidden', 'true');
+		element.addEventListener('transitionend', () => element.remove(), {
+			once: true,
+		});
 	}
 
 	function executeAction(button, toast) {
-		const actionString = button.dataset.toastAction
-		if (!actionString) return
+		const actionString = button.dataset.toastAction;
+		if (!actionString) return;
 		try {
-			const func = new Function('close', actionString)
-			func(() => closeToast(toast))
+			const func = new Function('close', actionString);
+			func(() => closeToast(toast));
 		} catch (event) {
-			console.error('Error executing toast action:', event)
+			console.error('Error executing toast action:', event);
 		}
 	}
 
 	function createToast(config) {
-		const { category = 'info', title, description, action, cancel, duration, icon } = config
+		const {
+			category = 'info',
+			title,
+			description,
+			action,
+			cancel,
+			duration,
+			icon,
+		} = config;
 
-		const iconHtml = icon || (category && ICONS[category]) || ''
-		const titleHtml = title ? `<h2>${title}</h2>` : ''
-		const descriptionHtml = description ? `<p>${description}</p>` : ''
-		const actionHtml =
-			action?.href ? `<a href="${action.href}" class="btn" data-toast-action>${action.label}</a>`
-			: action?.onclick ?
-				`<button type="button" class="btn" data-toast-action onclick="${action.onclick}">${action.label}</button>`
-			:	''
-		const cancelHtml =
-			cancel ?
-				`<button type="button" class="btn-outline h-6 text-xs px-2.5 rounded-sm" data-toast-cancel onclick="${cancel?.onclick}">${cancel.label}</button>`
-			:	''
+		const iconHtml = icon || (category && ICONS[category]) || '';
+		const titleHtml = title ? `<h2>${title}</h2>` : '';
+		const descriptionHtml = description ? `<p>${description}</p>` : '';
+		const actionHtml = action?.href
+			? `<a href="${action.href}" class="btn" data-toast-action>${action.label}</a>`
+			: action?.onclick
+				? `<button type="button" class="btn" data-toast-action onclick="${action.onclick}">${action.label}</button>`
+				: '';
+		const cancelHtml = cancel
+			? `<button type="button" class="btn-outline h-6 text-xs px-2.5 rounded-sm" data-toast-cancel onclick="${cancel?.onclick}">${cancel.label}</button>`
+			: '';
 
-		const footerHtml = actionHtml || cancelHtml ? `<footer>${actionHtml}${cancelHtml}</footer>` : ''
+		const footerHtml =
+			actionHtml || cancelHtml
+				? `<footer>${actionHtml}${cancelHtml}</footer>`
+				: '';
 
 		const html = `
       <div
@@ -945,40 +1030,42 @@
           </div>
         </div>
       </div>
-    `
-		const template = document.createElement('template')
-		template.innerHTML = html.trim()
-		return template.content.firstChild
+    `;
+		const template = document.createElement('template');
+		template.innerHTML = html.trim();
+		return template.content.firstChild;
 	}
 
-	const initialToaster = document.getElementById('toaster')
-	if (initialToaster) initToaster(initialToaster)
+	const initialToaster = document.getElementById('toaster');
+	if (initialToaster) initToaster(initialToaster);
 
 	document.addEventListener('basecoat:toast', (event) => {
 		if (!toaster) {
-			console.error('Cannot create toast: toaster container not found on page.')
-			return
+			console.error(
+				'Cannot create toast: toaster container not found on page.',
+			);
+			return;
 		}
-		const config = event.detail?.config || {}
-		const toastElement = createToast(config)
-		toaster.appendChild(toastElement)
-	})
+		const config = event.detail?.config || {};
+		const toastElement = createToast(config);
+		toaster.appendChild(toastElement);
+	});
 
 	const observer = new MutationObserver((mutations) => {
 		mutations.forEach((mutation) => {
 			mutation.addedNodes.forEach((node) => {
-				if (node.nodeType !== Node.ELEMENT_NODE) return
+				if (node.nodeType !== Node.ELEMENT_NODE) return;
 
 				if (node.matches('#toaster')) {
-					initToaster(node)
+					initToaster(node);
 				}
 
 				if (toaster && node.matches('.toast:not([data-toast-initialized])')) {
-					initToast(node)
+					initToast(node);
 				}
-			})
-		})
-	})
+			});
+		});
+	});
 
-	observer.observe(document.body, { childList: true, subtree: true })
-})()
+	observer.observe(document.body, { childList: true, subtree: true });
+})();

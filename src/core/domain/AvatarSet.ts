@@ -1,4 +1,4 @@
-import { ExavatarError } from '../shared/ExavatarError.ts'
+import { ExavatarError } from '../shared/ExavatarError.ts';
 
 /**
  * Available avatar sets/collections in the system.
@@ -14,10 +14,10 @@ import { ExavatarError } from '../shared/ExavatarError.ts'
  * console.log(avatarSets.length) // 3
  * ```
  */
-export const avatarSets = ['animals', 'adventure_time', 'rick_morty'] as const
+export const avatarSets = ['animals', 'adventure_time', 'rick_morty'] as const;
 
 /** Type representing valid avatar set names */
-export type AvatarSetType = (typeof avatarSets)[number]
+export type AvatarSetType = (typeof avatarSets)[number];
 
 /**
  * Value object representing an avatar set/collection.
@@ -65,8 +65,8 @@ export class AvatarSet {
 	 * ```
 	 */
 	static default(): AvatarSet {
-		const set = avatarSets[Math.floor(Math.random() * avatarSets.length)]
-		return new AvatarSet(set)
+		const set = avatarSets[Math.floor(Math.random() * avatarSets.length)];
+		return new AvatarSet(set);
 	}
 
 	/**
@@ -92,11 +92,14 @@ export class AvatarSet {
 	 * ```
 	 */
 	static create(input: unknown): AvatarSet {
-		if (typeof input === 'string' && avatarSets.includes(input as AvatarSetType)) {
-			return new AvatarSet(input as AvatarSetType)
+		if (
+			typeof input === 'string' &&
+			avatarSets.includes(input as AvatarSetType)
+		) {
+			return new AvatarSet(input as AvatarSetType);
 		}
 
-		return AvatarSet.default()
+		return AvatarSet.default();
 	}
 }
 
@@ -125,6 +128,6 @@ export class AvatarSetNotValidError extends ExavatarError {
 	constructor(set: unknown) {
 		super(
 			`Avatar.set <<${set}>> is not valid. Expected a valid set like: ${avatarSets.join(', ')}.`,
-		)
+		);
 	}
 }

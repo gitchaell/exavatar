@@ -1,4 +1,4 @@
-import { ExavatarError } from '../shared/ExavatarError.ts'
+import { ExavatarError } from '../shared/ExavatarError.ts';
 
 /**
  * Required text length for generated avatars.
@@ -11,7 +11,7 @@ import { ExavatarError } from '../shared/ExavatarError.ts'
  * // Invalid: 'J', 'John', '123'
  * ```
  */
-export const TEXT_LENGTH = 2
+export const TEXT_LENGTH = 2;
 
 /**
  * Value object representing text content for generated avatars.
@@ -62,7 +62,7 @@ export class AvatarText {
 	 * ```
 	 */
 	static default() {
-		return new AvatarText('')
+		return new AvatarText('');
 	}
 
 	/**
@@ -99,10 +99,10 @@ export class AvatarText {
 	 */
 	static create(input: unknown): AvatarText {
 		if (typeof input === 'string' && input.trim().length === TEXT_LENGTH) {
-			return new AvatarText(input.trim().toUpperCase())
+			return new AvatarText(input.trim().toUpperCase());
 		}
 
-		return AvatarText.default()
+		return AvatarText.default();
 	}
 
 	/**
@@ -128,7 +128,7 @@ export class AvatarText {
 	 * ```
 	 */
 	hasText(): boolean {
-		return this.value.length > 0
+		return this.value.length > 0;
 	}
 
 	/**
@@ -161,7 +161,7 @@ export class AvatarText {
 			.replace(/'/g, '&#039;')
 			.replace(/\n/g, '')
 			.replace(/\s+/g, '')
-			.trim()
+			.trim();
 	}
 }
 
@@ -188,6 +188,8 @@ export class AvatarTextNotValidError extends ExavatarError {
 	 * @param text - The invalid text value that caused the error
 	 */
 	constructor(text: unknown) {
-		super(`Avatar.text <<${text}>> is not valid. Expected a valid text with length ${TEXT_LENGTH}.`)
+		super(
+			`Avatar.text <<${text}>> is not valid. Expected a valid text with length ${TEXT_LENGTH}.`,
+		);
 	}
 }

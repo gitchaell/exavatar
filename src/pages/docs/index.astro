@@ -1,38 +1,35 @@
 ---
-import { AvatarSize, avatarSizes } from '../../core/domain/AvatarSize'
-import { AvatarFormat, avatarFormats } from '../../core/domain/AvatarFormat'
-import Layout from '../../layouts/Layout.astro'
-import AvatarCode from '../../components/AvatarCode.astro'
-import SampleCode from '../../components/SampleCode.astro'
+import { AvatarSize, avatarSizes } from '../../core/domain/AvatarSize';
+import { AvatarFormat, avatarFormats } from '../../core/domain/AvatarFormat';
+import Layout from '../../layouts/Layout.astro';
+import AvatarCode from '../../components/AvatarCode.astro';
+import SampleCode from '../../components/SampleCode.astro';
 
 const codes = {
-	html: `<img src="https://exavatar.deno.dev/api/avatar" />`,
+	html: `<img src="https://exavatar.vercel.app/api/avatar" />`,
 
 	css: `.avatar {
-  background-image: url('https://exavatar.deno.dev/api/avatar');
+  background-image: url('https://exavatar.vercel.app/api/avatar');
   background-size: cover;
 }`,
 
 	javascript: `const image = new Image(256, 256);
-image.src = 'https://exavatar.deno.dev/api/avatar';`,
+image.src = 'https://exavatar.vercel.app/api/avatar';`,
 
-	react: `export const Avatar = () => (<img src="https://exavatar.deno.dev/api/avatar" />)`,
+	react: `export const Avatar = () => (<img src="https://exavatar.vercel.app/api/avatar" />)`,
 
 	angular: `@Component({
-  template: '<img src="https://exavatar.deno.dev/api/avatar" />'
+  template: '<img src="https://exavatar.vercel.app/api/avatar" />'
 })
 export class Avatar { }`,
 
 	svelte: `<script>
-  $: src = 'https://exavatar.deno.dev/api/avatar';
+  $: src = 'https://exavatar.vercel.app/api/avatar';
 </script>
 <img src={src} />`,
 
-	astro: `---
-const src = 'https://exavatar.deno.dev/api/avatar';
----
-<img src={src} />`,
-}
+	astro: `---\nconst src = 'https://exavatar.vercel.app/api/avatar';\n---\n<img src={src} />`,
+};
 ---
 
 <Layout
@@ -58,7 +55,7 @@ const src = 'https://exavatar.deno.dev/api/avatar';
 			</p>
 			<AvatarCode
 				class='grid-box box-height-1 col-[2/12] row-[8/9] content-center px-4 md:col-[3/11] md:row-[7/8]'
-				code='https://exavatar.deno.dev/api/avatar'
+				code='https://exavatar.vercel.app/api/avatar'
 			/>
 		</section>
 
@@ -69,7 +66,7 @@ const src = 'https://exavatar.deno.dev/api/avatar';
 			</h2>
 			<SampleCode
 				class='grid-box box-height-1 col-[2/12] row-[11/12] content-center px-4 md:col-[3/11] md:row-[10/11]'
-				code='GET https://exavatar.deno.dev/api/avatar'
+				code='GET https://exavatar.vercel.app/api/avatar'
 			/>
 		</section>
 
@@ -151,7 +148,7 @@ const src = 'https://exavatar.deno.dev/api/avatar';
 			</h3>
 			<AvatarCode
 				class='grid-box box-height-1 col-[2/12] row-[24/25] content-center px-4 md:col-[3/11] md:row-[23/24]'
-				code='https://exavatar.deno.dev/api/avatar'
+				code='https://exavatar.vercel.app/api/avatar'
 			/>
 			<h3
 				class='grid-box box-height-1 col-[2/12] row-[25/26] content-center px-4 text-lg font-medium md:col-[3/11] md:row-[24/25]'>
@@ -159,7 +156,7 @@ const src = 'https://exavatar.deno.dev/api/avatar';
 			</h3>
 			<AvatarCode
 				class='grid-box box-height-1 col-[2/12] row-[26/27] content-center px-4 md:col-[3/11] md:row-[25/26]'
-				code='https://exavatar.deno.dev/api/avatar?set=animals&id=dinosaur'
+				code='https://exavatar.vercel.app/api/avatar?set=animals&id=dinosaur'
 			/>
 			<h3
 				class='grid-box box-height-1 col-[2/12] row-[27/28] content-center px-4 text-lg font-medium md:col-[3/11] md:row-[26/27]'>
@@ -167,7 +164,7 @@ const src = 'https://exavatar.deno.dev/api/avatar';
 			</h3>
 			<AvatarCode
 				class='grid-box box-height-1 col-[2/12] row-[28/29] content-center px-4 md:col-[3/11] md:row-[27/28]'
-				code='https://exavatar.deno.dev/api/avatar?text=JD&color=%2300d4aa'
+				code='https://exavatar.vercel.app/api/avatar?text=JD&color=%2300d4aa'
 			/>
 		</section>
 

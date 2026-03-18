@@ -1,10 +1,10 @@
-import { ExavatarError } from '../shared/ExavatarError.ts'
+import { ExavatarError } from '../shared/ExavatarError.ts';
 
 /** Supported image formats for avatar output */
-export const avatarFormats = ['png', 'jpeg', 'webp'] as const
+export const avatarFormats = ['png', 'jpeg', 'webp'] as const;
 
 /** Type representing valid avatar image formats */
-export type AvatarFormatType = (typeof avatarFormats)[number]
+export type AvatarFormatType = (typeof avatarFormats)[number];
 
 /**
  * Value object representing avatar image format.
@@ -45,7 +45,7 @@ export class AvatarFormat {
 	 * ```
 	 */
 	static default() {
-		return new AvatarFormat('webp')
+		return new AvatarFormat('webp');
 	}
 
 	/**
@@ -73,18 +73,18 @@ export class AvatarFormat {
 	 */
 	static create(input: unknown): AvatarFormat {
 		if (input === null || input === undefined || input === '') {
-			return AvatarFormat.default()
+			return AvatarFormat.default();
 		}
 
 		if (typeof input !== 'string') {
-			throw new AvatarFormatNotValidError(input)
+			throw new AvatarFormatNotValidError(input);
 		}
 
 		if (!avatarFormats.includes(input as AvatarFormatType)) {
-			throw new AvatarFormatNotValidError(input)
+			throw new AvatarFormatNotValidError(input);
 		}
 
-		return new AvatarFormat(input as AvatarFormatType)
+		return new AvatarFormat(input as AvatarFormatType);
 	}
 }
 
@@ -113,6 +113,6 @@ export class AvatarFormatNotValidError extends ExavatarError {
 			`Avatar.format <<${format}>> is not valid. Expected a valid image format like: ${avatarFormats.join(
 				', ',
 			)}`,
-		)
+		);
 	}
 }
