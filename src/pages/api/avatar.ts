@@ -31,7 +31,8 @@ export const GET: APIRoute = async ({ request }) => {
 		if (error instanceof ExavatarError) {
 			return new Response(error.message, { status: 400 });
 		}
-		return new Response('Server Error', { status: 500 });
+		console.error('Server error in /api/avatar:', error);
+		return new Response('Server Error: ' + (error instanceof Error ? error.message : String(error)), { status: 500 });
 	}
 };
 

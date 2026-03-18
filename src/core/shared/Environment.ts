@@ -56,12 +56,24 @@ class EnvironmentManager {
 	}
 
 	private loadConfig(): EnvironmentConfig {
-		const env = process.env.ENV || import.meta.env?.ENV;
+		let env = process.env.ENV || import.meta.env?.ENV;
 
-		if (!env || !Object.values(Environment).includes(env as Environment)) {
-			throw new Error(
-				`Invalid or missing ENV variable. Expected: ${Object.values(Environment).join(', ')}, got: ${env}`,
-			);
+		// Vercel and Node environments commonly use NODE_ENV
+		if (!env) {
+			const nodeEnv = process.env.NODE_ENV || import.meta.env?.NODE_ENV;
+			if (nodeEnv === 'production' || nodeEnv === 'development') {
+				env = nodeEnv;
+			}
+		}
+
+		// Default to production if completely missing in a serverless environment
+		if (!env) {
+			env = Environment.PRODUCTION;
+		}
+
+		if (!Object.values(Environment).includes(env as Environment)) {
+			console.warn(`⚠️ Invalid ENV variable: ${env}. Defaulting to production.`);
+			env = Environment.PRODUCTION;
 		}
 
 		return {
