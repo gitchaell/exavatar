@@ -1,75 +1,123 @@
 # Exavatar
 
-> *Una API de generación de avatares dinámicos construida sobre principios de Arquitectura Hexagonal y Domain-Driven Design (DDD).*
+[📸 Captura: Logo principal del proyecto o vista de la página inicial de la API]
 
-[📸 Insertar captura: Vista de la interfaz o Playground de Exavatar]
+Este documento detalla la arquitectura, el diseño de dominio y la implementación técnica de Exavatar, un motor de renderizado y API de generación de avatares dinámicos. Como arquitecto del proyecto, desarrollé esta solución para abordar una fricción recurrente en el desarrollo de aplicaciones web y móviles: la gestión de imágenes de perfil por defecto o *placeholders* cuando el usuario final omite proveer una.
 
-**Exavatar** es un servicio enfocado en la generación dinámica de avatares a través de una API REST. Su propósito principal es proveer una solución estandarizada y fácilmente integrable para aplicaciones que requieren imágenes de perfil por defecto (placeholders) cuando un usuario no ha subido una propia.
+## Utilidad y Flujo de Trabajo
 
-El proyecto permite obtener imágenes pre-renderizadas o generar SVGs de iniciales basados en parámetros de URL, abstrayendo la lógica de renderizado del lado del cliente.
+El problema central que este proyecto resuelve es la ausencia de identidad visual temporal en interfaces de usuario, lo cual suele requerir que cada equipo de desarrollo implemente lógicas redundantes de generación de iniciales o carga condicional de imágenes en el cliente.
 
----
+Exavatar traslada esa responsabilidad completamente al servidor. La herramienta actúa como una API REST que, mediante parámetros estructurados en la URL, devuelve instantáneamente un avatar, ya sea sirviendo un activo estático de una colección predefinida (por ejemplo, animales o personajes en formato WEBP/PNG) o generando un SVG al vuelo con las iniciales del usuario y un fondo de color.
 
-## Características Principales
+El flujo principal de la aplicación opera de la siguiente manera:
 
-- **Generación Dinámica:** Capacidad para generar SVGs de iniciales (hasta 2 caracteres) con fondos de colores sólidos.
-- **Sets de Avatares Predefinidos:** Soporte para colecciones de imágenes estáticas (ej. animales, personajes) en formatos óptimos como WEBP, SVG o PNG.
-- **Parametrización Flexible:** Control granular sobre atributos como el estilo (set), identificador (id), tamaño en píxeles, formato y color de fondo.
-- **Resolución Automática:** El sistema decide inteligentemente si debe servir una imagen preexistente de su repositorio o generar un SVG al vuelo basándose en los parámetros de la petición.
+1. **Recepción de la Petición:** Un cliente realiza una petición HTTP GET a la API con parámetros específicos (`set`, `id`, `size`, `format`, `color`, `text`).
+2. **Evaluación de Dominio:** El núcleo de la aplicación interpreta los parámetros de la URL para instanciar la entidad principal (`Avatar`). Si se provee el parámetro `text`, la aplicación determina que debe compilar y devolver un SVG generado dinámicamente. De lo contrario, valida los atributos de tamaño, colección y formato para formar una ruta de archivo válida.
+3. **Resolución de Repositorio:** Dependiendo del entorno de ejecución (Desarrollo vs. Producción), la capa de aplicación delega la carga física de la imagen al adaptador de infraestructura correspondiente (local o basado en red).
+4. **Respuesta:** El servidor devuelve el binario de la imagen o el string SVG con las cabeceras HTTP correctas y el caché configurado, minimizando la carga computacional en peticiones subsiguientes.
 
-## Arquitectura y Stack Tecnológico
-
-El proyecto no es solo una utilidad, sino también una demostración práctica de patrones de diseño de software avanzados en un entorno de JavaScript/TypeScript moderno.
-
-### Estructura del Código (Domain-Driven Design y Arquitectura Hexagonal)
-
-El núcleo de Exavatar está estrictamente separado de la capa de presentación (Astro), organizado bajo el patrón de **Arquitectura Hexagonal (Ports and Adapters)** dentro del directorio `src/core/`:
-
-- **Capa de Dominio (`domain`):** Contiene la lógica central de negocio. Entidades como `Avatar`, y Objetos de Valor (Value Objects) como `AvatarSize`, `AvatarColor`, `AvatarId`, y `AvatarSet` garantizan que las reglas de negocio (ej. validación de formatos, límites de tamaño, cálculo de contraste de colores) estén fuertemente tipadas y encapsuladas.
-- **Capa de Aplicación (`application`):** Coordina los flujos de trabajo. El `AvatarService` actúa como el punto de entrada, orquestando la creación de la entidad Avatar a partir de una URL y delegando la carga al repositorio apropiado.
-- **Capa de Infraestructura (`infrastructure`):** Implementa las interfaces (puertos) definidas por el dominio. Cuenta con implementaciones dinámicas de repositorios como `GitHubAvatarRepository` para el entorno de producción y `LocalAvatarRepository` para entornos de desarrollo.
-
-[📸 Insertar diagrama o esquema: Diagrama simplificado de la Arquitectura Hexagonal mostrando la separación entre Astro, Core/Domain, e Infrastructure]
-
-### Tecnologías Clave
-
-- **Astro (Server-Side Rendering):** Maneja el enrutamiento API y el renderizado SSR ultrarrápido sin sobrecargar de JavaScript al cliente.
-- **TypeScript:** Fuertemente tipado, especialmente en las capas de dominio para evitar estados inválidos.
-- **Vitest:** Framework de testing moderno empleado para validar el comportamiento del `AvatarService` y las entidades del dominio de forma aislada.
-- **BiomeJS:** Utilizado como la única herramienta para el formateo y análisis estático (linting) del código, garantizando consistencia (indentación con tabs, comillas simples) y rendimiento.
-- **Vercel:** Plataforma de despliegue que utiliza Edge Functions y su red global de CDN para asegurar tiempos de respuesta bajos a nivel mundial.
+[📸 Captura: Interfaz del Playground mostrando una previsualización interactiva de un avatar SVG generado dinámicamente]
 
 ---
 
-## Uso de la API
+## Análisis Profundo: Arquitectura y Modelado de Datos
 
-La API es accesible mediante solicitudes GET simples. No requiere autenticación.
+El diseño del código fuente (ubicado principalmente en `src/core/`) es una implementación estricta de **Domain-Driven Design (DDD)** estructurada bajo el patrón de **Arquitectura Hexagonal (Ports and Adapters)**. Esta decisión técnica no es casualidad; se adoptó para aislar completamente la lógica de negocio y las reglas de generación de la capa de presentación (Astro) y de la capa de infraestructura (red/sistema de archivos).
 
-```bash
-# Obtener un avatar aleatorio por defecto
-curl https://exavatar.vercel.app/api/avatar
+### Arquitectura General
 
-# Obtener un avatar de la colección "animals"
-curl "https://exavatar.vercel.app/api/avatar?set=animals&id=cat&size=256&format=webp"
+La separación de responsabilidades garantiza que el núcleo (`domain`) no tenga dependencias externas, haciendo el código inherentemente testeable y escalable.
 
-# Generar un avatar SVG con iniciales "JD" y fondo azul
-curl "https://exavatar.vercel.app/api/avatar?text=JD&color=%233b82f6&size=128"
+```mermaid
+flowchart TD
+    subgraph Presentación (Astro / API Routes)
+        API[Ruta /api/avatar]
+    end
+
+    subgraph Capa de Aplicación
+        AS[AvatarService]
+    end
+
+    subgraph Capa de Dominio (Núcleo)
+        A[Entidad: Avatar]
+        VO1(Value Object: AvatarSize)
+        VO2(Value Object: AvatarColor)
+        VO3(Value Object: AvatarId)
+        VO4(Value Object: AvatarSet)
+        VO5(Value Object: AvatarText)
+        Repo[Puerto: AvatarRepository]
+
+        A --> VO1
+        A --> VO2
+        A --> VO3
+        A --> VO4
+        A --> VO5
+    end
+
+    subgraph Capa de Infraestructura (Adaptadores)
+        LRepo[LocalAvatarRepository]
+        GRepo[GitHubAvatarRepository]
+    end
+
+    API -->|Instancia y llama| AS
+    AS -->|Delega carga a| Repo
+    AS -->|Crea| A
+    LRepo -.->|Implementa| Repo
+    GRepo -.->|Implementa| Repo
 ```
 
-### Parámetros Soportados
+### Modelado de Datos y Lógica de Negocio
 
-| Parámetro | Tipo | Descripción |
-| :--- | :--- | :--- |
-| `set` | string | El estilo o colección del avatar (ej. `animals`, `rick_morty`). |
-| `id` | string | El identificador específico del avatar dentro de un set. |
-| `size` | number | El tamaño de la imagen en píxeles (entre 16 y 512). |
-| `format` | string | Formato de salida para avatares basados en imágenes (`webp`, `png`, `svg`). |
-| `color` | string | Código de color Hexadecimal (con o sin `#`) para el fondo. |
-| `text` | string | Iniciales a renderizar en un avatar SVG (máximo 2 caracteres). Si está presente, anula las imágenes de set. |
+La lógica de negocio reside en los *Value Objects* y en la entidad *Aggregate Root* (`Avatar`). Estos garantizan que la aplicación nunca procese un estado inválido.
+
+- **Entidad `Avatar`:** Orquesta la validación y transformación. Expone el método `needBuild()`, el cual determina de forma inteligente el flujo de ejecución (lectura de archivo estático vs. generación de SVG) evaluando si el Value Object `AvatarText` contiene un valor válido.
+- **Value Objects:**
+  - `AvatarSize`: Valida los límites y resoluciones permitidas (ej. restringiendo entre 16px y 512px).
+  - `AvatarColor`: Normaliza valores hexadecimales y calcula lógicas secundarias (como el contraste de texto automático para el SVG basado en la luminancia del color de fondo).
+  - `AvatarId`, `AvatarSet` y `AvatarFormat`: Aseguran que el identificador solicitado pertenezca a una colección válida y que el formato de salida sea soportado (`webp`, `png`, `svg`).
+
+```mermaid
+classDiagram
+    class Avatar {
+        +AvatarSet set
+        +AvatarId id
+        +AvatarSize size
+        +AvatarFormat format
+        +AvatarColor color
+        +AvatarText text
+        +String filepath
+        +String filename
+        +fromUrl(URL url) Avatar$
+        +needBuild() boolean
+    }
+    class AvatarService {
+        -AvatarRepository repository
+        +generate(URL url) Promise<AvatarResult>
+    }
+    class AvatarRepository {
+        <<interface>>
+        +load(Avatar avatar) Promise<AvatarResult>
+    }
+
+    AvatarService --> AvatarRepository : Usa
+    AvatarService ..> Avatar : Construye
+```
+
+El servicio orquestador, `AvatarService`, aplica inyección de dependencias mediante el constructor. En tiempo de ejecución, el sistema inyecta `GitHubAvatarRepository` para buscar estáticos en el repositorio de producción, o `LocalAvatarRepository` para leer desde el disco local durante el desarrollo.
+
+### Stack Tecnológico
+
+La pila de herramientas fue seleccionada estrictamente por rendimiento y control de tipos.
+
+| Tecnología | Rol en la Arquitectura |
+| :--- | :--- |
+| **Astro** | Framework de presentación y *Server-Side Rendering* (SSR). Maneja el enrutamiento API y entrega respuestas ultra-rápidas a través del Edge Network sin inyectar JavaScript en el cliente. |
+| **TypeScript** | Lenguaje principal. Fundamental para el modelado en la capa de Dominio, asegurando el cumplimiento riguroso de las interfaces entre puertos y adaptadores. |
+| **Vitest** | Entorno de pruebas unitarias. Permite probar la capa de dominio y `AvatarService` de forma completamente aislada, inyectando repositorios simulados (*mocks*). |
+| **BiomeJS** | Única herramienta de análisis estático (*linter*) y formateador. Configurada para usar indentación de tabulaciones y comillas simples, reemplazando completamente a Prettier y ESLint para mayor velocidad de ejecución. |
+| **Vercel** | Infraestructura de despliegue. Utiliza *Serverless/Edge Functions* mediante `@astrojs/vercel` para procesamiento y entrega CDN global de las imágenes generadas. |
 
 ---
 
-## Enlaces del Proyecto
-
-👉 **[Demo y Playground](https://exavatar.vercel.app)**
-🔍 **[Repositorio en GitHub](https://github.com/exavatar/exavatar)**
+La integración rigurosa de principios DDD, tipado estático avanzado y una arquitectura hexagonal pura en un entorno JavaScript moderno resulta en un sistema con un acoplamiento nulo entre su motor de renderizado y su infraestructura de distribución de archivos. Esta abstracción permite escalar, cambiar de plataforma de alojamiento o añadir nuevos formatos de generación algorítmica sin requerir alteraciones en la lógica de dominio.
