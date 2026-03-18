@@ -1,5 +1,8 @@
-import { Avatar } from '../../domain/Avatar.ts'
-import { AvatarRepository, AvatarResult } from '../../domain/AvatarRepository.ts'
+import { Avatar } from '../../domain/Avatar.ts';
+import type {
+	AvatarRepository,
+	AvatarResult,
+} from '../../domain/AvatarRepository.ts';
 
 /**
  * Application service for avatar generation and management.
@@ -87,6 +90,6 @@ export class AvatarService {
 	 * @throws {InternalError} When SVG generation fails or other system errors occur
 	 */
 	async generate(url: URL): Promise<AvatarResult> {
-		return await this.repository.load(Avatar.fromUrl(url))
+		return await this.repository.load(Avatar.fromUrl(url));
 	}
 }

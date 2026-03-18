@@ -1,10 +1,10 @@
-import { ExavatarError } from '../shared/ExavatarError.ts'
-import { colord, extend, random, Plugin } from 'colord'
-import namesPlugin from 'colord/plugins/names'
-import mixPlugin from 'colord/plugins/mix'
-import harmoniesPlugin from 'colord/plugins/harmonies'
+import { ExavatarError } from '../shared/ExavatarError.ts';
+import { colord, extend, random, type Plugin } from 'colord';
+import namesPlugin from 'colord/plugins/names';
+import mixPlugin from 'colord/plugins/mix';
+import harmoniesPlugin from 'colord/plugins/harmonies';
 
-extend([namesPlugin, mixPlugin, harmoniesPlugin] as unknown as Plugin[])
+extend([namesPlugin, mixPlugin, harmoniesPlugin] as unknown as Plugin[]);
 
 /**
  * Value Object representing avatar color with smart foreground/background contrast.
@@ -24,7 +24,7 @@ export class AvatarColor {
 	 * @returns AvatarColor instance with a random hex color
 	 */
 	static default() {
-		return new AvatarColor(random().toHex())
+		return new AvatarColor(random().toHex());
 	}
 
 	/**
@@ -44,10 +44,10 @@ export class AvatarColor {
 	 */
 	static create(input: unknown): AvatarColor {
 		if (typeof input === 'string' && colord(input).isValid()) {
-			return new AvatarColor(input)
+			return new AvatarColor(input);
 		}
 
-		return AvatarColor.default()
+		return AvatarColor.default();
 	}
 
 	/**
@@ -63,7 +63,7 @@ export class AvatarColor {
 	 * @returns Color string suitable for CSS background
 	 */
 	background() {
-		return this.value
+		return this.value;
 	}
 
 	/**
@@ -82,26 +82,28 @@ export class AvatarColor {
 	 * ```
 	 */
 	foreground() {
-		const c = colord(this.value)
-		if (!c.isValid()) return '#000000'
+		const c = colord(this.value);
+		if (!c.isValid()) return '#000000';
 
 		if (c.isLight()) {
-			return c.shades(3)[1].toHex()
+			return c.shades(3)[1].toHex();
 		}
 
 		if (c.isDark()) {
-			return c.tints(3)[1].toHex()
+			return c.tints(3)[1].toHex();
 		}
 
-		const tint = c.tints(3)[1]
-		const shade = c.shades(3)[1]
+		const tint = c.tints(3)[1];
+		const shade = c.shades(3)[1];
 
-		return c.brightness() > 0.5 ? shade.toHex() : tint.toHex()
+		return c.brightness() > 0.5 ? shade.toHex() : tint.toHex();
 	}
 }
 
 export class AvatarColorNotValidError extends ExavatarError {
 	constructor(color: unknown) {
-		super(`Avatar.color <<${color}>> is not valid. Expected a valid CSS color.`)
+		super(
+			`Avatar.color <<${color}>> is not valid. Expected a valid CSS color.`,
+		);
 	}
 }

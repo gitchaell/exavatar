@@ -1,10 +1,10 @@
 import {
 	AvatarBaseRepository,
-	AvatarResult,
-	AvatarRepository,
+	type AvatarResult,
+	type AvatarRepository,
 	AvatarNotFoundError,
-} from '../domain/AvatarRepository.ts'
-import { Avatar } from '../domain/Avatar.ts'
+} from '../domain/AvatarRepository.ts';
+import type { Avatar } from '../domain/Avatar.ts';
 
 /**
  * Base URL for GitHub raw content serving avatar images.
@@ -17,7 +17,8 @@ import { Avatar } from '../domain/Avatar.ts'
  * // 'https://raw.githubusercontent.com/gitchaell/exavatar/refs/heads/main/avatars/rick_morty/128/1.webp'
  * ```
  */
-const BASE_URL = 'https://raw.githubusercontent.com/gitchaell/exavatar/refs/heads/main/avatars/'
+const BASE_URL =
+	'https://raw.githubusercontent.com/gitchaell/exavatar/refs/heads/main/avatars/';
 
 /**
  * Production avatar repository implementation using GitHub raw URLs.
@@ -57,7 +58,10 @@ const BASE_URL = 'https://raw.githubusercontent.com/gitchaell/exavatar/refs/head
  * console.log(svgResult.type) // 'svg'
  * ```
  */
-export class GitHubAvatarRepository extends AvatarBaseRepository implements AvatarRepository {
+export class GitHubAvatarRepository
+	extends AvatarBaseRepository
+	implements AvatarRepository
+{
 	/**
 	 * Loads avatar data from GitHub or generates SVG for text avatars.
 	 * Automatically determines processing method based on avatar configuration.
@@ -97,18 +101,20 @@ export class GitHubAvatarRepository extends AvatarBaseRepository implements Avat
 	 */
 	override async load(avatar: Avatar): Promise<AvatarResult> {
 		try {
-			if (avatar.needBuild()) return this.build(avatar)
+			if (avatar.needBuild()) return this.build(avatar);
 
-			const response = await fetch(`${BASE_URL}${avatar.filepath}`)
+			const response = await fetch(`${BASE_URL}${avatar.filepath}`);
 
-			if (!response.ok) throw new AvatarNotFoundError(response.statusText)
+			if (!response.ok) throw new AvatarNotFoundError(response.statusText);
 
 			return {
 				data: new Uint8Array(await response.arrayBuffer()),
 				type: avatar.format.value,
-			}
+			};
 		} catch (cause) {
-			throw new AvatarNotFoundError(cause instanceof Error ? cause.message : undefined)
+			throw new AvatarNotFoundError(
+				cause instanceof Error ? cause.message : undefined,
+			);
 		}
 	}
 }

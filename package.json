@@ -4,30 +4,31 @@
 	"version": "1.0.0",
 	"description": "Generate beautiful, customizable avatars instantly with our powerful API. Built with Deno and Astro for lightning-fast performance.",
 	"scripts": {
-		"dev": "deno run --env-file -A npm:astro dev",
-		"start": "deno run --env-file=.env.prod -A npm:astro dev",
-		"build": "deno run -A npm:astro build",
-		"preview": "deno run -A --unstable ./dist/server/entry.mjs",
-		"format": "deno run -A npm:prettier --write .",
-		"lint": "deno run -A npm:eslint . --ext .js,.jsx,.ts,.tsx,.astro",
-		"test": "deno test --env-file -A --no-check",
-		"generate": "deno run -A scripts/generate.ts",
+		"dev": "astro dev",
+		"start": "astro dev",
+		"build": "astro build",
+		"preview": "astro preview",
+		"format": "biome format --write .",
+		"lint": "biome lint --write .",
+		"test": "vitest run",
+		"generate": "tsx scripts/generate.ts",
 		"prepare": "husky install",
 		"release": "semantic-release",
-		"release:dry": "semantic-release --dry-run --config .releaserc.local.json",
-		"deploy": "cd dist && deployctl deploy --project=exavatar --entrypoint=./server/entry.mjs"
+		"release:dry": "semantic-release --dry-run --config .releaserc.local.json"
 	},
 	"dependencies": {
-		"@deno/astro-adapter": "^0.1.2",
+		"@astrojs/vercel": "^8.2.11",
 		"@shikijs/transformers": "^3.7.0",
 		"@tailwindcss/vite": "^4.1.11",
-		"astro": "^4.9.3",
+		"@vercel/analytics": "^2.0.1",
+		"astro": "^5.18.1",
 		"basecoat-css": "^0.2.8",
 		"colord": "^2.9.3",
 		"sharp": "^0.33.0",
 		"tailwindcss": "^4.1.11"
 	},
 	"devDependencies": {
+		"@biomejs/biome": "^2.4.7",
 		"@commitlint/cli": "^18.4.3",
 		"@commitlint/config-conventional": "^18.4.3",
 		"@semantic-release/changelog": "^6.0.3",
@@ -35,16 +36,9 @@
 		"@semantic-release/git": "^10.0.1",
 		"@semantic-release/github": "^9.2.6",
 		"@semantic-release/release-notes-generator": "^12.1.0",
-		"@typescript-eslint/eslint-plugin": "^7.18.0",
-		"@typescript-eslint/parser": "^7.18.0",
-		"eslint": "^8.57.0",
-		"eslint-config-prettier": "^10.1.5",
-		"eslint-plugin-astro": "^1.3.1",
-		"eslint-plugin-prettier": "^5.5.1",
 		"husky": "^8.0.3",
-		"prettier": "^3.3.1",
-		"prettier-plugin-astro": "^0.14.0",
-		"prettier-plugin-tailwindcss": "^0.6.14",
-		"semantic-release": "^23.0.0"
+		"semantic-release": "^23.0.0",
+		"tsx": "^4.21.0",
+		"vitest": "^4.1.0"
 	}
 }

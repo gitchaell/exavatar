@@ -1,16 +1,16 @@
 ---
-import '../styles/global.css'
+import '../styles/global.css';
 // import { ViewTransitions } from 'astro:transitions'
-import Icon from '../components/Icon.astro'
-import GridPattern from '../components/GridPattern.astro'
+import Icon from '../components/Icon.astro';
+import GridPattern from '../components/GridPattern.astro';
 
 interface Props {
-	title?: string
-	description?: string
-	image?: string
-	url?: string
-	type?: 'website' | 'article'
-	noindex?: boolean
+	title?: string;
+	description?: string;
+	image?: string;
+	url?: string;
+	type?: 'website' | 'article';
+	noindex?: boolean;
 }
 
 const {
@@ -20,10 +20,10 @@ const {
 	url = Astro.url.href,
 	type = 'website',
 	noindex = false,
-} = Astro.props
+} = Astro.props;
 
-const canonicalUrl = new URL(url, Astro.site).href
-const ogImage = new URL(image, Astro.site).href
+const canonicalUrl = new URL(url, Astro.site).href;
+const ogImage = new URL(image, Astro.site).href;
 ---
 
 <!doctype html>
@@ -138,7 +138,7 @@ const ogImage = new URL(image, Astro.site).href
 				"@type": "WebApplication",
 				"name": "Exavatar",
 				"description": "Dynamic avatar generation API built with Deno and Astro for creating beautiful, customizable profile pictures",
-				"url": "https://exavatar.deno.dev",
+				"url": "https://exavatar.vercel.app",
 				"applicationCategory": "DeveloperApplication",
 				"operatingSystem": "Web",
 				"offers": {
@@ -279,5 +279,10 @@ const ogImage = new URL(image, Astro.site).href
 			data-web-vitals='true'
 			defer
 		></script>
+
+		<script>
+			import { inject } from '@vercel/analytics';
+			inject();
+		</script>
 	</body>
 </html>

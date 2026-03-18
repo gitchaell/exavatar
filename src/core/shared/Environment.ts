@@ -37,57 +37,57 @@ export enum Environment {
  */
 export interface EnvironmentConfig {
 	/** Current application environment mode */
-	environment: Environment
+	environment: Environment;
 }
 
 class EnvironmentManager {
-	private static instance: EnvironmentManager
-	private config: EnvironmentConfig
+	private static instance: EnvironmentManager;
+	private config: EnvironmentConfig;
 
 	private constructor() {
-		this.config = this.loadConfig()
+		this.config = this.loadConfig();
 	}
 
 	static getInstance(): EnvironmentManager {
 		if (!EnvironmentManager.instance) {
-			EnvironmentManager.instance = new EnvironmentManager()
+			EnvironmentManager.instance = new EnvironmentManager();
 		}
-		return EnvironmentManager.instance
+		return EnvironmentManager.instance;
 	}
 
 	private loadConfig(): EnvironmentConfig {
-		const env = Deno.env.get('ENV')
+		const env = process.env.ENV || import.meta.env?.ENV;
 
 		if (!env || !Object.values(Environment).includes(env as Environment)) {
 			throw new Error(
 				`Invalid or missing ENV variable. Expected: ${Object.values(Environment).join(', ')}, got: ${env}`,
-			)
+			);
 		}
 
 		return {
 			environment: env as Environment,
-		}
+		};
 	}
 
 	getConfig(): EnvironmentConfig {
-		return { ...this.config }
+		return { ...this.config };
 	}
 
 	getEnvironment(): Environment {
-		return this.config.environment
+		return this.config.environment;
 	}
 
 	isProduction(): boolean {
-		return this.config.environment === Environment.PRODUCTION
+		return this.config.environment === Environment.PRODUCTION;
 	}
 
 	isDevelopment(): boolean {
-		return this.config.environment === Environment.DEVELOPMENT
+		return this.config.environment === Environment.DEVELOPMENT;
 	}
 
 	static reset(): void {
-		EnvironmentManager.instance = undefined!
+		EnvironmentManager.instance = undefined!;
 	}
 }
 
-export const environmentManager = EnvironmentManager.getInstance()
+export const environmentManager = EnvironmentManager.getInstance();

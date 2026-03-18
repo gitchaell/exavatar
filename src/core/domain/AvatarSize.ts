@@ -1,4 +1,4 @@
-import { ExavatarError } from '../shared/ExavatarError.ts'
+import { ExavatarError } from '../shared/ExavatarError.ts';
 
 /**
  * Available avatar sizes in pixels (width and height).
@@ -13,10 +13,18 @@ import { ExavatarError } from '../shared/ExavatarError.ts'
  * console.log(avatarSizes.length) // 7 different size options
  * ```
  */
-export const avatarSizes = ['16', '32', '64', '128', '256', '512', '1024'] as const
+export const avatarSizes = [
+	'16',
+	'32',
+	'64',
+	'128',
+	'256',
+	'512',
+	'1024',
+] as const;
 
 /** Type representing valid avatar size values in pixels */
-export type AvatarSizeType = (typeof avatarSizes)[number]
+export type AvatarSizeType = (typeof avatarSizes)[number];
 
 /**
  * Value object representing avatar dimensions.
@@ -74,7 +82,7 @@ export class AvatarSize {
 	 */
 	static default() {
 		// const size = avatarSizes[Math.floor(Math.random() * avatarSizes.length)]
-		return new AvatarSize('256')
+		return new AvatarSize('256');
 	}
 
 	/**
@@ -102,11 +110,14 @@ export class AvatarSize {
 	 * ```
 	 */
 	static create(input: unknown): AvatarSize {
-		if (typeof input === 'string' && avatarSizes.includes(input as AvatarSizeType)) {
-			return new AvatarSize(input as AvatarSizeType)
+		if (
+			typeof input === 'string' &&
+			avatarSizes.includes(input as AvatarSizeType)
+		) {
+			return new AvatarSize(input as AvatarSizeType);
 		}
 
-		return AvatarSize.default()
+		return AvatarSize.default();
 	}
 }
 
@@ -135,6 +146,6 @@ export class AvatarSizeNotValidError extends ExavatarError {
 	constructor(size: unknown) {
 		super(
 			`Avatar.size <<${size}>> is not valid. Expected a valid size like: ${avatarSizes.join(', ')}`,
-		)
+		);
 	}
 }

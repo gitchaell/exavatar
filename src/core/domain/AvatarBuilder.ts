@@ -1,5 +1,5 @@
-import { ExavatarError } from '../shared/ExavatarError.ts'
-import { Avatar } from './Avatar.ts'
+import { ExavatarError } from '../shared/ExavatarError.ts';
+import type { Avatar } from './Avatar.ts';
 
 /**
  * Configuration object for SVG generation.
@@ -9,21 +9,21 @@ import { Avatar } from './Avatar.ts'
  */
 interface SvgConfig {
 	/** Avatar size in pixels (width and height) */
-	size: number
+	size: number;
 	/** Background color in CSS format */
-	backgroundColor: string
+	backgroundColor: string;
 	/** Text color in CSS format */
-	foregroundColor: string
+	foregroundColor: string;
 	/** Text content to display */
-	text: string
+	text: string;
 	/** Font size in pixels */
-	fontSize: number
+	fontSize: number;
 	/** CSS font-weight value */
-	fontWeight: string
+	fontWeight: string;
 	/** Vertical offset for text positioning */
-	yOffset: number
+	yOffset: number;
 	/** Stroke width for text outline */
-	strokeWidth: number
+	strokeWidth: number;
 }
 
 /**
@@ -63,8 +63,8 @@ export class AvatarBuilder {
 	 * ```
 	 */
 	static build(avatar: Avatar): Uint8Array {
-		const builder = new AvatarBuilder()
-		return builder.process(AvatarBuilder.config(avatar))
+		const builder = new AvatarBuilder();
+		return builder.process(AvatarBuilder.config(avatar));
 	}
 
 	/**
@@ -91,12 +91,12 @@ export class AvatarBuilder {
 	 * ```
 	 */
 	private static config(avatar: Avatar): SvgConfig {
-		const size = +avatar.size.value
-		const text = avatar.text.escaped()
+		const size = +avatar.size.value;
+		const text = avatar.text.escaped();
 
 		// Calculate font size based on text length and avatar size
 		// Shorter text gets larger font, longer text gets smaller font
-		const fontSize = Math.floor((size * 0.5) / (text.length > 1 ? 1.5 : 1))
+		const fontSize = Math.floor((size * 0.5) / (text.length > 1 ? 1.5 : 1));
 
 		// Font weight mapping based on avatar size for optimal readability
 		const fontWeightMap: Record<number, string> = {
@@ -107,10 +107,10 @@ export class AvatarBuilder {
 			256: '600', // Semi-bold for extra large avatars
 			512: '600', // Semi-bold for huge avatars
 			1024: '600', // Semi-bold for massive avatars
-		}
+		};
 
 		// Calculate stroke width as 1% of size, minimum 1px for visibility
-		const strokeWidth = Math.max(1, size * 0.01)
+		const strokeWidth = Math.max(1, size * 0.01);
 
 		return {
 			size,
@@ -121,7 +121,7 @@ export class AvatarBuilder {
 			fontWeight: fontWeightMap[size] ?? '400',
 			yOffset: size * 0.55, // Position text slightly below center
 			strokeWidth,
-		}
+		};
 	}
 
 	/**
@@ -160,7 +160,7 @@ export class AvatarBuilder {
 				fontWeight,
 				yOffset,
 				strokeWidth,
-			} = config
+			} = config;
 
 			// Build SVG markup with proper accessibility attributes
 			const svg = [
@@ -176,12 +176,14 @@ export class AvatarBuilder {
 				`stroke="${foregroundColor}" stroke-width="${strokeWidth}"`,
 				`paint-order="stroke">${text}</text>`,
 				`</svg>`,
-			].join(' ')
+			].join(' ');
 
 			// Encode SVG string as UTF-8 bytes
-			return new TextEncoder().encode(svg)
+			return new TextEncoder().encode(svg);
 		} catch (error) {
-			throw new AvatarBuilderError(error instanceof Error ? error.message : undefined)
+			throw new AvatarBuilderError(
+				error instanceof Error ? error.message : undefined,
+			);
 		}
 	}
 }
@@ -216,7 +218,7 @@ export class AvatarBuilderError extends ExavatarError {
 	 * ```
 	 */
 	constructor(cause?: string) {
-		super(`Avatar builder failed. ${cause}`)
-		this.cause = cause
+		super(`Avatar builder failed. ${cause}`);
+		this.cause = cause;
 	}
 }

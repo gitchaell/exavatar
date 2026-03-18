@@ -1,7 +1,11 @@
-import { AvatarBaseRepository, AvatarRepository } from '../domain/AvatarRepository.ts'
-import { Avatar } from '../domain/Avatar.ts'
-import { AvatarResult } from '../domain/AvatarRepository.ts'
-import { AvatarNotFoundError } from '../domain/AvatarRepository.ts'
+import { readFile } from 'node:fs/promises';
+import {
+	AvatarBaseRepository,
+	type AvatarRepository,
+} from '../domain/AvatarRepository.ts';
+import type { Avatar } from '../domain/Avatar.ts';
+import type { AvatarResult } from '../domain/AvatarRepository.ts';
+import { AvatarNotFoundError } from '../domain/AvatarRepository.ts';
 
 /**
  * Base path for local avatar files relative to project root.
@@ -14,7 +18,7 @@ import { AvatarNotFoundError } from '../domain/AvatarRepository.ts'
  * // 'avatars/rick_morty/128/1.webp'
  * ```
  */
-const BASE_URL = 'avatars/'
+const BASE_URL = 'avatars/';
 
 /**
  * Development avatar repository implementation using local filesystem.
@@ -61,12 +65,15 @@ const BASE_URL = 'avatars/'
  * // Resolves to: 'avatars/animals/256/cat.webp'
  * ```
  */
-export class LocalAvatarRepository extends AvatarBaseRepository implements AvatarRepository {
+export class LocalAvatarRepository
+	extends AvatarBaseRepository
+	implements AvatarRepository
+{
 	/**
 	 * Loads avatar data from local filesystem or generates SVG for text avatars.
 	 * Automatically determines processing method based on avatar configuration.
 	 *
-	 * For image-based avatars, reads directly from local filesystem using Deno.readFile().
+	 * For image-based avatars, reads directly from local filesystem using readFile().
 	 * For text-based avatars, delegates to inherited SVG generation from AvatarBaseRepository.
 	 *
 	 * @param avatar - Avatar entity containing loading configuration
@@ -102,14 +109,16 @@ export class LocalAvatarRepository extends AvatarBaseRepository implements Avata
 	 */
 	override async load(avatar: Avatar): Promise<AvatarResult> {
 		try {
-			if (avatar.needBuild()) return this.build(avatar)
+			if (avatar.needBuild()) return this.build(avatar);
 
 			return {
-				data: await Deno.readFile(`${BASE_URL}${avatar.filepath}`),
+				data: await readFile(`${BASE_URL}${avatar.filepath}`),
 				type: avatar.format.value,
-			}
+			};
 		} catch (cause) {
-			throw new AvatarNotFoundError(cause instanceof Error ? cause.message : undefined)
+			throw new AvatarNotFoundError(
+				cause instanceof Error ? cause.message : undefined,
+			);
 		}
 	}
 }

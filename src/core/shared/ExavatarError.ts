@@ -14,8 +14,8 @@ export class ExavatarError extends Error {
 	 * @param message - Human-readable error message
 	 */
 	constructor(message: string) {
-		super(message)
-		this.name = 'ExavatarError'
+		super(message);
+		this.name = 'ExavatarError';
 	}
 }
 
@@ -37,7 +37,7 @@ export class InvalidParamError extends ExavatarError {
 	 * @param param - Name of the invalid parameter
 	 */
 	constructor(param: string) {
-		super(`Invalid parameter <<${param}>>`)
+		super(`Invalid parameter <<${param}>>`);
 	}
 }
 
@@ -60,7 +60,7 @@ export class InternalError extends ExavatarError {
 	 * Creates a new InternalError instance with a generic message
 	 */
 	constructor(cause?: string) {
-		super(`Internal error. ${cause}`)
-		this.cause = cause
+		super(`Internal error. ${cause}`);
+		this.cause = cause;
 	}
 }

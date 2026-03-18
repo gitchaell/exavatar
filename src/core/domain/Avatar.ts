@@ -1,9 +1,9 @@
-import { AvatarSize, AvatarSizeType } from './AvatarSize.ts'
-import { AvatarFormat, AvatarFormatType } from './AvatarFormat.ts'
-import { AvatarColor } from './AvatarColor.ts'
-import { AvatarText } from './AvatarText.ts'
-import { AvatarId, AvatarIdType } from './AvatarId.ts'
-import { AvatarSet, AvatarSetType } from './AvatarSet.ts'
+import { AvatarSize, type AvatarSizeType } from './AvatarSize.ts';
+import { AvatarFormat, type AvatarFormatType } from './AvatarFormat.ts';
+import { AvatarColor } from './AvatarColor.ts';
+import { AvatarText } from './AvatarText.ts';
+import { AvatarId, type AvatarIdType } from './AvatarId.ts';
+import { AvatarSet, type AvatarSetType } from './AvatarSet.ts';
 
 /**
  * Configuration properties for creating an Avatar.
@@ -29,17 +29,17 @@ import { AvatarSet, AvatarSetType } from './AvatarSet.ts'
  */
 export interface AvatarProps {
 	/** Avatar set/collection (e.g., 'animals', 'rick_morty') */
-	set?: AvatarSetType
+	set?: AvatarSetType;
 	/** Specific avatar ID within the set */
-	id?: AvatarIdType
+	id?: AvatarIdType;
 	/** Avatar size in pixels */
-	size?: AvatarSizeType
+	size?: AvatarSizeType;
 	/** Image format for static avatars */
-	format?: AvatarFormatType
+	format?: AvatarFormatType;
 	/** Color for background/text styling */
-	color?: string
+	color?: string;
 	/** Text content for generated avatars */
-	text?: string
+	text?: string;
 }
 
 /**
@@ -70,27 +70,27 @@ export interface AvatarProps {
  */
 export class Avatar {
 	/** Avatar set/collection configuration */
-	readonly set: AvatarSet
+	readonly set: AvatarSet;
 	/** Specific avatar identifier within the set */
-	readonly id: AvatarId
+	readonly id: AvatarId;
 	/** Avatar dimensions configuration */
-	readonly size: AvatarSize
+	readonly size: AvatarSize;
 	/** Image format configuration */
-	readonly format: AvatarFormat
+	readonly format: AvatarFormat;
 	/** Color configuration with auto-contrast */
-	readonly color: AvatarColor
+	readonly color: AvatarColor;
 	/** Text configuration for generated avatars */
-	readonly text: AvatarText
+	readonly text: AvatarText;
 
 	/** Relative file path for image-based avatars (e.g., 'animals/256/cat.webp') */
-	readonly filepath: string
+	readonly filepath: string;
 	/** Filename with extension (e.g., 'cat.webp') */
-	readonly filename: string
+	readonly filename: string;
 
 	/** API endpoint URL for this avatar */
-	readonly imagesrc: string
+	readonly imagesrc: string;
 	/** Full public URL for sharing/embedding */
-	readonly codeurl: string
+	readonly codeurl: string;
 
 	/**
 	 * Creates a default Avatar with random configurations.
@@ -105,7 +105,7 @@ export class Avatar {
 	 * ```
 	 */
 	static default() {
-		const set = AvatarSet.default()
+		const set = AvatarSet.default();
 
 		return new Avatar({
 			set: set.value,
@@ -114,7 +114,7 @@ export class Avatar {
 			format: AvatarFormat.default().value,
 			color: AvatarColor.default().value,
 			text: AvatarText.default().value,
-		})
+		});
 	}
 
 	/**
@@ -143,7 +143,7 @@ export class Avatar {
 	 * ```
 	 */
 	static create(props: AvatarProps): Avatar {
-		return new Avatar(props)
+		return new Avatar(props);
 	}
 
 	/**
@@ -177,10 +177,10 @@ export class Avatar {
 				format: url.searchParams.get('format') as AvatarFormatType,
 				color: url.searchParams.get('color') as string,
 				text: url.searchParams.get('text') as string,
-			})
+			});
 		}
 
-		return Avatar.default()
+		return Avatar.default();
 	}
 
 	/**
@@ -204,18 +204,18 @@ export class Avatar {
 	 * ```
 	 */
 	constructor(props: AvatarProps) {
-		this.set = AvatarSet.create(props.set)
-		this.id = AvatarId.create(props.id, this.set.value)
-		this.size = AvatarSize.create(props.size)
-		this.format = AvatarFormat.create(props.format)
-		this.color = AvatarColor.create(props.color)
-		this.text = AvatarText.create(props.text)
+		this.set = AvatarSet.create(props.set);
+		this.id = AvatarId.create(props.id, this.set.value);
+		this.size = AvatarSize.create(props.size);
+		this.format = AvatarFormat.create(props.format);
+		this.color = AvatarColor.create(props.color);
+		this.text = AvatarText.create(props.text);
 
-		this.filename = `${this.id.value}.${this.format.value}`
-		this.filepath = `${this.set.value}/${this.size.value}/${this.filename}`
+		this.filename = `${this.id.value}.${this.format.value}`;
+		this.filepath = `${this.set.value}/${this.size.value}/${this.filename}`;
 
-		this.imagesrc = this.getImageSrc()
-		this.codeurl = `https://exavatar.deno.dev${this.imagesrc}`
+		this.imagesrc = this.getImageSrc();
+		this.codeurl = `https://exavatar.vercel.app${this.imagesrc}`;
 	}
 
 	/**
@@ -239,15 +239,20 @@ export class Avatar {
 	 * ```
 	 */
 	private getImageSrc(): string {
-		const path = `/api/avatar`
-		const params = []
-		if (this.set.value) params.push(`set=${encodeURIComponent(this.set.value)}`)
-		if (this.id.value) params.push(`id=${encodeURIComponent(this.id.value)}`)
-		if (this.size.value) params.push(`size=${encodeURIComponent(this.size.value)}`)
-		if (this.format.value) params.push(`format=${encodeURIComponent(this.format.value)}`)
-		if (this.color.value) params.push(`color=${encodeURIComponent(this.color.value)}`)
-		if (this.text.value) params.push(`text=${encodeURIComponent(this.text.value)}`)
-		return params?.length > 0 ? `${path}?${params.join('&')}` : path
+		const path = `/api/avatar`;
+		const params = [];
+		if (this.set.value)
+			params.push(`set=${encodeURIComponent(this.set.value)}`);
+		if (this.id.value) params.push(`id=${encodeURIComponent(this.id.value)}`);
+		if (this.size.value)
+			params.push(`size=${encodeURIComponent(this.size.value)}`);
+		if (this.format.value)
+			params.push(`format=${encodeURIComponent(this.format.value)}`);
+		if (this.color.value)
+			params.push(`color=${encodeURIComponent(this.color.value)}`);
+		if (this.text.value)
+			params.push(`text=${encodeURIComponent(this.text.value)}`);
+		return params?.length > 0 ? `${path}?${params.join('&')}` : path;
 	}
 
 	/**
@@ -266,6 +271,6 @@ export class Avatar {
 	 * ```
 	 */
 	needBuild(): boolean {
-		return this.text.hasText()
+		return this.text.hasText();
 	}
 }
