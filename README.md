@@ -1,85 +1,75 @@
-# Exavatar: La Revolución de los Avatares Dinámicos
+# Exavatar
 
-> *Transformando la fricción de la gestión de perfiles en una experiencia instantánea, elegante y escalable.*
+> *Una API de generación de avatares dinámicos construida sobre principios de Arquitectura Hexagonal y Domain-Driven Design (DDD).*
 
-[📸 Insertar captura: Vista principal demostrando el diseño minimalista de Exavatar y ejemplos de avatares generados instantáneamente]
+[📸 Insertar captura: Vista de la interfaz o Playground de Exavatar]
 
-Alguna vez te has preguntado cuánto tiempo pierden los equipos de producto resolviendo el mismo problema una y otra vez: **¿qué mostrar cuando un usuario no sube una foto de perfil?**
+**Exavatar** es un servicio enfocado en la generación dinámica de avatares a través de una API REST. Su propósito principal es proveer una solución estandarizada y fácilmente integrable para aplicaciones que requieren imágenes de perfil por defecto (placeholders) cuando un usuario no ha subido una propia.
 
-La respuesta típica son iniciales aburridas o siluetas genéricas grises que restan valor al diseño de tu aplicación. Como Arquitecto de Software, vi esta fricción constante y decidí construir una solución definitiva.
-
-Así nació **Exavatar**, una API de generación de avatares dinámicos diseñada para devolverle el tiempo a los desarrolladores y la identidad visual a los usuarios.
+El proyecto permite obtener imágenes pre-renderizadas o generar SVGs de iniciales basados en parámetros de URL, abstrayendo la lógica de renderizado del lado del cliente.
 
 ---
 
-## El Problema: Un Vacío en la Experiencia de Usuario
+## Características Principales
 
-En el competitivo ecosistema de aplicaciones web y móviles, cada detalle cuenta. Cuando los nuevos usuarios se registran, la ausencia de una imagen de perfil crea una interfaz fría e impersonal. Los equipos de desarrollo a menudo se ven obligados a invertir horas valiosas construyendo lógicas complejas de generación de iniciales o integrando librerías pesadas y lentas que afectan el rendimiento de la aplicación.
+- **Generación Dinámica:** Capacidad para generar SVGs de iniciales (hasta 2 caracteres) con fondos de colores sólidos.
+- **Sets de Avatares Predefinidos:** Soporte para colecciones de imágenes estáticas (ej. animales, personajes) en formatos óptimos como WEBP, SVG o PNG.
+- **Parametrización Flexible:** Control granular sobre atributos como el estilo (set), identificador (id), tamaño en píxeles, formato y color de fondo.
+- **Resolución Automática:** El sistema decide inteligentemente si debe servir una imagen preexistente de su repositorio o generar un SVG al vuelo basándose en los parámetros de la petición.
 
-Esto no es solo un problema de diseño; es una ineficiencia operativa que cuesta tiempo y dinero.
+## Arquitectura y Stack Tecnológico
 
-## La Solución: Identidad Instantánea como Servicio
+El proyecto no es solo una utilidad, sino también una demostración práctica de patrones de diseño de software avanzados en un entorno de JavaScript/TypeScript moderno.
 
-Creé Exavatar no solo como una herramienta, sino como una **pieza de infraestructura esencial** para productos digitales. Al delegar la generación de avatares a una API REST ultrarrápida, le ofrezco a los equipos la tranquilidad de saber que este componente está resuelto para siempre.
+### Estructura del Código (Domain-Driven Design y Arquitectura Hexagonal)
 
-### 🌟 Beneficios Absolutos
+El núcleo de Exavatar está estrictamente separado de la capa de presentación (Astro), organizado bajo el patrón de **Arquitectura Hexagonal (Ports and Adapters)** dentro del directorio `src/core/`:
 
-- **Ahorro Masivo de Tiempo:** No más sprints desperdiciados diseñando avatares por defecto. Con una simple llamada HTTP, tienes un avatar perfecto y consistente.
-- **Rendimiento Impecable:** Las imágenes se generan y sirven en milisegundos en el formato más óptimo (WEBP, SVG, PNG), sin cargar el servidor de tu aplicación.
-- **Personalización Sin Límites:** Desde paletas de colores corporativos hasta dimensiones precisas (16x16 a 512x512) que encajan en cualquier UI.
-- **Paz Mental para el Equipo:** Una API robusta, bien documentada y siempre disponible. Un "set-and-forget" literal.
+- **Capa de Dominio (`domain`):** Contiene la lógica central de negocio. Entidades como `Avatar`, y Objetos de Valor (Value Objects) como `AvatarSize`, `AvatarColor`, `AvatarId`, y `AvatarSet` garantizan que las reglas de negocio (ej. validación de formatos, límites de tamaño, cálculo de contraste de colores) estén fuertemente tipadas y encapsuladas.
+- **Capa de Aplicación (`application`):** Coordina los flujos de trabajo. El `AvatarService` actúa como el punto de entrada, orquestando la creación de la entidad Avatar a partir de una URL y delegando la carga al repositorio apropiado.
+- **Capa de Infraestructura (`infrastructure`):** Implementa las interfaces (puertos) definidas por el dominio. Cuenta con implementaciones dinámicas de repositorios como `GitHubAvatarRepository` para el entorno de producción y `LocalAvatarRepository` para entornos de desarrollo.
 
-[📸 Insertar captura: Ejemplos de diferentes estilos de avatares (animales, personajes) con variaciones de colores hex, demostrando la versatilidad visual]
+[📸 Insertar diagrama o esquema: Diagrama simplificado de la Arquitectura Hexagonal mostrando la separación entre Astro, Core/Domain, e Infrastructure]
 
-## Casos de Uso Reales
+### Tecnologías Clave
 
-Ya sea que estés construyendo el próximo gran SaaS, un foro comunitario o una app móvil, Exavatar se adapta sin fricción:
-
-- **SaaS y Plataformas B2B:** Genera avatares profesionales y coloridos basados en el ID del usuario.
-- **Comunidades y Foros:** Dale vida a las secciones de comentarios con personajes divertidos.
-- **Aplicaciones Móviles:** Descarga avatares en resoluciones perfectas para pantallas Retina.
+- **Astro (Server-Side Rendering):** Maneja el enrutamiento API y el renderizado SSR ultrarrápido sin sobrecargar de JavaScript al cliente.
+- **TypeScript:** Fuertemente tipado, especialmente en las capas de dominio para evitar estados inválidos.
+- **Vitest:** Framework de testing moderno empleado para validar el comportamiento del `AvatarService` y las entidades del dominio de forma aislada.
+- **BiomeJS:** Utilizado como la única herramienta para el formateo y análisis estático (linting) del código, garantizando consistencia (indentación con tabs, comillas simples) y rendimiento.
+- **Vercel:** Plataforma de despliegue que utiliza Edge Functions y su red global de CDN para asegurar tiempos de respuesta bajos a nivel mundial.
 
 ---
 
-## Bajo el Capó: Arquitectura y Stack
+## Uso de la API
 
-*Para los desarrolladores, líderes técnicos y CTOs que valoran la ingeniería detrás del producto.*
-
-Para lograr una experiencia de usuario perfecta y tiempos de respuesta de milisegundos, diseñé una arquitectura enfocada en el rendimiento extremo y la escalabilidad. Exavatar no es solo una cara bonita; es un motor de renderizado de alta velocidad.
-
-### 🛠️ Decisiones Técnicas Clave
-
-- **Astro (Server-Side Rendering):** Elegí Astro por su capacidad de procesamiento en el servidor ultrarrápido, permitiendo generar respuestas dinámicas sin el peso del JavaScript en el cliente.
-- **Vercel & Edge Network:** Desplegado en Vercel, la API aprovecha la CDN global para servir avatares desde el nodo más cercano al usuario final, garantizando latencias mínimas a nivel mundial.
-- **BiomeJS:** Para mantener un código inmaculado, estandarizado y libre de errores, implementé BiomeJS, unificando el formateo y linting con una velocidad superior.
-- **TailwindCSS:** Utilizado en la interfaz del Playground, permite iterar rápidamente sobre el diseño manteniendo un bundle diminuto.
-
-### 💻 Integración en Segundos
-
-La belleza de Exavatar radica en su simplicidad. Una solicitud GET es todo lo que necesitas:
+La API es accesible mediante solicitudes GET simples. No requiere autenticación.
 
 ```bash
-# Un avatar básico y aleatorio
+# Obtener un avatar aleatorio por defecto
 curl https://exavatar.vercel.app/api/avatar
 
-# Un avatar personalizado con estilo, tamaño, formato y color específico
-curl "https://exavatar.vercel.app/api/avatar?set=animals&id=dinosaur&size=256&format=webp&color=%23000000"
+# Obtener un avatar de la colección "animals"
+curl "https://exavatar.vercel.app/api/avatar?set=animals&id=cat&size=256&format=webp"
+
+# Generar un avatar SVG con iniciales "JD" y fondo azul
+curl "https://exavatar.vercel.app/api/avatar?text=JD&color=%233b82f6&size=128"
 ```
 
-[📸 Insertar captura: Bloque de código elegante junto a la imagen resultante, ilustrando la facilidad de la API]
+### Parámetros Soportados
+
+| Parámetro | Tipo | Descripción |
+| :--- | :--- | :--- |
+| `set` | string | El estilo o colección del avatar (ej. `animals`, `rick_morty`). |
+| `id` | string | El identificador específico del avatar dentro de un set. |
+| `size` | number | El tamaño de la imagen en píxeles (entre 16 y 512). |
+| `format` | string | Formato de salida para avatares basados en imágenes (`webp`, `png`, `svg`). |
+| `color` | string | Código de color Hexadecimal (con o sin `#`) para el fondo. |
+| `text` | string | Iniciales a renderizar en un avatar SVG (máximo 2 caracteres). Si está presente, anula las imágenes de set. |
 
 ---
 
-## El Impacto de Simplificar lo Complejo
+## Enlaces del Proyecto
 
-Exavatar es la prueba de que resolver un problema "pequeño" con una ejecución magistral puede tener un impacto gigante en el flujo de trabajo de cientos de desarrolladores. Al abstraer la complejidad de la generación de imágenes, permitimos que los equipos se enfoquen en lo que realmente importa: **construir el core de sus negocios**.
-
-### ¿Listo para elevar la interfaz de tu producto?
-
-Te invito a explorar lo que Exavatar puede hacer por tu próximo proyecto.
-
-👉 **[Prueba el Demo Interactivo](https://exavatar.vercel.app)**
-🔍 **[Explora el Código Fuente](https://github.com/exavatar/exavatar)**
-📩 **[Contáctame para Consultorías o Colaboraciones](mailto:tu@email.com)**
-
-*Construido con pasión y precisión.*
+👉 **[Demo y Playground](https://exavatar.vercel.app)**
+🔍 **[Repositorio en GitHub](https://github.com/exavatar/exavatar)**
