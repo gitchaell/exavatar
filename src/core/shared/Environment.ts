@@ -66,6 +66,11 @@ class EnvironmentManager {
 			}
 		}
 
+		// Force VERCEL env to production
+		if (process.env.VERCEL) {
+			env = Environment.PRODUCTION;
+		}
+
 		// Default to production if completely missing in a serverless environment
 		if (!env) {
 			env = Environment.PRODUCTION;
