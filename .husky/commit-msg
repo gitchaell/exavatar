@@ -1,4 +1,4 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-deno run -A npm:@commitlint/cli --edit "$1"
+npx @commitlint/cli --edit "$1"

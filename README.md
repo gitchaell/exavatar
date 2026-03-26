@@ -1,8 +1,26 @@
-# Exavatar
+<p align="center">
+  <img src="public/logo.svg" width="120px" alt="Exavatar Logo" />
+</p>
 
-[📸 Captura: Logo principal del proyecto o vista de la página inicial de la API]
+<h1 align="center">
+  Exavatar: Generación de Avatares de Usuario
+</h1>
 
-Este documento detalla la arquitectura, el diseño de dominio y la implementación técnica de Exavatar, un motor de renderizado y API de generación de avatares dinámicos. Como arquitecto del proyecto, desarrollé esta solución para abordar una fricción recurrente en el desarrollo de aplicaciones web y móviles: la gestión de imágenes de perfil por defecto o *placeholders* cuando el usuario final omite proveer una.
+![cover](public/og-image.png)
+
+## Capturas
+
+![1](public/screen-1.png)
+
+![2](public/screen-2.png)
+
+![3](public/screen-3.png)
+
+![4](public/screen-4.png)
+
+---
+
+Este documento detalla la arquitectura, el diseño de dominio y la implementación técnica de Exavatar, un motor de renderizado y API de generación de avatares dinámicos. Esta solución aborda una fricción recurrente en el desarrollo de aplicaciones web y móviles: la gestión de imágenes de perfil por defecto o *placeholders* cuando el usuario final omite proveer una.
 
 ## Utilidad y Flujo de Trabajo
 
@@ -17,8 +35,6 @@ El flujo principal de la aplicación opera de la siguiente manera:
 3. **Resolución de Repositorio:** Dependiendo del entorno de ejecución (Desarrollo vs. Producción), la capa de aplicación delega la carga física de la imagen al adaptador de infraestructura correspondiente (local o basado en red).
 4. **Respuesta:** El servidor devuelve el binario de la imagen o el string SVG con las cabeceras HTTP correctas y el caché configurado, minimizando la carga computacional en peticiones subsiguientes.
 
-[📸 Captura: Interfaz del Playground mostrando una previsualización interactiva de un avatar SVG generado dinámicamente]
-
 ---
 
 ## Análisis Profundo: Arquitectura y Modelado de Datos
@@ -31,22 +47,22 @@ La separación de responsabilidades garantiza que el núcleo (`domain`) no tenga
 
 ```mermaid
 flowchart TD
-    subgraph Presentación (Astro / API Routes)
-        API[Ruta /api/avatar]
+    subgraph Presentacion ["Presentación (Astro / API Routes)"]
+        API["Ruta /api/avatar"]
     end
 
-    subgraph Capa de Aplicación
-        AS[AvatarService]
+    subgraph CapaAplicacion ["Capa de Aplicación"]
+        AS["AvatarService"]
     end
 
-    subgraph Capa de Dominio (Núcleo)
-        A[Entidad: Avatar]
-        VO1(Value Object: AvatarSize)
-        VO2(Value Object: AvatarColor)
-        VO3(Value Object: AvatarId)
-        VO4(Value Object: AvatarSet)
-        VO5(Value Object: AvatarText)
-        Repo[Puerto: AvatarRepository]
+    subgraph CapaDominio ["Capa de Dominio (Núcleo)"]
+        A["Avatar : Entidad"]
+        VO1["AvatarSize : Value Object"]
+        VO2["AvatarColor : Value Object"]
+        VO3["AvatarId : Value Object"]
+        VO4["AvatarSet : Value Object"]
+        VO5["AvatarText : Value Object"]
+        Repo["AvatarRepository : Puerto"]
 
         A --> VO1
         A --> VO2
@@ -55,16 +71,16 @@ flowchart TD
         A --> VO5
     end
 
-    subgraph Capa de Infraestructura (Adaptadores)
-        LRepo[LocalAvatarRepository]
-        GRepo[GitHubAvatarRepository]
+    subgraph CapaInfraestructura ["Capa de Infraestructura (Adaptadores)"]
+        LRepo["LocalAvatarRepository"]
+        GRepo["GitHubAvatarRepository"]
     end
 
-    API -->|Instancia y llama| AS
-    AS -->|Delega carga a| Repo
-    AS -->|Crea| A
-    LRepo -.->|Implementa| Repo
-    GRepo -.->|Implementa| Repo
+    API --> AS
+    AS --> Repo
+    AS --> A
+    LRepo -.-> Repo
+    GRepo -.-> Repo
 ```
 
 ### Modelado de Datos y Lógica de Negocio

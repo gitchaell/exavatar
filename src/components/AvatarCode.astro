@@ -65,6 +65,7 @@ class UrlToken {
 	}
 }
 
+// biome-ignore lint/complexity/noStaticOnlyClass: omit
 class UrlSyntaxHighlighter {
 	static process(code: string): string {
 		return UrlSyntaxHighlighter.tokenize(code)
@@ -78,7 +79,7 @@ class UrlSyntaxHighlighter {
 
 			const tokens: UrlToken[] = [];
 
-			tokens.push(new UrlToken(parts.protocol + '//', 'protocol'));
+			tokens.push(new UrlToken(`${parts.protocol}//`, 'protocol'));
 			tokens.push(new UrlToken(parts.hostname, 'hostname'));
 
 			if (parts.port) {

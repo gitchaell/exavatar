@@ -41,7 +41,7 @@ export interface EnvironmentConfig {
 }
 
 class EnvironmentManager {
-	private static instance: EnvironmentManager;
+	private static instance: EnvironmentManager | null = null;
 	private config: EnvironmentConfig;
 
 	private constructor() {
@@ -103,7 +103,7 @@ class EnvironmentManager {
 	}
 
 	static reset(): void {
-		EnvironmentManager.instance = undefined!;
+		EnvironmentManager.instance = null;
 	}
 }
 

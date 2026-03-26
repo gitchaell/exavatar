@@ -19,6 +19,9 @@
 		}
 	},
 	"javascript": {
+		"linter": {
+			"enabled": false
+		},
 		"formatter": {
 			"quoteStyle": "single"
 		}
@@ -39,8 +42,19 @@
 	},
 	"overrides": [
 		{
-			"includes": ["public/js/**/*.js"],
-			"linter": { "enabled": false }
+			"includes": ["**/*.astro", "**/*.vue", "**/*.svelte"],
+			"linter": {
+				"rules": {
+					"correctness": {
+						"noUnusedImports": "off",
+						"noUnusedVariables": "off"
+					},
+					"style": {
+						"useConst": "off",
+						"useImportType": "off"
+					}
+				}
+			}
 		}
 	]
 }

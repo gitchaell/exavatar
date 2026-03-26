@@ -2,10 +2,10 @@
 . "$(dirname "$0")/_/husky.sh"
 
 # Format code with Deno and Prettier
-deno task format
+npm run format
 
 # Lint code
-deno task lint
+npm run lint
 
 # Add formatted files to git
 git add .

@@ -19,7 +19,7 @@ export const GET: APIRoute = async ({ request }) => {
 	try {
 		const { data, type } = await service.generate(new URL(request.url));
 
-		return new Response(data, {
+		return new Response(data as BodyInit, {
 			headers: {
 				'Content-Type': `image/${type}`,
 				'Cache-Control': environmentManager.isProduction()
@@ -32,7 +32,11 @@ export const GET: APIRoute = async ({ request }) => {
 			return new Response(error.message, { status: 400 });
 		}
 		console.error('Server error in /api/avatar:', error);
-		return new Response('Server Error: ' + (error instanceof Error ? error.message : String(error)), { status: 500 });
+		return new Response(
+			'Server Error: ' +
+				(error instanceof Error ? error.message : String(error)),
+			{ status: 500 },
+		);
 	}
 };
 

@@ -5,7 +5,7 @@ import {
 	AvatarSet,
 	type AvatarSetType,
 } from '../../core/domain/AvatarSet';
-import { avatarIdsMap } from '../../core/domain/AvatarId';
+import { avatarIdsMap, AvatarIdType } from '../../core/domain/AvatarId';
 import Layout from '../../layouts/Layout.astro';
 import Icon from '../../components/Icon.astro';
 
@@ -20,7 +20,7 @@ const filteredAvatars = avatarIdsMap[selectedSet as keyof typeof avatarIdsMap]
 	.map((id) =>
 		Avatar.create({
 			set: selectedSet as AvatarSetType,
-			id,
+			id: id as AvatarIdType,
 			size: '256',
 			format: 'webp',
 		}),
