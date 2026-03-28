@@ -135,22 +135,20 @@ const ogImage = new URL(image, Astro.site).href;
 		<script is:inline type='application/ld+json'>
 			{
 				"@context": "https://schema.org",
-				"@type": "WebApplication",
+				"@type": "SoftwareApplication",
 				"name": "Exavatar",
-				"description": "Dynamic avatar generation API built with Deno and Astro for creating beautiful, customizable profile pictures",
-				"url": "https://exavatar.vercel.app",
 				"applicationCategory": "DeveloperApplication",
 				"operatingSystem": "Web",
-				"offers": {
-					"@type": "Offer",
-					"price": "0",
-					"priceCurrency": "USD"
-				},
-				"creator": {
+				"author": {
 					"@type": "Person",
-					"name": "Michael Alavedra",
-					"url": "https://github.com/gitchaell"
-				}
+					"name": "Michaell Alavedra",
+					"url": "https://michaellalavedra.com",
+					"sameAs": [
+						"https://github.com/gitchaell",
+						"https://linkedin.com/in/michaell-alavedra"
+					]
+				},
+				"description": "Dynamic avatar generation API built with Node.js and Astro for creating beautiful, customizable profile pictures"
 			}
 		</script>
 
@@ -262,6 +260,12 @@ const ogImage = new URL(image, Astro.site).href;
 			id='toaster'
 			class='toaster'>
 		</div>
+
+		<footer class='grid-box box-height-1 col-[1/13] row-[100/-1] mt-auto grid place-content-center text-sm text-gray-500 dark:text-gray-400'>
+			<p>
+				Built by <a href='https://michaellalavedra.com' target='_blank' rel='noopener noreferrer' class='font-medium text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 transition-colors'>Michaell Alavedra</a>
+			</p>
+		</footer>
 
 		<GridPattern />
 
