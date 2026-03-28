@@ -215,7 +215,7 @@ export class Avatar {
 		this.filepath = `${this.set.value}/${this.size.value}/${this.filename}`;
 
 		this.imagesrc = this.getImageSrc();
-		this.codeurl = `https://exavatar.vercel.app${this.imagesrc}`;
+		this.codeurl = `https://exavatar.michaellalavedra.com${this.imagesrc}`;
 	}
 
 	/**
