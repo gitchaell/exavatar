@@ -39,7 +39,8 @@ const avatar = Avatar.fromUrl(Astro.url);
 				class='absolute inset-0 z-10 mx-auto block aspect-square h-full object-cover p-1'
 				src={avatar.imagesrc}
 				alt='Avatar Preview'
-				loading='lazy'
+				fetchpriority='high'
+				decoding='sync'
 			/>
 		</section>
 
