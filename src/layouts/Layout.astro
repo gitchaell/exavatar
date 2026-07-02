@@ -63,6 +63,11 @@ const ogImage = new URL(image, Astro.site).href;
 			href={canonicalUrl}
 		/>
 
+		<link rel="preload" href="/fonts/Geist/variable/Geist[wght].ttf" as="font" type="font/ttf" crossorigin />
+		<link rel="preconnect" href="https://app.rybbit.io" />
+		<link rel="preconnect" href="https://pagead2.googlesyndication.com" />
+		<link rel="preconnect" href="https://googleads.g.doubleclick.net" />
+
 		{
 			noindex && (
 				<meta
@@ -201,7 +206,7 @@ const ogImage = new URL(image, Astro.site).href;
 			<a
 				href='/'
 				class='grid-box grid-cross-br grid grid-flow-col gap-1 box-height-1 col-[1/5] row-[1/2] place-content-center text-center text-2xl font-bold italic md:col-[3/5] md:row-[1/2]'>
-				<img src="logo.svg" alt="Exavatar Logo" class="mx-auto w-8 h-auto" />
+				<img src="logo.svg" alt="Exavatar Logo" width="32" height="32" class="mx-auto w-8 h-auto" />
 				Exavatar
 			</a>
 
