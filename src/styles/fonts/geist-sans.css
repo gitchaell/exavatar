@@ -1,0 +1,5 @@
+@font-face {
+	font-family: "Geist Sans";
+	src: url("/fonts/geist-sans/GeistSansVariable.woff2")
+		format("woff2-variations");
+}
