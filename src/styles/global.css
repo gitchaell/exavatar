@@ -1,45 +1,21 @@
 @import "tailwindcss";
 @import "basecoat-css";
 
-/* Geist Sans Variable */
-@font-face {
-	font-family: "Geist";
-	src: url("/fonts/Geist/variable/Geist[wght].ttf") format("truetype");
-	font-weight: 100 900;
-	font-style: normal;
-	font-display: swap;
-}
-
-@font-face {
-	font-family: "Geist";
-	src: url("/fonts/Geist/variable/Geist-Italic[wght].ttf") format("truetype");
-	font-weight: 100 900;
-	font-style: italic;
-	font-display: swap;
-}
-
-/* Geist Mono Variable */
-@font-face {
-	font-family: "GeistMono";
-	src: url("/fonts/GeistMono/variable/GeistMono[wght].ttf") format("truetype");
-	font-weight: 100 900;
-	font-style: normal;
-	font-display: swap;
-}
-
-@font-face {
-	font-family: "GeistMono";
-	src: url("/fonts/GeistMono/variable/GeistMono-Italic[wght].ttf")
-		format("truetype");
-	font-weight: 100 900;
-	font-style: italic;
-	font-display: swap;
-}
+/* Importar declaraciones de fuentes individuales */
+@import "./fonts/geist-sans.css";
+@import "./fonts/geist-mono.css";
+@import "./fonts/space-grotesk.css";
 
 @theme {
-	--font-display: "Geist", "sans-serif";
-	--font-sans: "Geist", "sans-serif";
-	--font-mono: "GeistMono", "monospace";
+	/* Sobrescribe la familia sans por defecto (utilidad font-sans) */
+	--font-sans: "Geist Sans", sans-serif;
+
+	/* Sobrescribe la familia mono por defecto (utilidad font-mono) */
+	--font-mono: "Geist Mono", monospace;
+
+	/* Registra una nueva utilidad personalizada (utilidad font-display) */
+	--font-display: "Space Grotesk", sans-serif;
+
 	--grid-guide: oklch(0.93 0 0);
 	--grid-cross: oklch(0.6 0 0);
 	--grid-cross-size: 16px;
@@ -50,6 +26,46 @@
 }
 
 @layer base {
+	body {
+		font-family: "Geist Sans", sans-serif;
+		font-variation-settings: "wght" 400;
+		font-feature-settings:
+			"liga" 1,
+			"dlig" 1,
+			"tnum" 1,
+			"ss02" 1,
+			"ss05" 1,
+			"ss09" 1;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+	}
+
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		font-family: "Space Grotesk", sans-serif;
+		font-variation-settings: "wght" 600; /* Peso semi-bold por defecto para títulos */
+		font-feature-settings:
+			"liga" 1,
+			"tnum" 1,
+			"zero" 1,
+			"salt" 1,
+			"ss05" 1;
+	}
+
+	code,
+	pre {
+		font-family: "Geist Mono", monospace;
+		font-variation-settings: "wght" 400;
+		font-feature-settings:
+			"liga" 1,
+			"ss02" 1,
+			"ss03" 1;
+	}
+
 	.dark {
 		--grid-guide: oklch(0.32 0 0);
 		--grid-cross: oklch(0.8 0 0);
