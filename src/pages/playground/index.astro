@@ -57,7 +57,7 @@ const avatar = Avatar.fromUrl(Astro.url);
 						name='set'
 						id='avatar-set'
 						class='select col-[4/11] w-full md:col-[2/4]'
-						onchange='this.form.submit()'>
+						onchange='updatePreview(event)'>
 						<option value=''></option>
 						{
 							avatarSets.map((set) => (
@@ -81,7 +81,7 @@ const avatar = Avatar.fromUrl(Astro.url);
 						name='id'
 						id='avatar-id'
 						class='select col-[4/11] w-full md:col-[2/4]'
-						onchange='this.form.submit()'>
+						onchange='updatePreview(event)'>
 						<option value=''></option>
 						{
 							avatarIdsMap[avatar.set.value].map((id) => (
@@ -105,7 +105,7 @@ const avatar = Avatar.fromUrl(Astro.url);
 						name='size'
 						id='avatar-size'
 						class='select col-[4/11] w-full md:col-[2/4]'
-						onchange='this.form.submit()'>
+						onchange='updatePreview(event)'>
 						<option value=''></option>
 						{
 							avatarSizes.map((size) => (
@@ -129,7 +129,7 @@ const avatar = Avatar.fromUrl(Astro.url);
 						name='format'
 						id='avatar-format'
 						class='select col-[4/11] w-full md:col-[2/4]'
-						onchange='this.form.submit()'>
+						onchange='updatePreview(event)'>
 						<option value=''></option>
 						{
 							avatarFormats.map((format) => (
@@ -156,7 +156,7 @@ const avatar = Avatar.fromUrl(Astro.url);
 						maxlength='2'
 						class='input col-[4/11] w-full md:col-[2/4]'
 						value={avatar.text.value}
-						onchange='this.form.submit()'
+						onchange='updatePreview(event)'
 					/>
 				</label>
 			</div>
@@ -172,13 +172,73 @@ const avatar = Avatar.fromUrl(Astro.url);
 						type='color'
 						class='input col-[4/11] w-full md:col-[2/4]'
 						value={avatar.color.value}
-						onchange='this.form.submit()'
+						onchange='updatePreview(event)'
 					/>
 				</label>
 			</div>
 
+
+			{
+				avatar.set.value === 'builder' && (
+					<div class='grid-box box-height-auto col-[2/12] row-[19/20] grid gap-2 p-2 md:col-[7/10] md:row-[11/14] md:box-height-3 builder-controls'>
+						<div class="grid grid-cols-2 gap-2">
+							<label class='label'><span class='font-light block text-xs'>Gender</span>
+								<select name='gender' class='select w-full' onchange='updatePreview(event)'>
+									<option value='male' selected={avatar.builderConfig.gender === 'male'}>Male</option>
+									<option value='female' selected={avatar.builderConfig.gender === 'female'}>Female</option>
+								</select>
+							</label>
+							<label class='label'><span class='font-light block text-xs'>Skin</span>
+								<input name='skinTone' type='color' class='input w-full h-8' value={avatar.builderConfig.skinTone} onchange='updatePreview(event)' />
+							</label>
+						</div>
+
+						<div class="grid grid-cols-2 gap-2">
+							<label class='label'><span class='font-light block text-xs'>Hair</span>
+								<select name='hair' class='select w-full' onchange='updatePreview(event)'>
+									{['short', 'long', 'spiky', 'bald', 'curly', 'bob'].map(h => <option value={h} selected={avatar.builderConfig.hair === h}>{h}</option>)}
+								</select>
+							</label>
+							<label class='label'><span class='font-light block text-xs'>Hair Color</span>
+								<input name='hairColor' type='color' class='input w-full h-8' value={avatar.builderConfig.hairColor} onchange='updatePreview(event)' />
+							</label>
+						</div>
+
+						<div class="grid grid-cols-2 gap-2">
+							<label class='label'><span class='font-light block text-xs'>Clothing</span>
+								<select name='clothing' class='select w-full' onchange='updatePreview(event)'>
+									{['shirt', 'hoodie', 'suit', 'dress'].map(c => <option value={c} selected={avatar.builderConfig.clothing === c}>{c}</option>)}
+								</select>
+							</label>
+							<label class='label'><span class='font-light block text-xs'>Cloth Color</span>
+								<input name='clothingColor' type='color' class='input w-full h-8' value={avatar.builderConfig.clothingColor} onchange='updatePreview(event)' />
+							</label>
+						</div>
+
+						<div class="grid grid-cols-2 gap-2">
+							<label class='label'><span class='font-light block text-xs'>Accessory</span>
+								<select name='accessory' class='select w-full' onchange='updatePreview(event)'>
+									{['none', 'glasses', 'sunglasses', 'headphones', 'cap'].map(a => <option value={a} selected={avatar.builderConfig.accessory === a}>{a}</option>)}
+								</select>
+							</label>
+							<label class='label'><span class='font-light block text-xs'>Background</span>
+								<input name='background' type='color' class='input w-full h-8' value={avatar.builderConfig.background} onchange='updatePreview(event)' />
+							</label>
+						</div>
+
+						<div class="grid grid-cols-1 gap-2">
+							<label class='label'><span class='font-light block text-xs'>Expression</span>
+								<select name='expression' class='select w-full' onchange='updatePreview(event)'>
+									{['none', 'Neutral', 'Feliz', 'Sorprendido', 'Concentrado', 'Triste', 'Enojado', 'Asustado', 'Confundido', 'Cansado', 'Avergonzado', 'Emocionado', 'Arrogante', 'Aburrido', 'Sarcástico', 'Aliviado', 'Sonrisa pícara'].map(e => <option value={e} selected={avatar.builderConfig.expression === e}>{e}</option>)}
+								</select>
+							</label>
+						</div>
+					</div>
+				)
+			}
+
 			<div
-				class='grid-box box-height-1 col-[2/12] row-[20/21] grid grid-cols-2 items-center gap-2 px-2 md:col-[7/10] md:row-[12/13]'>
+				class={'grid-box box-height-1 col-[2/12] grid grid-cols-2 items-center gap-2 px-2 md:col-[7/10] ' + (avatar.set.value === 'builder' ? 'row-[20/21] md:row-[14/15]' : 'row-[21/22] md:row-[12/13]')}>
 				<button
 					type='button'
 					class='btn btn-secondary'
@@ -206,9 +266,54 @@ const avatar = Avatar.fromUrl(Astro.url);
 		</form>
 
 		<AvatarCode
-			class='grid-box box-height-2 col-[1/13] row-[22/24] content-center overflow-hidden p-3 text-center md:col-[3/11] md:row-[14/16]'
+			class={'grid-box box-height-2 col-[1/13] content-center overflow-hidden p-3 text-center md:col-[3/11] ' + (avatar.set.value === 'builder' ? 'row-[21/23] md:row-[17/19]' : 'row-[22/24] md:row-[14/16]')}
 			code={avatar.codeurl}
 			wrap={true}
 		/>
 	</main>
+
+<script is:inline>
+function updatePreview(e) {
+	const form = document.querySelector('form');
+
+    if (e && e.target && e.target.name === 'set') {
+        form.submit();
+        return;
+    }
+
+	const url = new URL(form.action || window.location.href);
+	const params = new URLSearchParams();
+
+	const formData = new FormData(form);
+	for (const [key, value] of formData.entries()) {
+		if (value) params.set(key, value);
+	}
+
+	const isBuilder = formData.get('set') === 'builder';
+
+	let apiUrl = '/api/avatar';
+	if (Array.from(params.keys()).length > 0) {
+		apiUrl += '?' + params.toString();
+	}
+
+	if (isBuilder) {
+		document.getElementById('preview').src = apiUrl;
+		const codeBlock = document.querySelector('pre');
+		if (codeBlock) {
+			const fullUrl = 'https://exavatar.michaellalavedra.com' + apiUrl;
+
+			// Update the text directly. Shiki will be blown away, but the URL will be correct and copyable.
+			codeBlock.textContent = fullUrl;
+
+			// Also update history state so URL bar reflects the changes without reload
+			const playgroundUrl = new URL(window.location.href);
+            playgroundUrl.search = params.toString();
+            window.history.replaceState({}, '', playgroundUrl.toString());
+		}
+	} else {
+		form.submit();
+	}
+}
+</script>
+
 </Layout>
