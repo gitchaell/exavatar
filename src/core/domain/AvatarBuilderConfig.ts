@@ -11,6 +11,7 @@ export class AvatarBuilderConfig {
 	readonly accessory: string;
 	readonly background: string;
 	readonly expression: string;
+	readonly age: 'child' | 'adult' | 'elder';
 
 	private constructor(props: any) {
 		this.gender = props.gender === 'female' ? 'female' : 'male';
@@ -25,6 +26,7 @@ export class AvatarBuilderConfig {
 		this.accessory = props.accessory || 'none';
 		this.background = props.background || '#1a8c9e';
 		this.expression = props.expression || 'none';
+		this.age = props.age || 'adult';
 	}
 
 	static create(props: any): AvatarBuilderConfig {
@@ -47,6 +49,7 @@ export class AvatarBuilderConfig {
 		if (this.background !== '#1a8c9e')
 			params.set('background', this.background);
 		if (this.expression !== 'none') params.set('expression', this.expression);
+		if (this.age !== 'adult') params.set('age', this.age);
 		return params.toString();
 	}
 }

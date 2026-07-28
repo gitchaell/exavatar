@@ -14,6 +14,7 @@ export interface DynamicAvatarConfig {
 	accessory: string;
 	background: string;
 	expression?: string;
+	age?: string;
 }
 
 export class DynamicAvatarBuilder {
@@ -144,7 +145,27 @@ export class DynamicAvatarBuilder {
 		const background = this.sanitizeColor(c.background, '#1a8c9e');
 
 		const isFemale = gender === 'female';
+		const resolvedAge = (c as any).age || 'adult';
+
+		let ageScale = 1;
+		let ageTranslateY = 0;
+		let ageFeatures = '';
+		if (resolvedAge === 'child') {
+			ageScale = 0.85;
+			ageTranslateY = 60;
+		} else if (resolvedAge === 'elder') {
+			ageFeatures = `
+                <!-- Wrinkles -->
+                <path d="M 170 210 Q 180 215 190 210" fill="none" stroke="#000" stroke-width="2" stroke-opacity="0.3" />
+                <path d="M 320 210 Q 330 215 340 210" fill="none" stroke="#000" stroke-width="2" stroke-opacity="0.3" />
+                <path d="M 160 280 Q 150 290 140 280" fill="none" stroke="#000" stroke-width="2" stroke-opacity="0.3" />
+                <path d="M 350 280 Q 360 290 370 280" fill="none" stroke="#000" stroke-width="2" stroke-opacity="0.3" />
+                <path d="M 230 380 Q 256 390 282 380" fill="none" stroke="#000" stroke-width="2" stroke-opacity="0.3" />
+            `;
+		}
+
 		const neck = `<path d="M 210 380 L 210 460 L 302 460 L 302 380 Z" fill="${skinTone}" stroke="#000" stroke-width="6" />`;
+
 		const face = isFemale
 			? `
             <path d="M 140 260 C 110 260, 110 320, 140 330" fill="${skinTone}" stroke="#000" stroke-width="6" stroke-linecap="round" />
@@ -265,15 +286,18 @@ export class DynamicAvatarBuilder {
 		return `
 <svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 512 512" role="img" aria-label="Generated avatar">
     <rect width="100%" height="100%" fill="${background}" />
-    ${hairBack}
-    ${neck}
-    ${cloth}
-    ${face}
-    ${eyesSvg}
-    ${browsSvg}
-    ${mouthSvg}
-    ${hairFront}
-    ${acc}
+    <g transform="translate(0, ${ageTranslateY}) scale(${ageScale}) translate(${(512 * (1 - ageScale)) / 2}, 0)">
+        ${hairBack}
+        ${neck}
+        ${cloth}
+        ${face}
+        ${ageFeatures}
+        ${eyesSvg}
+        ${browsSvg}
+        ${mouthSvg}
+        ${hairFront}
+        ${acc}
+    </g>
 </svg>`.trim();
 	}
 }

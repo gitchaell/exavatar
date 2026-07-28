@@ -44,6 +44,7 @@ const avatar = Avatar.fromUrl(Astro.url);
 			/>
 		</section>
 
+
 		<form
 			method='GET'
 			action=''
@@ -72,6 +73,7 @@ const avatar = Avatar.fromUrl(Astro.url);
 				</label>
 			</div>
 
+            {avatar.set.value !== 'builder' && (
 			<div
 				class='grid-box box-height-1 col-[2/12] row-[14/15] grid px-2 md:col-[7/10] md:row-[6/7]'>
 				<label class='label grid grid-cols-10 md:grid-cols-3'>
@@ -95,9 +97,10 @@ const avatar = Avatar.fromUrl(Astro.url);
 					</select>
 				</label>
 			</div>
+            )}
 
 			<div
-				class='grid-box box-height-1 col-[2/12] row-[15/16] grid px-2 md:col-[7/10] md:row-[7/8]'>
+				class={'grid-box box-height-1 col-[2/12] grid px-2 md:col-[7/10] ' + (avatar.set.value === 'builder' ? 'row-[14/15] md:row-[6/7]' : 'row-[15/16] md:row-[7/8]')}>
 				<label class='label grid grid-cols-10 md:grid-cols-3'>
 					<span class='col-[1/4] md:col-[1/2]'><span class='font-light'>Avatar.</span>Size</span>
 
@@ -121,7 +124,7 @@ const avatar = Avatar.fromUrl(Astro.url);
 			</div>
 
 			<div
-				class='grid-box box-height-1 col-[2/12] row-[16/17] grid px-2 md:col-[7/10] md:row-[8/9]'>
+				class={'grid-box box-height-1 col-[2/12] grid px-2 md:col-[7/10] ' + (avatar.set.value === 'builder' ? 'row-[15/16] md:row-[7/8]' : 'row-[16/17] md:row-[8/9]')}>
 				<label class='label grid grid-cols-10 md:grid-cols-3'>
 					<span class='col-[1/4] md:col-[1/2]'><span class='font-light'>Avatar.</span>Format</span>
 
@@ -144,6 +147,8 @@ const avatar = Avatar.fromUrl(Astro.url);
 				</label>
 			</div>
 
+			{avatar.set.value !== 'builder' && (
+            <div class='contents'>
 			<div
 				class='grid-box box-height-1 col-[2/12] row-[17/18] grid px-2 md:col-[7/10] md:row-[9/10]'>
 				<label class='label grid grid-cols-10 md:grid-cols-3'>
@@ -176,59 +181,106 @@ const avatar = Avatar.fromUrl(Astro.url);
 					/>
 				</label>
 			</div>
+            </div>
+            )}
 
-
-			{
+            {
 				avatar.set.value === 'builder' && (
-					<div class='grid-box box-height-auto col-[2/12] row-[19/20] grid gap-2 p-2 md:col-[7/10] md:row-[11/14] md:box-height-3 builder-controls'>
-						<div class="grid grid-cols-2 gap-2">
-							<label class='label'><span class='font-light block text-xs'>Gender</span>
-								<select name='gender' class='select w-full' onchange='updatePreview(event)'>
+					<div class='contents builder-controls'>
+                        <div class="grid-box box-height-1 grid-cross-bl col-[2/12] row-[16/17] grid px-2 md:col-[7/10] md:row-[8/9]">
+							<label class='label grid grid-cols-10 md:grid-cols-3'><span class='font-light col-[1/4] md:col-[1/2]'>Age</span>
+								<select name='age' class='select col-[4/11] w-full md:col-[2/4]' onchange='updatePreview(event)'>
+									<option value='child' selected={avatar.builderConfig.age === 'child'}>Child</option>
+									<option value='adult' selected={avatar.builderConfig.age === 'adult'}>Adult</option>
+									<option value='elder' selected={avatar.builderConfig.age === 'elder'}>Elder</option>
+								</select>
+							</label>
+						</div>
+
+						<div class="grid-box box-height-1 col-[2/12] row-[17/18] grid px-2 md:col-[7/10] md:row-[9/10]">
+							<label class='label grid grid-cols-10 md:grid-cols-3'><span class='font-light col-[1/4] md:col-[1/2]'>Gender</span>
+								<select name='gender' class='select col-[4/11] w-full md:col-[2/4]' onchange='updatePreview(event)'>
 									<option value='male' selected={avatar.builderConfig.gender === 'male'}>Male</option>
 									<option value='female' selected={avatar.builderConfig.gender === 'female'}>Female</option>
 								</select>
 							</label>
-							<label class='label'><span class='font-light block text-xs'>Skin</span>
-								<input name='skinTone' type='color' class='input w-full h-8' value={avatar.builderConfig.skinTone} onchange='updatePreview(event)' />
+						</div>
+
+						<div class="grid-box box-height-1 col-[2/12] row-[18/19] grid px-2 md:col-[7/10] md:row-[10/11]">
+							<label class='label grid grid-cols-10 md:grid-cols-3'><span class='font-light col-[1/4] md:col-[1/2]'>Skin</span>
+								<input name='skinTone' type='color' class='input col-[4/11] w-full md:col-[2/4]' value={avatar.builderConfig.skinTone} onchange='updatePreview(event)' />
 							</label>
 						</div>
 
-						<div class="grid grid-cols-2 gap-2">
-							<label class='label'><span class='font-light block text-xs'>Hair</span>
-								<select name='hair' class='select w-full' onchange='updatePreview(event)'>
+						<div class="grid-box box-height-1 col-[2/12] row-[19/20] grid px-2 md:col-[7/10] md:row-[11/12]">
+							<label class='label grid grid-cols-10 md:grid-cols-3'><span class='font-light col-[1/4] md:col-[1/2]'>Hair</span>
+								<select name='hair' class='select col-[4/11] w-full md:col-[2/4]' onchange='updatePreview(event)'>
 									{['short', 'long', 'spiky', 'bald', 'curly', 'bob'].map(h => <option value={h} selected={avatar.builderConfig.hair === h}>{h}</option>)}
 								</select>
 							</label>
-							<label class='label'><span class='font-light block text-xs'>Hair Color</span>
-								<input name='hairColor' type='color' class='input w-full h-8' value={avatar.builderConfig.hairColor} onchange='updatePreview(event)' />
+						</div>
+
+                        <div class="grid-box box-height-1 col-[2/12] row-[20/21] grid px-2 md:col-[7/10] md:row-[12/13]">
+							<label class='label grid grid-cols-10 md:grid-cols-3'><span class='font-light col-[1/4] md:col-[1/2]'>Hair Color</span>
+								<input name='hairColor' type='color' class='input col-[4/11] w-full md:col-[2/4]' value={avatar.builderConfig.hairColor} onchange='updatePreview(event)' />
 							</label>
 						</div>
 
-						<div class="grid grid-cols-2 gap-2">
-							<label class='label'><span class='font-light block text-xs'>Clothing</span>
-								<select name='clothing' class='select w-full' onchange='updatePreview(event)'>
+						<div class="grid-box box-height-1 col-[2/12] row-[21/22] grid px-2 md:col-[7/10] md:row-[13/14]">
+							<label class='label grid grid-cols-10 md:grid-cols-3'><span class='font-light col-[1/4] md:col-[1/2]'>Clothing</span>
+								<select name='clothing' class='select col-[4/11] w-full md:col-[2/4]' onchange='updatePreview(event)'>
 									{['shirt', 'hoodie', 'suit', 'dress'].map(c => <option value={c} selected={avatar.builderConfig.clothing === c}>{c}</option>)}
 								</select>
 							</label>
-							<label class='label'><span class='font-light block text-xs'>Cloth Color</span>
-								<input name='clothingColor' type='color' class='input w-full h-8' value={avatar.builderConfig.clothingColor} onchange='updatePreview(event)' />
+						</div>
+
+                        <div class="grid-box box-height-1 col-[2/12] row-[22/23] grid px-2 md:col-[7/10] md:row-[14/15]">
+							<label class='label grid grid-cols-10 md:grid-cols-3'><span class='font-light col-[1/4] md:col-[1/2]'>Cloth Color</span>
+								<input name='clothingColor' type='color' class='input col-[4/11] w-full md:col-[2/4]' value={avatar.builderConfig.clothingColor} onchange='updatePreview(event)' />
 							</label>
 						</div>
 
-						<div class="grid grid-cols-2 gap-2">
-							<label class='label'><span class='font-light block text-xs'>Accessory</span>
-								<select name='accessory' class='select w-full' onchange='updatePreview(event)'>
+						<div class="grid-box box-height-1 col-[2/12] row-[23/24] grid px-2 md:col-[7/10] md:row-[15/16]">
+							<label class='label grid grid-cols-10 md:grid-cols-3'><span class='font-light col-[1/4] md:col-[1/2]'>Accessory</span>
+								<select name='accessory' class='select col-[4/11] w-full md:col-[2/4]' onchange='updatePreview(event)'>
 									{['none', 'glasses', 'sunglasses', 'headphones', 'cap'].map(a => <option value={a} selected={avatar.builderConfig.accessory === a}>{a}</option>)}
 								</select>
 							</label>
-							<label class='label'><span class='font-light block text-xs'>Background</span>
-								<input name='background' type='color' class='input w-full h-8' value={avatar.builderConfig.background} onchange='updatePreview(event)' />
+						</div>
+
+                        <div class="grid-box box-height-1 col-[2/12] row-[24/25] grid px-2 md:col-[7/10] md:row-[16/17]">
+							<label class='label grid grid-cols-10 md:grid-cols-3'><span class='font-light col-[1/4] md:col-[1/2]'>Background</span>
+								<input name='background' type='color' class='input col-[4/11] w-full md:col-[2/4]' value={avatar.builderConfig.background} onchange='updatePreview(event)' />
 							</label>
 						</div>
 
-						<div class="grid grid-cols-1 gap-2">
-							<label class='label'><span class='font-light block text-xs'>Expression</span>
-								<select name='expression' class='select w-full' onchange='updatePreview(event)'>
+						<div class="grid-box box-height-1 col-[2/12] row-[25/26] grid px-2 md:col-[7/10] md:row-[17/18]">
+							<label class='label grid grid-cols-10 md:grid-cols-3'><span class='font-light col-[1/4] md:col-[1/2]'>Eyes</span>
+								<select name='eyes' class='select col-[4/11] w-full md:col-[2/4]' onchange='updatePreview(event)'>
+									{['normal', 'wide', 'closed', 'squint', 'tired', 'look_away'].map(e => <option value={e} selected={avatar.builderConfig.eyes === e}>{e}</option>)}
+								</select>
+							</label>
+						</div>
+
+						<div class="grid-box box-height-1 col-[2/12] row-[26/27] grid px-2 md:col-[7/10] md:row-[18/19]">
+							<label class='label grid grid-cols-10 md:grid-cols-3'><span class='font-light col-[1/4] md:col-[1/2]'>Brows</span>
+								<select name='brows' class='select col-[4/11] w-full md:col-[2/4]' onchange='updatePreview(event)'>
+									{['neutral', 'raised', 'angry', 'sad', 'flat'].map(b => <option value={b} selected={avatar.builderConfig.brows === b}>{b}</option>)}
+								</select>
+							</label>
+						</div>
+
+						<div class="grid-box box-height-1 col-[2/12] row-[27/28] grid px-2 md:col-[7/10] md:row-[19/20]">
+							<label class='label grid grid-cols-10 md:grid-cols-3'><span class='font-light col-[1/4] md:col-[1/2]'>Mouth</span>
+								<select name='mouth' class='select col-[4/11] w-full md:col-[2/4]' onchange='updatePreview(event)'>
+									{['neutral', 'smile', 'big_smile', 'sad', 'open', 'smirk', 'teeth', 'gasp'].map(m => <option value={m} selected={avatar.builderConfig.mouth === m}>{m}</option>)}
+								</select>
+							</label>
+						</div>
+
+                        <div class="grid-box box-height-1 grid-cross-bl col-[2/12] row-[28/29] grid px-2 md:col-[7/10] md:row-[20/21]">
+							<label class='label grid grid-cols-10 md:grid-cols-3'><span class='font-light col-[1/4] md:col-[1/2]'>Expression</span>
+								<select name='expression' class='select col-[4/11] w-full md:col-[2/4]' onchange='updatePreview(event)'>
 									{['none', 'Neutral', 'Feliz', 'Sorprendido', 'Concentrado', 'Triste', 'Enojado', 'Asustado', 'Confundido', 'Cansado', 'Avergonzado', 'Emocionado', 'Arrogante', 'Aburrido', 'Sarcástico', 'Aliviado', 'Sonrisa pícara'].map(e => <option value={e} selected={avatar.builderConfig.expression === e}>{e}</option>)}
 								</select>
 							</label>
@@ -238,7 +290,7 @@ const avatar = Avatar.fromUrl(Astro.url);
 			}
 
 			<div
-				class={'grid-box box-height-1 col-[2/12] grid grid-cols-2 items-center gap-2 px-2 md:col-[7/10] ' + (avatar.set.value === 'builder' ? 'row-[20/21] md:row-[14/15]' : 'row-[21/22] md:row-[12/13]')}>
+				class={'grid-box box-height-1 col-[2/12] grid grid-cols-2 items-center gap-2 px-2 md:col-[7/10] ' + (avatar.set.value === 'builder' ? 'row-[29/30] md:row-[21/22]' : 'row-[19/20] md:row-[11/12]')}>
 				<button
 					type='button'
 					class='btn btn-secondary'
@@ -266,7 +318,7 @@ const avatar = Avatar.fromUrl(Astro.url);
 		</form>
 
 		<AvatarCode
-			class={'grid-box box-height-2 col-[1/13] content-center overflow-hidden p-3 text-center md:col-[3/11] ' + (avatar.set.value === 'builder' ? 'row-[21/23] md:row-[17/19]' : 'row-[22/24] md:row-[14/16]')}
+			class={'grid-box box-height-2 col-[1/13] content-center overflow-hidden p-3 text-center md:col-[3/11] ' + (avatar.set.value === 'builder' ? 'row-[30/32] md:row-[22/24]' : 'row-[20/22] md:row-[12/14]')}
 			code={avatar.codeurl}
 			wrap={true}
 		/>

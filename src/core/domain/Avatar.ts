@@ -191,6 +191,7 @@ export class Avatar {
 					'accessory',
 					'background',
 					'expression',
+					'age',
 				];
 				for (const key of builderKeys) {
 					const val = url.searchParams.get(key);
