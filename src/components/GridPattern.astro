@@ -112,6 +112,7 @@
 					document.body.style.display = 'grid'
 					document.body.style.gridTemplateColumns = `repeat(${this.config.cols}, 1fr)`
 					document.body.style.gridTemplateRows = `repeat(auto-fill, ${this.config.cellHeight}px)`
+					document.body.style.gridAutoRows = `${this.config.cellHeight}px`
 				}
 			})
 		}
