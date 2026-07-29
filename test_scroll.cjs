@@ -7,10 +7,9 @@ const { chromium } = require('playwright');
   });
   await page.goto('http://localhost:4322/playground?set=builder');
 
-  // wait 1 sec to let grid pattern kick in
-  await page.waitForTimeout(1000);
-
-  await page.screenshot({ path: 'mobile3.png', fullPage: true });
+  // Try to find age input
+  const ageVisible = await page.locator('select[name="age"]').isVisible();
+  console.log("Is Age visible on mobile?", ageVisible);
 
   await browser.close();
 })();
