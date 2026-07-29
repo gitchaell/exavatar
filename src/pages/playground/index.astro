@@ -145,7 +145,7 @@ const avatar = Avatar.fromUrl(Astro.url);
 			</div>
 
 			<div
-				class={'grid-box box-height-1 col-[2/12] grid px-2 md:col-[7/10] ' + (avatar.set.value === 'builder' ? 'hidden' : 'row-[17/18] md:row-[9/10]')}>
+				class={`grid-box box-height-1 col-[2/12] px-2 md:col-[7/10] ${avatar.set.value === 'builder' ? 'hidden' : 'grid row-[17/18] md:row-[9/10]'}`}>
 				<label class='label grid grid-cols-10 md:grid-cols-3'>
 					<span class='col-[1/4] md:col-[1/2]'><span class='font-light'>Avatar.</span>Text</span>
 
