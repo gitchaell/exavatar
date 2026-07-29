@@ -20,6 +20,7 @@ import type { AvatarSetType } from './AvatarSet.ts';
  * ```
  */
 export const avatarIdsMap = {
+	builder: ['dynamic'],
 	animals: [
 		'ant',
 		'bear',
@@ -376,8 +377,14 @@ export type AvatarAnimalIdTypes = (typeof avatarIdsMap)['animals'][number];
 export type AvatarRickAndMortyIdTypes =
 	(typeof avatarIdsMap)['rick_morty'][number];
 
+/** Type for Builder avatar IDs derived from avatarIdsMap */
+export type AvatarBuilderIdTypes = (typeof avatarIdsMap)['builder'][number];
+
 /** Union type representing all valid avatar IDs across all sets */
-export type AvatarIdType = AvatarAnimalIdTypes | AvatarRickAndMortyIdTypes;
+export type AvatarIdType =
+	| AvatarAnimalIdTypes
+	| AvatarRickAndMortyIdTypes
+	| AvatarBuilderIdTypes;
 
 /**
  * Value object representing a specific avatar identifier within a set.

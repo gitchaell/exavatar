@@ -4,6 +4,7 @@ import { AvatarColor } from './AvatarColor.ts';
 import { AvatarText } from './AvatarText.ts';
 import { AvatarId, type AvatarIdType } from './AvatarId.ts';
 import { AvatarSet, type AvatarSetType } from './AvatarSet.ts';
+import { AvatarBuilderConfig } from './AvatarBuilderConfig.ts';
 
 /**
  * Configuration properties for creating an Avatar.
@@ -40,6 +41,8 @@ export interface AvatarProps {
 	color?: string;
 	/** Text content for generated avatars */
 	text?: string;
+	/** Configuration for dynamic builder avatars */
+	builderConfig?: Record<string, string>;
 }
 
 /**
@@ -81,6 +84,8 @@ export class Avatar {
 	readonly color: AvatarColor;
 	/** Text configuration for generated avatars */
 	readonly text: AvatarText;
+	/** Dynamic builder configuration */
+	readonly builderConfig: AvatarBuilderConfig;
 
 	/** Relative file path for image-based avatars (e.g., 'animals/256/cat.webp') */
 	readonly filepath: string;
@@ -114,6 +119,7 @@ export class Avatar {
 			format: AvatarFormat.default().value,
 			color: AvatarColor.default().value,
 			text: AvatarText.default().value,
+			builderConfig: {},
 		});
 	}
 
@@ -170,6 +176,29 @@ export class Avatar {
 	 */
 	static fromUrl(url: URL): Avatar {
 		if (url?.searchParams?.size > 0) {
+			const builderConfig: Record<string, string> = {};
+			if (url.searchParams.get('set') === 'builder') {
+				const builderKeys = [
+					'gender',
+					'skinTone',
+					'hair',
+					'hairColor',
+					'brows',
+					'eyes',
+					'mouth',
+					'clothing',
+					'clothingColor',
+					'accessory',
+					'background',
+					'expression',
+					'age',
+				];
+				for (const key of builderKeys) {
+					const val = url.searchParams.get(key);
+					if (val !== null) builderConfig[key] = val;
+				}
+			}
+
 			return new Avatar({
 				set: url.searchParams.get('set') as AvatarSetType,
 				id: url.searchParams.get('id') as AvatarIdType,
@@ -177,6 +206,7 @@ export class Avatar {
 				format: url.searchParams.get('format') as AvatarFormatType,
 				color: url.searchParams.get('color') as string,
 				text: url.searchParams.get('text') as string,
+				builderConfig,
 			});
 		}
 
@@ -210,6 +240,7 @@ export class Avatar {
 		this.format = AvatarFormat.create(props.format);
 		this.color = AvatarColor.create(props.color);
 		this.text = AvatarText.create(props.text);
+		this.builderConfig = AvatarBuilderConfig.create(props.builderConfig);
 
 		this.filename = `${this.id.value}.${this.format.value}`;
 		this.filepath = `${this.set.value}/${this.size.value}/${this.filename}`;
@@ -252,6 +283,10 @@ export class Avatar {
 			params.push(`color=${encodeURIComponent(this.color.value)}`);
 		if (this.text.value)
 			params.push(`text=${encodeURIComponent(this.text.value)}`);
+		if (this.set.value === 'builder') {
+			const bParams = this.builderConfig.toQueryString();
+			if (bParams) params.push(bParams);
+		}
 		return params?.length > 0 ? `${path}?${params.join('&')}` : path;
 	}
 
@@ -271,6 +306,6 @@ export class Avatar {
 	 * ```
 	 */
 	needBuild(): boolean {
-		return this.text.hasText();
+		return this.text.hasText() || this.set.value === 'builder';
 	}
 }

@@ -14,7 +14,12 @@ import { ExavatarError } from '../shared/ExavatarError.ts';
  * console.log(avatarSets.length) // 3
  * ```
  */
-export const avatarSets = ['animals', 'adventure_time', 'rick_morty'] as const;
+export const avatarSets = [
+	'animals',
+	'adventure_time',
+	'rick_morty',
+	'builder',
+] as const;
 
 /** Type representing valid avatar set names */
 export type AvatarSetType = (typeof avatarSets)[number];

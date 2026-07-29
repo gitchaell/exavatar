@@ -57,7 +57,7 @@ const avatar = Avatar.fromUrl(Astro.url);
 						name='set'
 						id='avatar-set'
 						class='select col-[4/11] w-full md:col-[2/4]'
-						onchange='this.form.submit()'>
+						onchange='updatePreview(event)'>
 						<option value=''></option>
 						{
 							avatarSets.map((set) => (
@@ -73,7 +73,7 @@ const avatar = Avatar.fromUrl(Astro.url);
 			</div>
 
 			<div
-				class='grid-box box-height-1 col-[2/12] row-[14/15] grid px-2 md:col-[7/10] md:row-[6/7]'>
+				class={`grid-box box-height-1 col-[2/12] px-2 md:col-[7/10] ${avatar.set.value === 'builder' ? 'hidden' : 'grid row-[14/15] md:row-[6/7]'}`}>
 				<label class='label grid grid-cols-10 md:grid-cols-3'>
 					<span class='col-[1/4] md:col-[1/2]'><span class='font-light'>Avatar.</span>Id</span>
 
@@ -81,7 +81,7 @@ const avatar = Avatar.fromUrl(Astro.url);
 						name='id'
 						id='avatar-id'
 						class='select col-[4/11] w-full md:col-[2/4]'
-						onchange='this.form.submit()'>
+						onchange='updatePreview(event)'>
 						<option value=''></option>
 						{
 							avatarIdsMap[avatar.set.value].map((id) => (
@@ -97,7 +97,7 @@ const avatar = Avatar.fromUrl(Astro.url);
 			</div>
 
 			<div
-				class='grid-box box-height-1 col-[2/12] row-[15/16] grid px-2 md:col-[7/10] md:row-[7/8]'>
+				class={`grid-box box-height-1 col-[2/12] grid px-2 md:col-[7/10] ${avatar.set.value === 'builder' ? 'row-[14/15] md:row-[6/7]' : 'row-[15/16] md:row-[7/8]'}`}>
 				<label class='label grid grid-cols-10 md:grid-cols-3'>
 					<span class='col-[1/4] md:col-[1/2]'><span class='font-light'>Avatar.</span>Size</span>
 
@@ -105,7 +105,7 @@ const avatar = Avatar.fromUrl(Astro.url);
 						name='size'
 						id='avatar-size'
 						class='select col-[4/11] w-full md:col-[2/4]'
-						onchange='this.form.submit()'>
+						onchange='updatePreview(event)'>
 						<option value=''></option>
 						{
 							avatarSizes.map((size) => (
@@ -121,7 +121,7 @@ const avatar = Avatar.fromUrl(Astro.url);
 			</div>
 
 			<div
-				class='grid-box box-height-1 col-[2/12] row-[16/17] grid px-2 md:col-[7/10] md:row-[8/9]'>
+				class={`grid-box box-height-1 col-[2/12] grid px-2 md:col-[7/10] ${avatar.set.value === 'builder' ? 'row-[15/16] md:row-[7/8]' : 'row-[16/17] md:row-[8/9]'}`}>
 				<label class='label grid grid-cols-10 md:grid-cols-3'>
 					<span class='col-[1/4] md:col-[1/2]'><span class='font-light'>Avatar.</span>Format</span>
 
@@ -129,7 +129,7 @@ const avatar = Avatar.fromUrl(Astro.url);
 						name='format'
 						id='avatar-format'
 						class='select col-[4/11] w-full md:col-[2/4]'
-						onchange='this.form.submit()'>
+						onchange='updatePreview(event)'>
 						<option value=''></option>
 						{
 							avatarFormats.map((format) => (
@@ -145,7 +145,7 @@ const avatar = Avatar.fromUrl(Astro.url);
 			</div>
 
 			<div
-				class='grid-box box-height-1 col-[2/12] row-[17/18] grid px-2 md:col-[7/10] md:row-[9/10]'>
+				class={`grid-box box-height-1 col-[2/12] px-2 md:col-[7/10] ${avatar.set.value === 'builder' ? 'hidden' : 'grid row-[17/18] md:row-[9/10]'}`}>
 				<label class='label grid grid-cols-10 md:grid-cols-3'>
 					<span class='col-[1/4] md:col-[1/2]'><span class='font-light'>Avatar.</span>Text</span>
 
@@ -156,13 +156,117 @@ const avatar = Avatar.fromUrl(Astro.url);
 						maxlength='2'
 						class='input col-[4/11] w-full md:col-[2/4]'
 						value={avatar.text.value}
-						onchange='this.form.submit()'
+						onchange='updatePreview(event)'
 					/>
 				</label>
 			</div>
 
+            {avatar.set.value === 'builder' && (
+            <>
+                <div class='grid-box box-height-1 col-[2/12] row-[16/17] grid px-2 md:col-[7/10] md:row-[8/9]'>
+                    <label class='label grid grid-cols-10 md:grid-cols-3'><span class='col-[1/4] md:col-[1/2]'><span class='font-light'>Builder.</span>Age</span>
+                        <select name='age' class='select col-[4/11] w-full md:col-[2/4]' onchange='updatePreview(event)'>
+                            <option value='child' selected={avatar.builderConfig.age === 'child'}>Child</option>
+                            <option value='adult' selected={avatar.builderConfig.age === 'adult'}>Adult</option>
+                            <option value='elder' selected={avatar.builderConfig.age === 'elder'}>Elder</option>
+                        </select>
+                    </label>
+                </div>
+
+                <div class='grid-box box-height-1 col-[2/12] row-[17/18] grid px-2 md:col-[7/10] md:row-[9/10]'>
+                    <label class='label grid grid-cols-10 md:grid-cols-3'><span class='col-[1/4] md:col-[1/2]'><span class='font-light'>Builder.</span>Gender</span>
+                        <select name='gender' class='select col-[4/11] w-full md:col-[2/4]' onchange='updatePreview(event)'>
+                            <option value='male' selected={avatar.builderConfig.gender === 'male'}>Male</option>
+                            <option value='female' selected={avatar.builderConfig.gender === 'female'}>Female</option>
+                        </select>
+                    </label>
+                </div>
+
+                <div class='grid-box box-height-1 col-[2/12] row-[18/19] grid px-2 md:col-[7/10] md:row-[10/11]'>
+                    <label class='label grid grid-cols-10 md:grid-cols-3'><span class='col-[1/4] md:col-[1/2]'><span class='font-light'>Builder.</span>Skin</span>
+                        <input name='skinTone' type='color' class='input col-[4/11] w-full md:col-[2/4]' value={avatar.builderConfig.skinTone} onchange='updatePreview(event)' />
+                    </label>
+                </div>
+
+                <div class='grid-box box-height-1 col-[2/12] row-[19/20] grid px-2 md:col-[7/10] md:row-[11/12]'>
+                    <label class='label grid grid-cols-10 md:grid-cols-3'><span class='col-[1/4] md:col-[1/2]'><span class='font-light'>Builder.</span>Hair</span>
+                        <select name='hair' class='select col-[4/11] w-full md:col-[2/4]' onchange='updatePreview(event)'>
+                            {['short', 'long', 'spiky', 'bald', 'curly', 'bob'].map(h => <option value={h} selected={avatar.builderConfig.hair === h}>{h}</option>)}
+                        </select>
+                    </label>
+                </div>
+
+                <div class='grid-box box-height-1 col-[2/12] row-[20/21] grid px-2 md:col-[7/10] md:row-[12/13]'>
+                    <label class='label grid grid-cols-10 md:grid-cols-3'><span class='col-[1/4] md:col-[1/2]'><span class='font-light'>Builder.</span>Hair Color</span>
+                        <input name='hairColor' type='color' class='input col-[4/11] w-full md:col-[2/4]' value={avatar.builderConfig.hairColor} onchange='updatePreview(event)' />
+                    </label>
+                </div>
+
+                <div class='grid-box box-height-1 col-[2/12] row-[21/22] grid px-2 md:col-[7/10] md:row-[13/14]'>
+                    <label class='label grid grid-cols-10 md:grid-cols-3'><span class='col-[1/4] md:col-[1/2]'><span class='font-light'>Builder.</span>Clothing</span>
+                        <select name='clothing' class='select col-[4/11] w-full md:col-[2/4]' onchange='updatePreview(event)'>
+                            {['shirt', 'hoodie', 'suit', 'dress'].map(c => <option value={c} selected={avatar.builderConfig.clothing === c}>{c}</option>)}
+                        </select>
+                    </label>
+                </div>
+
+                <div class='grid-box box-height-1 col-[2/12] row-[22/23] grid px-2 md:col-[7/10] md:row-[14/15]'>
+                    <label class='label grid grid-cols-10 md:grid-cols-3'><span class='col-[1/4] md:col-[1/2]'><span class='font-light'>Builder.</span>Cloth Color</span>
+                        <input name='clothingColor' type='color' class='input col-[4/11] w-full md:col-[2/4]' value={avatar.builderConfig.clothingColor} onchange='updatePreview(event)' />
+                    </label>
+                </div>
+
+                <div class='grid-box box-height-1 col-[2/12] row-[23/24] grid px-2 md:col-[7/10] md:row-[15/16]'>
+                    <label class='label grid grid-cols-10 md:grid-cols-3'><span class='col-[1/4] md:col-[1/2]'><span class='font-light'>Builder.</span>Accessory</span>
+                        <select name='accessory' class='select col-[4/11] w-full md:col-[2/4]' onchange='updatePreview(event)'>
+                            {['none', 'glasses', 'sunglasses', 'headphones', 'cap'].map(a => <option value={a} selected={avatar.builderConfig.accessory === a}>{a}</option>)}
+                        </select>
+                    </label>
+                </div>
+
+                <div class='grid-box box-height-1 col-[2/12] row-[24/25] grid px-2 md:col-[7/10] md:row-[16/17]'>
+                    <label class='label grid grid-cols-10 md:grid-cols-3'><span class='col-[1/4] md:col-[1/2]'><span class='font-light'>Builder.</span>Background</span>
+                        <input name='background' type='color' class='input col-[4/11] w-full md:col-[2/4]' value={avatar.builderConfig.background} onchange='updatePreview(event)' />
+                    </label>
+                </div>
+
+                <div class='grid-box box-height-1 col-[2/12] row-[25/26] grid px-2 md:col-[7/10] md:row-[17/18]'>
+                    <label class='label grid grid-cols-10 md:grid-cols-3'><span class='col-[1/4] md:col-[1/2]'><span class='font-light'>Builder.</span>Eyes</span>
+                        <select name='eyes' class='select col-[4/11] w-full md:col-[2/4]' onchange='updatePreview(event)'>
+                            {['normal', 'wide', 'closed', 'squint', 'tired', 'look_away'].map(e => <option value={e} selected={avatar.builderConfig.eyes === e}>{e}</option>)}
+                        </select>
+                    </label>
+                </div>
+
+                <div class='grid-box box-height-1 col-[2/12] row-[26/27] grid px-2 md:col-[7/10] md:row-[18/19]'>
+                    <label class='label grid grid-cols-10 md:grid-cols-3'><span class='col-[1/4] md:col-[1/2]'><span class='font-light'>Builder.</span>Brows</span>
+                        <select name='brows' class='select col-[4/11] w-full md:col-[2/4]' onchange='updatePreview(event)'>
+                            {['neutral', 'raised', 'angry', 'sad', 'flat'].map(b => <option value={b} selected={avatar.builderConfig.brows === b}>{b}</option>)}
+                        </select>
+                    </label>
+                </div>
+
+                <div class='grid-box box-height-1 col-[2/12] row-[27/28] grid px-2 md:col-[7/10] md:row-[19/20]'>
+                    <label class='label grid grid-cols-10 md:grid-cols-3'><span class='col-[1/4] md:col-[1/2]'><span class='font-light'>Builder.</span>Mouth</span>
+                        <select name='mouth' class='select col-[4/11] w-full md:col-[2/4]' onchange='updatePreview(event)'>
+                            {['neutral', 'smile', 'big_smile', 'sad', 'open', 'smirk', 'teeth', 'gasp'].map(m => <option value={m} selected={avatar.builderConfig.mouth === m}>{m}</option>)}
+                        </select>
+                    </label>
+                </div>
+
+                <div class='grid-box box-height-1 grid-cross-bl col-[2/12] row-[28/29] grid px-2 md:col-[7/10] md:row-[20/21]'>
+                    <label class='label grid grid-cols-10 md:grid-cols-3'><span class='col-[1/4] md:col-[1/2]'><span class='font-light'>Builder.</span>Expression</span>
+                        <select name='expression' class='select col-[4/11] w-full md:col-[2/4]' onchange='updatePreview(event)'>
+                            {['none', 'Neutral', 'Feliz', 'Sorprendido', 'Concentrado', 'Triste', 'Enojado', 'Asustado', 'Confundido', 'Cansado', 'Avergonzado', 'Emocionado', 'Arrogante', 'Aburrido', 'Sarcástico', 'Aliviado', 'Sonrisa pícara'].map(e => <option value={e} selected={avatar.builderConfig.expression === e}>{e}</option>)}
+                        </select>
+                    </label>
+                </div>
+            </>
+            )}
+
+
 			<div
-				class='grid-box box-height-1 grid-cross-bl col-[2/12] row-[18/19] grid px-2 md:col-[7/10] md:row-[10/11]'>
+				class={`grid-box box-height-1 grid-cross-bl col-[2/12] px-2 md:col-[7/10] ${avatar.set.value === 'builder' ? 'hidden' : 'grid row-[18/19] md:row-[10/11]'}`}>
 				<label class='label grid grid-cols-10 md:grid-cols-3'>
 					<span class='col-[1/4] md:col-[1/2]'><span class='font-light'>Avatar.</span>Color</span>
 
@@ -172,13 +276,13 @@ const avatar = Avatar.fromUrl(Astro.url);
 						type='color'
 						class='input col-[4/11] w-full md:col-[2/4]'
 						value={avatar.color.value}
-						onchange='this.form.submit()'
+						onchange='updatePreview(event)'
 					/>
 				</label>
 			</div>
 
 			<div
-				class='grid-box box-height-1 col-[2/12] row-[20/21] grid grid-cols-2 items-center gap-2 px-2 md:col-[7/10] md:row-[12/13]'>
+				class={`grid-box box-height-1 col-[2/12] grid grid-cols-2 items-center gap-2 px-2 md:col-[7/10] ${avatar.set.value === 'builder' ? 'row-[29/30] md:row-[21/22]' : 'row-[20/21] md:row-[12/13]'}`}>
 				<button
 					type='button'
 					class='btn btn-secondary'
@@ -206,9 +310,55 @@ const avatar = Avatar.fromUrl(Astro.url);
 		</form>
 
 		<AvatarCode
-			class='grid-box box-height-2 col-[1/13] row-[22/24] content-center overflow-hidden p-3 text-center md:col-[3/11] md:row-[14/16]'
+			class={`grid-box box-height-2 col-[1/13] content-center overflow-hidden p-3 text-center md:col-[3/11] ${avatar.set.value === 'builder' ? 'row-[30/32] md:row-[22/24]' : 'row-[22/24] md:row-[14/16]'}`}
 			code={avatar.codeurl}
 			wrap={true}
 		/>
 	</main>
+<script is:inline>
+function updatePreview(e) {
+	const form = document.querySelector('form');
+
+    if (e && e.target && e.target.name === 'set') {
+        form.submit();
+        return;
+    }
+
+	const url = new URL(form.action || window.location.href);
+	const params = new URLSearchParams();
+
+	const formData = new FormData(form);
+	for (const [key, value] of formData.entries()) {
+		if (value) params.set(key, value);
+	}
+
+	const isBuilder = formData.get('set') === 'builder';
+
+	let apiUrl = '/api/avatar';
+	if (Array.from(params.keys()).length > 0) {
+		apiUrl += '?' + params.toString();
+	}
+
+	if (isBuilder) {
+		document.getElementById('preview').src = apiUrl;
+		const codeBlock = document.querySelector('pre');
+		if (codeBlock) {
+			const fullUrl = window.location.origin + apiUrl;
+
+			// Update the text directly. Shiki will be blown away, but the URL will be correct and copyable.
+			codeBlock.textContent = fullUrl;
+
+			// Also update history state so URL bar reflects the changes without reload
+			const playgroundUrl = new URL(window.location.href);
+            playgroundUrl.search = params.toString();
+            window.history.replaceState({}, '', playgroundUrl.toString());
+		}
+	} else {
+		form.submit();
+	}
+}
+</script>
+
+
+
 </Layout>
