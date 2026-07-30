@@ -50,13 +50,13 @@ const avatar = Avatar.fromUrl(Astro.url);
 			class='contents'>
 			<div
 				class='grid-box box-height-1 col-[2/12] row-[13/14] grid px-2 md:col-[7/10] md:row-[5/6]'>
-				<label class='label grid grid-cols-10 md:grid-cols-3'>
-					<span class='col-[1/4] md:col-[1/2]'><span class='font-light'>Avatar.</span>Set</span>
+				<label class='label grid grid-cols-12 md:grid-cols-3 gap-2'>
+					<span class='col-[1/7] md:col-[1/2]'><span class='font-light'>Avatar.</span>Set</span>
 
 					<select
 						name='set'
 						id='avatar-set'
-						class='select col-[4/11] w-full md:col-[2/4]'
+						class='select col-[7/13] w-full md:col-[2/4]'
 						onchange='this.form.submit()'>
 						<option value=''></option>
 						{
@@ -74,13 +74,13 @@ const avatar = Avatar.fromUrl(Astro.url);
 
 			<div
 				class='grid-box box-height-1 col-[2/12] row-[14/15] grid px-2 md:col-[7/10] md:row-[6/7]'>
-				<label class='label grid grid-cols-10 md:grid-cols-3'>
-					<span class='col-[1/4] md:col-[1/2]'><span class='font-light'>Avatar.</span>Id</span>
+				<label class='label grid grid-cols-12 md:grid-cols-3 gap-2'>
+					<span class='col-[1/7] md:col-[1/2]'><span class='font-light'>Avatar.</span>Id</span>
 
 					<select
 						name='id'
 						id='avatar-id'
-						class='select col-[4/11] w-full md:col-[2/4]'
+						class='select col-[7/13] w-full md:col-[2/4]'
 						onchange='this.form.submit()'>
 						<option value=''></option>
 						{
@@ -98,13 +98,13 @@ const avatar = Avatar.fromUrl(Astro.url);
 
 			<div
 				class='grid-box box-height-1 col-[2/12] row-[15/16] grid px-2 md:col-[7/10] md:row-[7/8]'>
-				<label class='label grid grid-cols-10 md:grid-cols-3'>
-					<span class='col-[1/4] md:col-[1/2]'><span class='font-light'>Avatar.</span>Size</span>
+				<label class='label grid grid-cols-12 md:grid-cols-3 gap-2'>
+					<span class='col-[1/7] md:col-[1/2]'><span class='font-light'>Avatar.</span>Size</span>
 
 					<select
 						name='size'
 						id='avatar-size'
-						class='select col-[4/11] w-full md:col-[2/4]'
+						class='select col-[7/13] w-full md:col-[2/4]'
 						onchange='this.form.submit()'>
 						<option value=''></option>
 						{
@@ -122,13 +122,13 @@ const avatar = Avatar.fromUrl(Astro.url);
 
 			<div
 				class='grid-box box-height-1 col-[2/12] row-[16/17] grid px-2 md:col-[7/10] md:row-[8/9]'>
-				<label class='label grid grid-cols-10 md:grid-cols-3'>
-					<span class='col-[1/4] md:col-[1/2]'><span class='font-light'>Avatar.</span>Format</span>
+				<label class='label grid grid-cols-12 md:grid-cols-3 gap-2'>
+					<span class='col-[1/7] md:col-[1/2]'><span class='font-light'>Avatar.</span>Format</span>
 
 					<select
 						name='format'
 						id='avatar-format'
-						class='select col-[4/11] w-full md:col-[2/4]'
+						class='select col-[7/13] w-full md:col-[2/4]'
 						onchange='this.form.submit()'>
 						<option value=''></option>
 						{
@@ -146,15 +146,15 @@ const avatar = Avatar.fromUrl(Astro.url);
 
 			<div
 				class='grid-box box-height-1 col-[2/12] row-[17/18] grid px-2 md:col-[7/10] md:row-[9/10]'>
-				<label class='label grid grid-cols-10 md:grid-cols-3'>
-					<span class='col-[1/4] md:col-[1/2]'><span class='font-light'>Avatar.</span>Text</span>
+				<label class='label grid grid-cols-12 md:grid-cols-3 gap-2'>
+					<span class='col-[1/7] md:col-[1/2]'><span class='font-light'>Avatar.</span>Text</span>
 
 					<input
 						name='text'
 						id='avatar-text'
 						type='text'
 						maxlength='2'
-						class='input col-[4/11] w-full md:col-[2/4]'
+						class='input col-[7/13] w-full md:col-[2/4]'
 						value={avatar.text.value}
 						onchange='this.form.submit()'
 					/>
@@ -163,14 +163,14 @@ const avatar = Avatar.fromUrl(Astro.url);
 
 			<div
 				class='grid-box box-height-1 grid-cross-bl col-[2/12] row-[18/19] grid px-2 md:col-[7/10] md:row-[10/11]'>
-				<label class='label grid grid-cols-10 md:grid-cols-3'>
-					<span class='col-[1/4] md:col-[1/2]'><span class='font-light'>Avatar.</span>Color</span>
+				<label class='label grid grid-cols-12 md:grid-cols-3 gap-2'>
+					<span class='col-[1/7] md:col-[1/2]'><span class='font-light'>Avatar.</span>Color</span>
 
 					<input
 						name='color'
 						id='avatar-color'
 						type='color'
-						class='input col-[4/11] w-full md:col-[2/4]'
+						class='input col-[7/13] w-full md:col-[2/4]'
 						value={avatar.color.value}
 						onchange='this.form.submit()'
 					/>
