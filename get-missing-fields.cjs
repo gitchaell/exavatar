@@ -6,5 +6,10 @@ const content = fs.readFileSync('src/pages/playground/index.astro', 'utf8');
 const matches = content.match(/<label class='label grid grid-cols-10/g);
 console.log('grid-cols-10 matches:', matches ? matches.length : 0);
 
-const builderMatches = content.match(/<label class='label.*?>\s*<span.*?>\s*<span class='font-light'>Builder/g);
-console.log('Builder fields total:', builderMatches ? builderMatches.length : 0);
+const builderMatches = content.match(
+	/<label class='label.*?>\s*<span.*?>\s*<span class='font-light'>Builder/g,
+);
+console.log(
+	'Builder fields total:',
+	builderMatches ? builderMatches.length : 0,
+);
